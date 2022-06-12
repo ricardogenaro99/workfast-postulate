@@ -28,6 +28,9 @@ const addUserDb = async (user) => {
 				email: user.email,
 			},
 		},
+		headers: {
+			"content-type": "application/json",
+		},
 	};
 	await helpHttp().post(`${API_BACKEND}/users`, options);
 };
