@@ -40,22 +40,16 @@ export function AuthProvider({ children }) {
 	const [loading, setLoading] = useState(true);
 
 	const signup = async (email, password) => {
-		const { user } = await createUserWithEmailAndPassword(
-			auth,
-			email,
-			password,
-		);
+		await createUserWithEmailAndPassword(auth, email, password);
+		const user = auth.currentUser;
 		await addUserDb(user);
 	};
 
 	const login = async (email, password) => {
-		const { user } = await signInWithEmailAndPassword(
-			auth,
-			email,
-			password,
-		);
+		await signInWithEmailAndPassword(auth, email, password);
+		const user = auth.currentUser;
 		const { data } = await helpHttp().get(
-			`${API_BACKEND}/users?authId=${user.uid}`,
+			`${API_BACKEND}/users?email=${user.email}`,
 		);
 
 		if (data.length === 0) {
