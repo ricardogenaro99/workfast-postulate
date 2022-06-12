@@ -15,12 +15,12 @@ const Container = styled.aside`
 	top: 0;
 	display: flex;
 	justify-content: center;
-	box-shadow: rgb(0 0 0 / 15%) 4px var(--height-header) 8px 1px;
 	> div {
 		position: fixed;
 		height: 100%;
 		width: 100%;
 		max-width: var(--max-width-aside);
+		box-shadow: rgb(0 0 0 / 15%) 4px var(--height-header) 8px 0px;
 		> section {
 			display: grid;
 			padding: 15px;
