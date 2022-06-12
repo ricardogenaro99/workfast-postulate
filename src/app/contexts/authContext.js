@@ -2,6 +2,7 @@ import {
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	onAuthStateChanged,
+	sendEmailVerification,
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signInWithPopup,
@@ -37,27 +38,32 @@ const addUserDb = async (user) => {
 
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	const signup = async (email, password) => {
+		setLoading(true);
 		await createUserWithEmailAndPassword(auth, email, password);
-		const user = auth.currentUser;
-		await addUserDb(user);
+		const tmp = auth.currentUser;
+		await addUserDb(tmp);
+		await signOut(auth);
 	};
 
 	const login = async (email, password) => {
+		setLoading(true);
 		await signInWithEmailAndPassword(auth, email, password);
-		const user = auth.currentUser;
+		const tmp = auth.currentUser;
 		const { data } = await helpHttp().get(
-			`${API_BACKEND}/users?email=${user.email}`,
+			`${API_BACKEND}/users?email=${tmp.email}`,
 		);
-
 		if (data.length === 0) {
-			addUserDb(user);
+			addUserDb(tmp);
 		}
 	};
 
-	const logout = () => signOut(auth);
+	const logout = () => {
+		setLoading(true);
+		setTimeout(signOut, 500, auth);
+	};
 
 	const loginWithGoogle = () => {
 		const googleProvider = new GoogleAuthProvider();
@@ -66,9 +72,20 @@ export function AuthProvider({ children }) {
 
 	const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
+	const sendVerification = () => sendEmailVerification(auth.currentUser);
+
 	useEffect(() => {
 		const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
-			setUser(currentUser);
+			if (currentUser) {
+				if (currentUser.emailVerified) {
+					setUser(currentUser);
+				} else {
+					signOut(auth);
+					sendVerification().then(() => setUser(null));
+				}
+			} else {
+				setUser(null);
+			}
 			setLoading(false);
 		});
 		return () => unsubuscribe();
@@ -81,9 +98,10 @@ export function AuthProvider({ children }) {
 				login,
 				logout,
 				loginWithGoogle,
+				resetPassword,
 				user,
 				loading,
-				resetPassword,
+				setLoading,
 			}}
 		>
 			{children}

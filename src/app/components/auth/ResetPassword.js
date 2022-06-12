@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useForm } from "../../hooks/useForm";
 import { pathAuth } from "../../routes/Path";
 import {
-    ButtonPrimaryPurple,
-    ButtonPrimaryWhite,
-    ControlButtons
+	ButtonPrimaryPurple,
+	ButtonPrimaryWhite,
+	ControlButtons
 } from "../../shared/components";
 import AuthModel from "./AuthModel";
 
@@ -14,7 +14,7 @@ const initialForm = {
 };
 const ResetPassword = () => {
 	const navigate = useNavigate();
-	const { resetPassword } = useAuth();
+	const { resetPassword, loading, setLoading, user } = useAuth();
 	const { form, handleChange } = useForm(initialForm);
 	const handleLogin = () => navigate(`${pathAuth}/login`);
 
@@ -25,6 +25,9 @@ const ResetPassword = () => {
 			onChange={handleChange}
 			action={resetPassword}
 			resetPassword={true}
+			loading={loading}
+			setLoading={setLoading}
+			user={user}
 		>
 			<ControlButtons>
 				<ButtonPrimaryWhite type="button" onClick={handleLogin}>

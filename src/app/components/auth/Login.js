@@ -16,7 +16,7 @@ const initialForm = {
 
 const Login = () => {
 	const navigate = useNavigate();
-	const { login } = useAuth();
+	const { login, loading, setLoading, user } = useAuth();
 	const { form, handleChange } = useForm(initialForm);
 	const handleRegister = () => navigate(`${pathAuth}/register`);
 
@@ -26,6 +26,9 @@ const Login = () => {
 			form={form}
 			onChange={handleChange}
 			action={login}
+			loading={loading}
+			setLoading={setLoading}
+			user={user}
 		>
 			<ControlButtons>
 				<ButtonPrimaryWhite type="button" onClick={handleRegister}>

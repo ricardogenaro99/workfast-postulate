@@ -1,9 +1,13 @@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { helpHttp } from "../../helpers/helpHttp";
 import { pathDashboard } from "../../routes/Path";
-import { Alert, CardDefault, InputLabel } from "../../shared/components";
+import {
+	Alert,
+	CardDefault,
+	InputLabel,
+	Loader,
+} from "../../shared/components";
 
 const Container = styled.div`
 	width: 100%;
@@ -14,6 +18,7 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
+	position: relative;
 	> div {
 		width: 90%;
 		max-width: 500px;
@@ -53,25 +58,37 @@ const AuthModel = ({
 	onChange,
 	action,
 	resetPassword = false,
+	loading = false,
+	setLoading,
+	user,
 }) => {
 	const [error, setError] = useState();
 	const navigate = useNavigate();
+
+	const writeError = (message) => {
+		setLoading(false);
+		setError(message);
+		setTimeout(() => {
+			setError();
+		}, 4500);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			await action(form.email, form.password);
+			if (!user) {
+				writeError("Le enviamos un correo para validar su cuenta!");
+			}
 			navigate(pathDashboard);
 		} catch (err) {
-			setError(err.message);
-			setTimeout(() => {
-				setError();
-			}, 4000);
+			writeError(err.message);
 		}
 	};
 	return (
 		<Container>
 			{error && <Alert message={error} />}
+			{loading && <Loader />}
 			<CardStyle>
 				<h2>{title}</h2>
 				<form onSubmit={handleSubmit}>
