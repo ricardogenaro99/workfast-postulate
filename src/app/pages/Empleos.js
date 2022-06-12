@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { API_JOBS } from "../apis/api-jobs";
+import { API_JOBS } from "../endpoints/apis";
 import CardJob from "../components/empleos/CardJob";
 import { helpHttp } from "../helpers/helpHttp";
 import { Alert, Loader } from "../shared/components";

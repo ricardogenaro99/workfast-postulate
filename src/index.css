@@ -6,9 +6,9 @@
 	--color-purple: #5432ebee;
 	--color-purple-ligth: #9e88ffee;
 	--color-purple-active: #8266ffee;
-	--color-grey: #b0b0b0;
-	--color-grey-ligth: #e0e7ff;
-
+	--color-grey: #868686;
+	/* --color-grey-ligth: #e0e7ff; */
+	--color-grey-ligth: #d3d1d6;
 	--color-blue: #0153ce;
 	--color-blue-ligth: #8fbcff;
 	--color-red: #ffb4bcaf;
@@ -82,4 +82,8 @@ ul {
 
 a {
 	text-decoration: none;
+}
+
+::placeholder{
+	opacity: .45;
 }

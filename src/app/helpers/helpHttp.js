@@ -2,6 +2,7 @@ export const helpHttp = () => {
 	const customFetch = (endpoint, options) => {
 		const defaultHeader = {
 			accept: "application/json",
+			"content-type": "application/json",
 		};
 
 		const controller = new AbortController();
@@ -14,8 +15,6 @@ export const helpHttp = () => {
 		options.body = JSON.stringify(options.body) || false;
 
 		if (!options.body) delete options.body;
-
-		
 
 		setTimeout(() => {
 			controller.abort();

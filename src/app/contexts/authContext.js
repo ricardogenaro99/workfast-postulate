@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
+import { API_BACKEND } from "../endpoints/apis";
+import { helpHttp } from "../helpers/helpHttp";
 
 export const authContext = createContext();
 
@@ -17,15 +19,46 @@ export const useAuth = () => {
 	if (!context) throw new Error("There is no auth provider");
 	return context;
 };
+
+const addUserDb = async (user) => {
+	const options = {
+		body: {
+			details: {
+				authId: user.uid,
+				email: user.email,
+			},
+		},
+	};
+	await helpHttp().post(`${API_BACKEND}/users`, options);
+};
+
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 
-	const signup = (email, password) =>
-		createUserWithEmailAndPassword(auth, email, password);
+	const signup = async (email, password) => {
+		const { user } = await createUserWithEmailAndPassword(
+			auth,
+			email,
+			password,
+		);
+		await addUserDb(user);
+	};
 
-	const login = (email, password) =>
-		signInWithEmailAndPassword(auth, email, password);
+	const login = async (email, password) => {
+		const { user } = await signInWithEmailAndPassword(
+			auth,
+			email,
+			password,
+		);
+		const { data } = await helpHttp().get(
+			`${API_BACKEND}/users?authId=${user.uid}`,
+		);
+
+		if (data.length === 0) {
+			addUserDb(user);
+		}
+	};
 
 	const logout = () => signOut(auth);
 

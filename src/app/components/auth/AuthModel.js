@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { helpHttp } from "../../helpers/helpHttp";
 import { pathDashboard } from "../../routes/Path";
 import { Alert, CardDefault, InputLabel } from "../../shared/components";
 
@@ -22,12 +23,12 @@ const Container = styled.div`
 const CardStyle = styled(CardDefault)`
 	> * {
 		width: 100%;
-		padding: 0 var(--padding-global-x);
+		padding: 0 calc(var(--padding-global-x) + 12px);
 	}
 
 	> h2 {
 		font-weight: 800;
-		font-size: 24px;
+		font-size: 26px;
 		display: flex;
 		align-items: center;
 		color: var(--color-black);
@@ -85,7 +86,7 @@ const AuthModel = ({
 						/>
 						{!resetPassword && (
 							<InputLabel
-								label="Constraseña"
+								label="Contraseña"
 								type="password"
 								name="password"
 								placeholder="***************"
