@@ -6,6 +6,8 @@ import { Loader } from "../components";
 export default function ProtectedRoute({ children }) {
 	const { user, loading } = useAuth();
 	if (loading) return <Loader />;
-	if (!user) return <Navigate to={`${pathAuth}/login`} />;
-	return <>{children}</>;
+	if (user !== undefined) {
+		if (!user) return <Navigate to={`${pathAuth}/login`} />;
+		return <>{children}</>;
+	}
 }

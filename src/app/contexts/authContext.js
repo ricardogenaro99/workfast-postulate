@@ -37,7 +37,7 @@ const addUserDb = async (user) => {
 };
 
 export function AuthProvider({ children }) {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(undefined);
 	const [loading, setLoading] = useState(false);
 
 	const signup = async (email, password) => {
@@ -75,7 +75,7 @@ export function AuthProvider({ children }) {
 	const sendVerification = () => sendEmailVerification(auth.currentUser);
 
 	useEffect(() => {
-		const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
+		const unsubuscribe = onAuthStateChanged(auth, async (currentUser) => {
 			if (currentUser) {
 				if (currentUser.emailVerified) {
 					setUser(currentUser);
