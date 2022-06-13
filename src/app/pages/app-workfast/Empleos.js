@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CardJob from "../components/empleos/CardJob";
-import { API_JOBS } from "../endpoints/apis";
-import { helpHttp } from "../helpers/helpHttp";
-import { Alert, Loader } from "../shared/components";
+import CardJob from "../../components/empleos/CardJob";
+import { API_JOBS } from "../../endpoints/apis";
+import { helpHttp } from "../../helpers/helpHttp";
+import { Alert, Loader } from "../../shared/components";
 
 const Container = styled.div`
 	display: grid;

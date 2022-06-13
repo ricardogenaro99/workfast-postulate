@@ -1,7 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../contexts/authContext";
-import RoutesComponents from "../routes/Routes";
+import { API_BACKEND } from "../endpoints/apis";
+import { helpHttp } from "../helpers/helpHttp";
+import RoutesComponents from "../routes/RoutesApp";
 import { Header } from "../shared/components";
 
 const Container = styled.section`
@@ -14,10 +16,25 @@ const Container = styled.section`
 
 const Main = () => {
 	const { user, logout } = useAuth();
+	const [userDb, setUserDb] = useState(null);
+
+	useEffect(() => {
+		const userFetch = async () => {
+			const { data } = await helpHttp().get(
+				`${API_BACKEND}/users?email=${user.email}`,
+			);
+			if (data.length === 1) {
+				setUserDb(data[0]);
+			}
+		};
+
+		return () => userFetch();
+	}, [user]);
+
 	return (
 		<Container>
-			<Header user={user} logout={logout}/>
-			<RoutesComponents user={user}/>
+			<Header logout={logout} userDb={userDb} setUserDb={setUserDb} />
+			<RoutesComponents userDb={userDb} setUserDb={setUserDb} />
 		</Container>
 	);
 };

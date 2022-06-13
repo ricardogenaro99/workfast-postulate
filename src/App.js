@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import "./App.css";
 import Login from "./app/components/auth/Login";
 import Register from "./app/components/auth/Register";
 import ResetPassword from "./app/components/auth/ResetPassword";

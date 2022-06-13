@@ -18,10 +18,9 @@
 	--color-green: #125737;
 	--color-teal: #4fcfa9d3;
 	--color-cyan: #0dcaf0;
-
 	--max-width-aside: 235px;
 	--min-width-aside: 70px;
-
+	--min-width-aside: 55px;
 	--height-header: 66px;
 	--height-footer: 0px;
 	--height-main: calc(100vh - var(--height-header) - var(--height-footer));
