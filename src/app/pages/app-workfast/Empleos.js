@@ -4,12 +4,16 @@ import CardJob from "../../components/empleos/CardJob";
 import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert, Loader } from "../../shared/components";
+import { device } from "../../shared/utils/Breakpoints";
 
 const Container = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	grid-auto-rows: 1fr;
 	gap: 25px;
+	@media ${device.mobileL} {
+		grid-template-columns: 1fr;
+	}
 `;
 
 const Empleos = () => {
