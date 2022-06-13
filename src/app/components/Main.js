@@ -1,7 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { useAuth } from "../contexts/authContext";
-import RoutesComponents from "../routes/Routes";
+import RoutesComponents from "../routes/RoutesApp";
 import { Header } from "../shared/components";
 
 const Container = styled.section`
@@ -12,12 +10,11 @@ const Container = styled.section`
 	grid-template-rows: var(--height-header) 1fr;
 `;
 
-const Main = () => {
-	const { user, logout } = useAuth();
+const Main = ({ logout, userDb, setUserDb }) => {
 	return (
 		<Container>
-			<Header user={user} logout={logout}/>
-			<RoutesComponents user={user}/>
+			<Header logout={logout} userDb={userDb} setUserDb={setUserDb} />
+			<RoutesComponents userDb={userDb} setUserDb={setUserDb} />
 		</Container>
 	);
 };

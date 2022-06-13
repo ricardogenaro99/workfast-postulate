@@ -24,13 +24,13 @@ const Container = styled.aside`
 		> section {
 			display: grid;
 			padding: 15px;
-			gap: 5px;
+			gap: 8px;
 
 			.logo {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				margin: 20px 0;
+				margin: 30px 0;
 			}
 		}
 	}
@@ -42,7 +42,7 @@ const Container = styled.aside`
 	@media ${device.tabletS} {
 		width: var(--min-width-aside);
 		> div {
-			max-width: calc(var(--min-width-aside) - 5px);
+			max-width: calc(var(--min-width-aside) - 6px);
 			> section {
 				padding: 10px 0;
 			}
@@ -52,7 +52,7 @@ const Container = styled.aside`
 
 const sizeIconTech = 25;
 
-const Aside = () => {
+const Aside = ({ userDb }) => {
 	return (
 		<Container>
 			<div>

@@ -23,6 +23,8 @@ const Container = styled(NavLink)`
 	}
 
 	@media ${device.tabletS} {
+		padding: 5px;
+		justify-content: center;
 		span{
 			display: none;
 		}

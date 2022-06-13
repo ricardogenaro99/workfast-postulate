@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { pathDashboard } from "../../routes/Path";
@@ -6,7 +6,7 @@ import {
 	Alert,
 	CardDefault,
 	InputLabel,
-	Loader,
+	Loader
 } from "../../shared/components";
 
 const Container = styled.div`
@@ -112,7 +112,7 @@ const AuthModel = ({
 							/>
 						)}
 					</section>
-					<Fragment>{children}</Fragment>
+					{children}
 				</form>
 			</CardStyle>
 		</Container>

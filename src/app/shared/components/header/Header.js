@@ -1,8 +1,5 @@
-import React from "react";
 import { AiOutlinePoweroff } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { pathAuth } from "../../../routes/Path";
 import { device } from "../../utils/Breakpoints";
 
 const Container = styled.header`
@@ -32,18 +29,13 @@ const Container = styled.header`
 	}
 `;
 
-const Header = ({ user, logout }) => {
-	const navigate = useNavigate();
-	const handleLogout = async () => {
-		await logout();
-		navigate(`${pathAuth}/login`);
-	};
+const Header = ({ logout, userDb, setUserDb }) => {
+	const handleLogout = async () => await logout();
 	return (
 		<Container>
 			<div>
 				<h1>WORKFAST</h1>
 				<div>
-					<span>{user.displayName}</span>
 					<AiOutlinePoweroff
 						onClick={handleLogout}
 						cursor="pointer"

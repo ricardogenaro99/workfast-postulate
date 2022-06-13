@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import ListOfLists from "../components/preparate/ListOfLists";
+import ListOfLists from "../../components/preparate/ListOfLists";
+import { Loader } from "../../shared/components";
 
 const Container = styled.div`
 	display: flex;
@@ -38,8 +40,16 @@ const listOfLists = [
 	},
 ];
 const Preparate = () => {
+	const [loading, setLoading] = useState(null);
+
+	useEffect(() => {
+		setLoading(true);
+		setInterval(setLoading, 1500, false);
+	}, []);
+
 	return (
 		<Container>
+			{loading && <Loader />}
 			{listOfLists.map((lists, i) => (
 				<ListOfLists key={i} title={lists.title} lists={lists.lists} />
 			))}
