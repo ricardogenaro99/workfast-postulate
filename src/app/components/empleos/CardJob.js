@@ -22,8 +22,6 @@ const Container = styled(CardDefault)`
 
 const CardJob = ({ job }) => {
 	const { name, contents, locations = [], company, id } = job;
-	
-	
 
 	return (
 		<Container id={id}>
@@ -41,7 +39,7 @@ const CardJob = ({ job }) => {
 				className="content"
 				dangerouslySetInnerHTML={{ __html: contents }}
 			></div>
-			
+
 			<ButtonPrimaryPurple>Conocer más...</ButtonPrimaryPurple>
 		</Container>
 	);

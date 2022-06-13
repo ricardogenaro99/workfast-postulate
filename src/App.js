@@ -1,22 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 import Login from "./app/components/auth/Login";
 import Register from "./app/components/auth/Register";
 import ResetPassword from "./app/components/auth/ResetPassword";
-import Main from "./app/components/Main";
 import { AuthProvider } from "./app/contexts/authContext";
 import { pathAuth, pathDashboard } from "./app/routes/Path";
-import { Aside } from "./app/shared/components";
 import ProtectedRoute from "./app/shared/utils/ProtectedRoute";
 import RestrictAuth from "./app/shared/utils/RestrictAuth";
-
-const Container = styled.div`
-	width: 100%;
-	height: 100%;
-	min-height: 100vh;
-	display: grid;
-	grid-template-columns: auto 1fr;
-`;
+import { AppModule } from "./modules";
 
 function App() {
 	return (
@@ -26,10 +16,7 @@ function App() {
 					path={`${pathDashboard}/*`}
 					element={
 						<ProtectedRoute>
-							<Container>
-								<Aside />
-								<Main />
-							</Container>
+							<AppModule />
 						</ProtectedRoute>
 					}
 				/>
