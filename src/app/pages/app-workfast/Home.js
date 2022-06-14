@@ -1,5 +1,7 @@
+import { SectionTitle } from "../../shared/templates";
+
 const Home = () => {
-	return <div>Home</div>;
+	return <SectionTitle title="Home"></SectionTitle>;
 };
 
 export default Home;

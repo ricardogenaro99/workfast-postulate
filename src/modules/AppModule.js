@@ -23,7 +23,7 @@ const AppModule = () => {
 			const { data } = await helpHttp().get(
 				`${API_BACKEND}/users?email=${user.email}`,
 			);
-			if (await data.length === 1) {
+			if ((await data.length) === 1) {
 				setUserDb(data[0]);
 			}
 		};

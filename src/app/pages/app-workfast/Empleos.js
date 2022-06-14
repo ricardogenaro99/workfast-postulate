@@ -4,9 +4,10 @@ import CardJob from "../../components/empleos/CardJob";
 import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert, Loader } from "../../shared/components";
+import { ContainerGapDefault, SectionTitle } from "../../shared/templates";
 import { device } from "../../shared/utils/Breakpoints";
 
-const Container = styled.div`
+const ContainerCards = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	grid-auto-rows: 1fr;
@@ -39,13 +40,17 @@ const Empleos = () => {
 	}, []);
 
 	return (
-		<Container>
-			{error && <Alert message={error.statusText} />}
-			{loading && <Loader />}
-			{db.map((job, i) => (
-				<CardJob key={i} job={job} />
-			))}
-		</Container>
+		<ContainerGapDefault>
+			<SectionTitle title={"Estos empleos se ajustan a tu perfil"}>
+				<ContainerCards>
+					{error && <Alert message={error.statusText} />}
+					{loading && <Loader />}
+					{db.map((job, i) => (
+						<CardJob key={i} job={job} />
+					))}
+				</ContainerCards>
+			</SectionTitle>
+		</ContainerGapDefault>
 	);
 };
 

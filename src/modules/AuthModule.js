@@ -1,4 +1,3 @@
-
 const AuthModule = () => {
 	return <div>AuthModule</div>;
 };
