@@ -1,12 +1,18 @@
 import { auth } from "../../config/firebase";
 
-export const helpHttp = () => {
+export const helpHttp = (authorization = true) => {
 	const customFetch = async (endpoint, options) => {
 		const token = await auth.currentUser.getIdToken(true);
-		const defaultHeader = {
+		let defaultHeader = {
 			Accept: "application/json",
-			Authorization: `Bearer ${token}`,
 		};
+
+		if (authorization) {
+			defaultHeader = {
+				...defaultHeader,
+				Authorization: `Bearer ${token}`,
+			};
+		}
 
 		const controller = new AbortController();
 		options.signal = controller.signal;
