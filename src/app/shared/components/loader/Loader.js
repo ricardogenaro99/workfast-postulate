@@ -5,7 +5,7 @@ const Container = styled.div`
 	width: 100vw !important;
 	max-width: none !important;
 	height: 100vh;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 100000;
