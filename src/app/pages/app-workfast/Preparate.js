@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import ListOfLists from "../../components/preparate/ListOfLists";
 import { Loader } from "../../shared/components";
-
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 75px;
-`;
+import { ContainerGapDefault } from "../../shared/templates";
 
 const listOfLists = [
 	{
@@ -44,16 +38,16 @@ const Preparate = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		setInterval(setLoading, 1500, false);
+		setInterval(setLoading, 1800, false);
 	}, []);
 
 	return (
-		<Container>
+		<ContainerGapDefault>
 			{loading && <Loader />}
 			{listOfLists.map((lists, i) => (
 				<ListOfLists key={i} title={lists.title} lists={lists.lists} />
 			))}
-		</Container>
+		</ContainerGapDefault>
 	);
 };
 

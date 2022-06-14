@@ -1,4 +1,3 @@
-
 const LandingModule = () => {
 	return <div>LandingModule</div>;
 };
