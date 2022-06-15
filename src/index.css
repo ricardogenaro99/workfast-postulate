@@ -83,6 +83,6 @@ a {
 	text-decoration: none;
 }
 
-::placeholder{
-	opacity: .45;
+::placeholder {
+	opacity: 0.45;
 }

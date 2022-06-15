@@ -1,5 +1,5 @@
 import { CgUserlane } from "react-icons/cg";
-import { FaVideo } from "react-icons/fa";
+import { FaCog, FaVideo } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { RiProfileFill } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
@@ -78,6 +78,11 @@ const Aside = ({ userDb }) => {
 						path="preparate"
 						name="Preparate"
 						icon={<FaVideo size={sizeIconTech} />}
+					/>
+					<NavLinkComponent
+						path="configuracion"
+						name="Configuracion"
+						icon={<FaCog size={sizeIconTech} />}
 					/>
 				</section>
 			</div>

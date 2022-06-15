@@ -5,7 +5,7 @@ import { pathAuth } from "../../routes/Path";
 import {
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
-	ControlButtons
+	ControlGrid
 } from "../../shared/components";
 import AuthModel from "./AuthModel";
 
@@ -30,19 +30,19 @@ const Login = () => {
 			setLoading={setLoading}
 			user={user}
 		>
-			<ControlButtons>
+			<ControlGrid>
 				<ButtonPrimaryWhite type="button" onClick={handleRegister}>
 					Crear Cuenta
 				</ButtonPrimaryWhite>
 				<ButtonPrimaryPurple type="submit">
 					Ingresar
 				</ButtonPrimaryPurple>
-			</ControlButtons>
-			<ControlButtons columns={1}>
+			</ControlGrid>
+			<ControlGrid columns={1}>
 				<Link to={`${pathAuth}/reset-password`}>
 					¿Olvidaste tu contraseña?
 				</Link>
-			</ControlButtons>
+			</ControlGrid>
 		</AuthModel>
 	);
 };

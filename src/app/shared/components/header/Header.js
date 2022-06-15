@@ -1,5 +1,6 @@
 import { AiOutlinePoweroff } from "react-icons/ai";
 import styled from "styled-components";
+import { useAuth } from "../../../contexts/authContext";
 import { device } from "../../utils/Breakpoints";
 
 const Container = styled.header`
@@ -29,15 +30,16 @@ const Container = styled.header`
 	}
 `;
 
-const Header = ({ logout, userDb, setUserDb }) => {
-	const handleLogout = async () => await logout();
+const Header = () => {
+	const { logout } = useAuth();
+
 	return (
 		<Container>
 			<div>
 				<h1>WORKFAST</h1>
 				<div>
 					<AiOutlinePoweroff
-						onClick={handleLogout}
+						onClick={logout}
 						cursor="pointer"
 						size={25}
 					/>
