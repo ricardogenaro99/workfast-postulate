@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import { Empleos, Home, Perfil, Preparate } from "../pages";
+import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
 
 const Container = styled.main`
 	padding: 60px var(--padding-global-x);
@@ -28,6 +28,15 @@ const RoutesApp = ({ userDb, setUserDb }) => {
 						}
 					/>
 					<Route path="preparate" element={<Preparate />} />
+					<Route
+						path="configuracion"
+						element={
+							<Configuracion
+								userDb={userDb}
+								setUserDb={setUserDb}
+							/>
+						}
+					/>
 				</Route>
 				<Route path="*" element={<h1>Error 404</h1>} />
 			</Routes>

@@ -10,11 +10,11 @@ const Container = styled.section`
 	grid-template-rows: var(--height-header) 1fr;
 `;
 
-const Main = ({ logout, userDb, setUserDb }) => {
+const Main = () => {
 	return (
 		<Container>
-			<Header logout={logout} userDb={userDb} setUserDb={setUserDb} />
-			<RoutesComponents userDb={userDb} setUserDb={setUserDb} />
+			<Header />
+			<RoutesComponents />
 		</Container>
 	);
 };

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	outline: 1px solid var(--color-grey-ligth);
+	border: 1px solid var(--color-grey-ligth);
 	padding: 10px 16px;
 	gap: 5px;
 	border-radius: var(--border-radius-global);

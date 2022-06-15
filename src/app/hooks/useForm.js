@@ -10,6 +10,7 @@ export const useForm = (initalForm) => {
 
 	return {
 		form,
+		setForm,
 		handleChange,
 	};
 };

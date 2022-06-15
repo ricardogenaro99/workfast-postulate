@@ -79,8 +79,9 @@ const AuthModel = ({
 			await action(form.email, form.password);
 			if (!user) {
 				writeError("Le enviamos un correo para validar su cuenta!");
+			} else {
+				navigate(pathDashboard);
 			}
-			navigate(pathDashboard);
 		} catch (err) {
 			writeError(err.message);
 		}

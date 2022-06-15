@@ -7,14 +7,18 @@ const Container = styled.div`
 	gap: 15px;
 	justify-content: center;
 	align-items: center;
-	text-align: center;
+	text-align: ${(props) => props.textAlign};
 
 	@media ${device.mobileM} {
 		grid-template-columns: 1fr;
 	}
 `;
-const ControlButtons = ({ children, columns = 2 }) => {
-	return <Container columns={columns}>{children}</Container>;
+const ControlGrid = ({ children, columns = 2, textAlign = "center" }) => {
+	return (
+		<Container columns={columns} textAlign={textAlign}>
+			{children}
+		</Container>
+	);
 };
 
-export default ControlButtons;
+export default ControlGrid;
