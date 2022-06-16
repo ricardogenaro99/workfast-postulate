@@ -1,5 +1,6 @@
 import {
-	createUserWithEmailAndPassword,  GoogleAuthProvider,
+	createUserWithEmailAndPassword,
+	GoogleAuthProvider,
 	onAuthStateChanged,
 	sendEmailVerification,
 	sendPasswordResetEmail,
@@ -11,6 +12,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
 import { API_BACKEND } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
+import { Loader } from "../shared/components";
 
 export const authContext = createContext();
 
@@ -103,6 +105,7 @@ export function AuthProvider({ children }) {
 				setLoading,
 			}}
 		>
+			{loading && <Loader />}
 			{children}
 		</authContext.Provider>
 	);

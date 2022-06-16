@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardJob from "../../components/empleos/CardJob";
+import { useAuth } from "../../contexts/authContext";
 import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
-import { Alert, Loader } from "../../shared/components";
+import { Alert } from "../../shared/components";
 import { ContainerGapDefault, SectionTitle } from "../../shared/templates";
 import { device } from "../../shared/utils/Breakpoints";
 
@@ -20,31 +21,34 @@ const ContainerCards = styled.div`
 const Empleos = () => {
 	const [db, setDb] = useState([]);
 	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(null);
+	const { setLoading } = useAuth();
 
 	useEffect(() => {
 		setLoading(true);
-		helpHttp(false)
-			.get(API_JOBS)
-			.then((res) => {
-				if (!res.err) {
-					setDb(res.results);
-					setError(null);
-				} else {
-					setDb([]);
-					setError(res);
-				}
-				setLoading(false);
-			})
-			.catch((err) => console.log(err));
-	}, []);
+		const getData = () => {
+			helpHttp(false)
+				.get(API_JOBS)
+				.then((res) => {
+					if (!res.err) {
+						setDb(res.results);
+						setError(null);
+					} else {
+						setDb([]);
+						setError(res);
+					}
+					setLoading(false);
+				})
+				.catch((err) => console.log(err));
+		};
+
+		return () => getData();
+	}, [setLoading]);
 
 	return (
 		<ContainerGapDefault>
 			<SectionTitle title={"Estos empleos se ajustan a tu perfil"}>
 				<ContainerCards>
 					{error && <Alert message={error.statusText} />}
-					{loading && <Loader />}
 					{db.map((job, i) => (
 						<CardJob key={i} job={job} />
 					))}

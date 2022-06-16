@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { pathDashboard } from "../../routes/Path";
 import {
 	Alert,
 	CardDefault,
-	InputLabel,
-	Loader
+	FormDefault,
+	InputLabel
 } from "../../shared/components";
 
 const Container = styled.div`
@@ -25,32 +25,6 @@ const Container = styled.div`
 	}
 `;
 
-const CardStyle = styled(CardDefault)`
-	> * {
-		width: 100%;
-		padding: 0 calc(var(--padding-global-x) + 12px);
-	}
-
-	> h2 {
-		font-weight: 800;
-		font-size: 26px;
-		display: flex;
-		align-items: center;
-		color: var(--color-black);
-	}
-
-	> form {
-		display: flex;
-		flex-direction: column;
-		gap: 31px;
-
-		> section {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-		}
-	}
-`;
 const AuthModel = ({
 	children,
 	title,
@@ -89,11 +63,9 @@ const AuthModel = ({
 	return (
 		<Container>
 			{error && <Alert message={error} />}
-			{loading && <Loader />}
-			<CardStyle>
-				<h2>{title}</h2>
-				<form onSubmit={handleSubmit}>
-					<section>
+			<CardDefault title={title}>
+				<FormDefault onSubmit={handleSubmit}>
+					<Fragment>
 						<InputLabel
 							label="Correo"
 							type="email"
@@ -112,10 +84,10 @@ const AuthModel = ({
 								onChange={onChange}
 							/>
 						)}
-					</section>
-					{children}
-				</form>
-			</CardStyle>
+					</Fragment>
+					<Fragment>{children}</Fragment>
+				</FormDefault>
+			</CardDefault>
 		</Container>
 	);
 };
