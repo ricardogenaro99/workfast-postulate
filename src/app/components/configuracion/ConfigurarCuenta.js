@@ -1,50 +1,15 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Fragment, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 import { API_BACKEND } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { useForm } from "../../hooks/useForm";
 import {
-	ButtonPrimaryPurple, CardDefault,
+	ButtonPrimaryPurple,
+	CardDefault,
 	ControlGrid,
+	FormDefault,
 	InputLabel
 } from "../../shared/components";
-import { device } from "../../shared/utils/Breakpoints";
-
-const CardStyle = styled(CardDefault)`
-	max-width: 800px;
-	width: 100%;
-	margin: auto;
-
-	> h2 {
-		font-weight: 800;
-		font-size: 26px;
-		display: flex;
-		align-items: center;
-		color: var(--color-black);
-	}
-
-	> form {
-		display: flex;
-		flex-direction: column;
-		gap: 31px;
-		width: 100%;
-		padding: 0 var(--padding-global-x);
-
-		> section {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			grid-auto-rows: 1fr;
-			justify-content: center;
-			align-items: center;
-			gap: 20px;
-
-			@media ${device.tabletS} {
-				grid-template-columns: 1fr;
-			}
-		}
-	}
-`;
 
 const initialForm = {
 	name: "",
@@ -94,9 +59,9 @@ const ConfigurarCuenta = () => {
 	};
 
 	return (
-		<CardStyle>
-			<form onSubmit={handleSubmit}>
-				<section>
+		<CardDefault>
+			<FormDefault onSubmit={handleSubmit}>
+				<Fragment>
 					<InputLabel
 						label="Nombres"
 						name="name"
@@ -125,17 +90,14 @@ const ConfigurarCuenta = () => {
 						value={form.city}
 						onChange={handleChange}
 					/>
-				</section>
+				</Fragment>
 				<ControlGrid>
-					{/* <ButtonPrimaryWhite type="button">
-						Cancelar
-					</ButtonPrimaryWhite> */}
 					<ButtonPrimaryPurple type="submit">
 						Guardar
 					</ButtonPrimaryPurple>
 				</ControlGrid>
-			</form>
-		</CardStyle>
+			</FormDefault>
+		</CardDefault>
 	);
 };
 

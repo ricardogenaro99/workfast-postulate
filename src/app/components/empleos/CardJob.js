@@ -1,23 +1,31 @@
 import styled from "styled-components";
-import { ButtonPrimaryPurple, CardDefault } from "../../shared/components";
+import { ButtonPrimaryPurple, CardDefaultStyle } from "../../shared/components";
 
-const Container = styled(CardDefault)`
+const Container = styled(CardDefaultStyle)`
 	max-height: 300px;
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: auto 1fr auto;
 	justify-content: center;
 	padding: 15px var(--padding-global-x);
-	.content {
-		overflow: hidden;
-		-webkit-mask-image: -webkit-gradient(
-			linear,
-			left top,
-			left bottom,
-			from(rgba(0, 0, 0, 1)),
-			to(rgba(0, 0, 0, 0))
-		);
-	}
+`;
+
+const ContentContainer = styled.div`
+	overflow: hidden;
+	-mask-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		from(rgba(0, 0, 0, 1)),
+		to(rgba(0, 0, 0, 0))
+	);
+	-webkit-mask-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		from(rgba(0, 0, 0, 1)),
+		to(rgba(0, 0, 0, 0))
+	);
 `;
 
 const CardJob = ({ job }) => {
@@ -34,11 +42,9 @@ const CardJob = ({ job }) => {
 				</div>
 				<h3>{company.name}</h3>
 			</div>
-
-			<div
-				className="content"
+			<ContentContainer
 				dangerouslySetInnerHTML={{ __html: contents }}
-			></div>
+			></ContentContainer>
 
 			<ButtonPrimaryPurple>Conocer más...</ButtonPrimaryPurple>
 		</Container>

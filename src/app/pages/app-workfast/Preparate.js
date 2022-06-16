@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ListOfLists from "../../components/preparate/ListOfLists";
-import { Loader } from "../../shared/components";
+import { useAuth } from "../../contexts/authContext";
 import { ContainerGapDefault } from "../../shared/templates";
 
 const listOfLists = [
@@ -34,16 +34,15 @@ const listOfLists = [
 	},
 ];
 const Preparate = () => {
-	const [loading, setLoading] = useState(null);
+	const { setLoading } = useAuth();
 
 	useEffect(() => {
 		setLoading(true);
 		setInterval(setLoading, 1800, false);
-	}, []);
+	}, [setLoading]);
 
 	return (
 		<ContainerGapDefault>
-			{loading && <Loader />}
 			{listOfLists.map((lists, i) => (
 				<ListOfLists key={i} title={lists.title} lists={lists.lists} />
 			))}
