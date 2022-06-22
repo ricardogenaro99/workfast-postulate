@@ -20,22 +20,32 @@ const initialForm = {
 };
 
 const ConfigurarCuenta = () => {
-	const { user, setLoading } = useAuth();
+	const { setLoading } = useAuth();
 	const [userDb, setUserDb] = useState(null);
 	const { form, handleChange, setForm } = useForm(initialForm);
 
 	useEffect(() => {
+		setLoading(true);
 		const userFetch = async () => {
-			const { data } = await helpHttp().get(
-				`${API_BACKEND}/users?email=${user.email}`,
-			);
-			if ((await data.length) === 1) {
-				setUserDb(data[0]);
-				setForm(data[0].details);
+			try {
+				const _idUserDb = JSON.parse(localStorage.getItem("_idUserDb"));
+				if (_idUserDb) {
+					const { data } = await helpHttp().get(
+						`${API_BACKEND}/users/${_idUserDb}`,
+					);
+					if (data) {
+						setUserDb(data);
+						setForm(data.details);
+					}
+				}
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		return () => userFetch();
-	}, [user, setForm]);
+	}, [setForm, setLoading]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -49,9 +59,6 @@ const ConfigurarCuenta = () => {
 					city: form.city,
 					country: form.country,
 				},
-			},
-			headers: {
-				"content-type": "application/json",
 			},
 		};
 		await helpHttp().put(`${API_BACKEND}/users/${userDb._id}`, options);
