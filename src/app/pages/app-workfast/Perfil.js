@@ -1,6 +1,7 @@
+import { SectionTitle } from "../../shared/templates";
 
 const Perfil = () => {
-	return <div>Perfil</div>;
+	return <SectionTitle title="Perfil"></SectionTitle>;
 };
 
 export default Perfil;

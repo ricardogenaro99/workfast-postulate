@@ -66,13 +66,13 @@ const CardJob = ({ job, handleFavorite }) => {
 				const { data } = await helpHttp().get(
 					`${API_BACKEND}/users/${_idUserDb}`,
 				);
-				
+
 				if (data.jobFavorites.find((el) => el === _id)) {
 					setFavorite(true);
 				}
 			}
 		};
-		return getUser();
+		getUser();
 	}, [_id]);
 
 	const handleClick = () => {

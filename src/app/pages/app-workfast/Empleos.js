@@ -19,7 +19,7 @@ const ContainerCards = styled.div`
 `;
 
 const Empleos = () => {
-	const [db, setDb] = useState([]);
+	const [jobsDb, setJobsDb] = useState([]);
 	const [error, setError] = useState(null);
 	const { setLoading } = useAuth();
 
@@ -29,14 +29,14 @@ const Empleos = () => {
 			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
 			if (res.err) {
 				setError(res);
-				setDb([]);
+				setJobsDb([]);
 			} else {
 				setError(null);
-				setDb(res.data);
+				setJobsDb(res.data);
 			}
+			setInterval(setLoading, 500, false);
 		};
 		getData();
-		setInterval(setLoading, 1800, false);
 	}, [setLoading]);
 
 	const handleFavorite = async (_id) => {
@@ -78,7 +78,7 @@ const Empleos = () => {
 			<SectionTitle title={"Estos empleos se ajustan a tu perfil"}>
 				<ContainerCards>
 					{error && <Alert message={error.statusText} />}
-					{db.map((job, i) => (
+					{jobsDb.map((job, i) => (
 						<CardJob
 							key={i}
 							job={job}
