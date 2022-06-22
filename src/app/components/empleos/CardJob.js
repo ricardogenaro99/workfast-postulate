@@ -72,7 +72,7 @@ const CardJob = ({ job, handleFavorite }) => {
 				}
 			}
 		};
-		return () => getUser();
+		return getUser();
 	}, [_id]);
 
 	const handleClick = () => {
