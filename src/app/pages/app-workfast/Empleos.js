@@ -24,8 +24,8 @@ const Empleos = () => {
 	const { setLoading } = useAuth();
 
 	useEffect(() => {
-		setLoading(true);
 		const getData = async () => {
+			setLoading(true);
 			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
 			if (res.err) {
 				setError(res);

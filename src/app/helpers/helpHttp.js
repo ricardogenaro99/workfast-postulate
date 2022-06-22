@@ -2,7 +2,7 @@ import { auth } from "../../config/firebase";
 
 export const helpHttp = () => {
 	const customFetch = async (endpoint, options) => {
-		const token = (await auth.currentUser.getIdToken(true)) || "";
+		const token = (await auth.currentUser.getIdToken()) || "";
 
 		let defaultHeader = {
 			Accept: "application/json",

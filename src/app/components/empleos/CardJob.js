@@ -57,27 +57,28 @@ const CardJob = ({ job, handleFavorite }) => {
 	const [favorite, setFavorite] = useState(false);
 	const { details, enterpiseDetails, _id } = job;
 
-	const handleClick = () => {
-		handleFavorite(_id);
-		setFavorite(!favorite);
-	};
-
 	useEffect(() => {
 		const getUser = async () => {
-			const _idUserDb = JSON.parse(localStorage.getItem("_idUserDb"));
+			const _idUserDb = await JSON.parse(
+				localStorage.getItem("_idUserDb"),
+			);
 			if (_idUserDb) {
 				const { data } = await helpHttp().get(
 					`${API_BACKEND}/users/${_idUserDb}`,
 				);
-
-				if (data.jobFavorites.find((job) => job === _id)) {
+				console.log(data.jobFavorites);
+				if (await data.jobFavorites.find((el) => el === _id)) {
 					setFavorite(true);
 				}
 			}
 		};
-
 		return () => getUser();
 	}, [_id]);
+
+	const handleClick = () => {
+		handleFavorite(_id);
+		setFavorite(!favorite);
+	};
 
 	return (
 		<Container id={useId()}>
