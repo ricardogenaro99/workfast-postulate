@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardJob from "../../components/empleos/CardJob";
 import { useAuth } from "../../contexts/authContext";
-import { API_JOBS } from "../../endpoints/apis";
+import { API_BACKEND } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert } from "../../shared/components";
 import { ContainerGapDefault, SectionTitle } from "../../shared/templates";
@@ -25,24 +25,54 @@ const Empleos = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		const getData = () => {
-			helpHttp(false)
-				.get(API_JOBS)
-				.then((res) => {
-					if (!res.err) {
-						setDb(res.results);
-						setError(null);
-					} else {
-						setDb([]);
-						setError(res);
-					}
-					setLoading(false);
-				})
-				.catch((err) => console.log(err));
+		const getData = async () => {
+			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
+			if (res.err) {
+				setError(res);
+				setDb([]);
+			} else {
+				setError(null);
+				setDb(res.data);
+			}
+			setLoading(false);
 		};
 
 		return () => getData();
 	}, [setLoading]);
+
+	const handleFavorite = async (_id) => {
+		try {
+			const _idUserDb = JSON.parse(localStorage.getItem("_idUserDb"));
+			if (_idUserDb) {
+				const { data } = await helpHttp().get(
+					`${API_BACKEND}/users/${_idUserDb}`,
+				);
+
+				data.jobFavorites = data.jobFavorites || [];
+
+				const pos = data.jobFavorites.indexOf(_id);
+
+				if (pos === -1) {
+					data.jobFavorites.push(_id);
+				} else {
+					data.jobFavorites.splice(pos, 1);
+				}
+
+				const options = {
+					body: {
+						jobFavorites: data.jobFavorites,
+					},
+				};
+
+				await helpHttp().put(
+					`${API_BACKEND}/users/${_idUserDb}`,
+					options,
+				);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<ContainerGapDefault>
@@ -50,7 +80,11 @@ const Empleos = () => {
 				<ContainerCards>
 					{error && <Alert message={error.statusText} />}
 					{db.map((job, i) => (
-						<CardJob key={i} job={job} />
+						<CardJob
+							key={i}
+							job={job}
+							handleFavorite={handleFavorite}
+						/>
 					))}
 				</ContainerCards>
 			</SectionTitle>

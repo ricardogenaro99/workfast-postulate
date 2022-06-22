@@ -12,6 +12,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
 import { API_BACKEND } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { Loader } from "../shared/components";
 
 export const authContext = createContext();
@@ -22,24 +23,26 @@ export const useAuth = () => {
 	return context;
 };
 
-const addUserDb = async (user) => {
-	const options = {
-		body: {
-			details: {
-				authId: user.uid,
-				email: user.email,
-			},
-		},
-		headers: {
-			"content-type": "application/json",
-		},
-	};
-	await helpHttp().post(`${API_BACKEND}/users`, options);
-};
-
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState(undefined);
 	const [loading, setLoading] = useState(false);
+	const [storedValue, setStoredValue] = useLocalStorage("_idUserDb");
+
+	const addUserDb = async (user) => {
+		const options = {
+			body: {
+				details: {
+					authId: user.uid,
+					email: user.email,
+				},
+			},
+			headers: {
+				"content-type": "application/json",
+			},
+		};
+		const { data } = await helpHttp().post(`${API_BACKEND}/users`, options);
+		return data;
+	};
 
 	const signup = async (email, password) => {
 		setLoading(true);
@@ -57,11 +60,15 @@ export function AuthProvider({ children }) {
 			`${API_BACKEND}/users?email=${tmp.email}`,
 		);
 		if (data.length === 0) {
-			addUserDb(tmp);
+			const res = await addUserDb(tmp);
+			await setStoredValue(res._id);
+		} else {
+			await setStoredValue(data[0]._id);
 		}
 	};
 
 	const logout = () => {
+		setStoredValue();
 		setLoading(true);
 		setTimeout(signOut, 500, auth);
 	};
@@ -87,7 +94,8 @@ export function AuthProvider({ children }) {
 			} else {
 				setUser(null);
 			}
-			setLoading(false);
+			setTimeout(setLoading, 1000, false);
+			// setLoading(false);
 		});
 		return () => unsubuscribe();
 	}, []);
