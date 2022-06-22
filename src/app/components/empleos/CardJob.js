@@ -66,8 +66,8 @@ const CardJob = ({ job, handleFavorite }) => {
 				const { data } = await helpHttp().get(
 					`${API_BACKEND}/users/${_idUserDb}`,
 				);
-				console.log(data.jobFavorites);
-				if (await data.jobFavorites.find((el) => el === _id)) {
+				
+				if (data.jobFavorites.find((el) => el === _id)) {
 					setFavorite(true);
 				}
 			}

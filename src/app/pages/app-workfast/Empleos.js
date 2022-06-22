@@ -25,6 +25,7 @@ const Empleos = () => {
 
 	useEffect(() => {
 		const getData = async () => {
+			console.log(1);
 			setLoading(true);
 			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
 			if (res.err) {
@@ -70,7 +71,7 @@ const Empleos = () => {
 				);
 			}
 		} catch (error) {
-			console.log(error);
+			setError(error);
 		}
 	};
 
