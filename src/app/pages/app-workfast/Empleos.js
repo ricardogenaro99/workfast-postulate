@@ -24,7 +24,8 @@ const Empleos = () => {
 	const { setLoading } = useAuth();
 
 	useEffect(() => {
-		console.log(0)
+		console.log(0);
+		setLoading(true);
 		const getData = async () => {
 			console.log(1);
 			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
@@ -35,10 +36,10 @@ const Empleos = () => {
 				setError(null);
 				setDb(res.data);
 			}
+			setLoading(false);
 		};
-
-		return () => getData();
-	}, []);
+		getData();
+	}, [setLoading]);
 
 	const handleFavorite = async (_id) => {
 		try {
