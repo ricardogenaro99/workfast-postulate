@@ -24,7 +24,6 @@ const Empleos = () => {
 	const { setLoading } = useAuth();
 
 	useEffect(() => {
-		setLoading(true);
 		console.log(0)
 		const getData = async () => {
 			console.log(1);
@@ -36,11 +35,10 @@ const Empleos = () => {
 				setError(null);
 				setDb(res.data);
 			}
-			setLoading(false);
 		};
 
 		return () => getData();
-	}, [setLoading]);
+	}, []);
 
 	const handleFavorite = async (_id) => {
 		try {
