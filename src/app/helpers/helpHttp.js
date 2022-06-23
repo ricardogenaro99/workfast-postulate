@@ -35,7 +35,7 @@ export const helpHttp = () => {
 						statusText: res.statusText || "Ocurrio un error",
 				  }));
 		} catch (err) {
-			return err;
+			throw new Error("Ocurrio un error en el servidor.");
 		}
 	};
 

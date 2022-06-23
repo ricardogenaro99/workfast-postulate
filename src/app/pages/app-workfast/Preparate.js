@@ -38,7 +38,11 @@ const Preparate = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		setInterval(setLoading, 1800, false);
+		const idTime = setTimeout(() => {
+			setLoading(false);
+		}, 1500);
+
+		return () => clearTimeout(idTime)
 	}, [setLoading]);
 
 	return (

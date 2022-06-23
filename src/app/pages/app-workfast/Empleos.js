@@ -26,17 +26,29 @@ const Empleos = () => {
 	useEffect(() => {
 		setLoading(true);
 		const getData = async () => {
-			const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
-			if (res.err) {
-				setError(res);
-				setJobsDb([]);
-			} else {
-				setError(null);
-				setJobsDb(res.data);
+			try {
+				const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
+				if (res.err) {
+					setError(res);
+					setJobsDb([]);
+					return;
+				}
+				if (res.data) {
+					setError(null);
+					setJobsDb(res.data);
+					return;
+				}
+			} catch (e) {
+				setError({ statusText: `${e.name}: ${e.message}` });
 			}
-			setInterval(setLoading, 500, false);
 		};
 		getData();
+
+		const idTime = setTimeout(() => {
+			setLoading(false);
+		}, 3000);
+
+		return () => clearTimeout(idTime);
 	}, [setLoading]);
 
 	const handleFavorite = async (_id) => {
