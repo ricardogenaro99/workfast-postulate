@@ -95,7 +95,6 @@ export function AuthProvider({ children }) {
 				setUser(null);
 			}
 			setTimeout(setLoading, 1000, false);
-			// setLoading(false);
 		});
 		return () => unsubuscribe();
 	}, []);

@@ -52,7 +52,7 @@ const Container = styled.aside`
 
 const sizeIconTech = 25;
 
-const Aside = ({ userDb }) => {
+const Aside = () => {
 	return (
 		<Container>
 			<div>

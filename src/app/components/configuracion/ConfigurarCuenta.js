@@ -6,7 +6,6 @@ import { useForm } from "../../hooks/useForm";
 import {
 	Alert,
 	ButtonPrimaryPurple,
-	CardDefault,
 	ControlGrid,
 	FormDefault,
 	InputLabel
@@ -75,45 +74,43 @@ const ConfigurarCuenta = () => {
 		<Fragment>
 			{error && <Alert message={error.statusText} />}
 			{userDb && (
-				<CardDefault>
-					<FormDefault onSubmit={handleSubmit}>
-						<Fragment>
-							<InputLabel
-								label="Nombres"
-								name="name"
-								placeholder="Ingrese sus nombres"
-								value={form.name}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="Apellidos"
-								name="lastname"
-								placeholder="Ingrese sus apellidos"
-								value={form.lastname}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="País"
-								name="country"
-								placeholder="Ingrese su País"
-								value={form.country}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="Ciudad"
-								name="city"
-								placeholder="Ingrese su Ciudad"
-								value={form.city}
-								onChange={handleChange}
-							/>
-						</Fragment>
-						<ControlGrid>
-							<ButtonPrimaryPurple type="submit">
-								Guardar
-							</ButtonPrimaryPurple>
-						</ControlGrid>
-					</FormDefault>
-				</CardDefault>
+				<FormDefault onSubmit={handleSubmit}>
+					<Fragment>
+						<InputLabel
+							label="Nombres"
+							name="name"
+							placeholder="Ingrese sus nombres"
+							value={form.name}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="Apellidos"
+							name="lastname"
+							placeholder="Ingrese sus apellidos"
+							value={form.lastname}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="País"
+							name="country"
+							placeholder="Ingrese su País"
+							value={form.country}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="Ciudad"
+							name="city"
+							placeholder="Ingrese su Ciudad"
+							value={form.city}
+							onChange={handleChange}
+						/>
+					</Fragment>
+					<ControlGrid columns={3}>
+						<ButtonPrimaryPurple type="submit">
+							Guardar
+						</ButtonPrimaryPurple>
+					</ControlGrid>
+				</FormDefault>
 			)}
 		</Fragment>
 	);
