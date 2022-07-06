@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-import { useForm } from "../../hooks/useForm";
+import { Fragment, useState } from "react";
 import {
 	ButtonPrimaryPurple,
 	ControlGrid,
@@ -8,49 +7,56 @@ import {
 import SelectLabel from "../../shared/components/form/SelectLabel";
 
 const initialForm = {
-	name: "",
-	lastname: "",
-	city: "",
-	country: "",
-	email: "",
+	career: "",
+	graduateSchool: "",
+	desiredPosition: "",
+	workModality: "",
+	desiredSalary: "",
+};
+
+const options = {
+	career: [
+		{ value: "chocolate", label: "Chocolate" },
+		{ value: "strawberry", label: "Strawberry" },
+		{ value: "vanilla", label: "Vanilla" },
+	],
+	graduateSchool:[
+
+	]
 };
 
 const PerfilForm = () => {
-	const { form, handleChange, setForm } = useForm(initialForm);
+	const [form, setForm] = useState(initialForm);
 
 	const handleSubmit = (e) => {};
 
+	const handleSelectChange = (e) => {
+		console.log(e);
+	};
 	return (
 		<Fragment>
 			<FormDefault onSubmit={handleSubmit}>
 				<Fragment>
 					<SelectLabel
-						label="Nombres"
-						name="name"
-						placeholder="Ingrese sus nombres"
-						value={form.name}
-						onChange={handleChange}
+						label="¿Cuál es tu carrera profesional?"
+						value={form.career}
+						options={options.career}
+						onChange={handleSelectChange}
 					/>
 					<SelectLabel
-						label="Apellidos"
-						name="lastname"
-						placeholder="Ingrese sus apellidos"
-						value={form.lastname}
-						onChange={handleChange}
+						label="¿En qué ciclo te encuentras?"
+						value={form.graduateSchool}
+						onChange={handleSelectChange}
 					/>
 					<SelectLabel
-						label="País"
-						name="country"
-						placeholder="Ingrese su País"
-						value={form.country}
-						onChange={handleChange}
+						label="¿En qué cargo quisieras enfocarte?"
+						value={form.desiredPosition}
+						onChange={handleSelectChange}
 					/>
 					<SelectLabel
-						label="Ciudad"
-						name="city"
-						placeholder="Ingrese su Ciudad"
-						value={form.city}
-						onChange={handleChange}
+						label="¿En qué modalidad te gustaria laborar?"
+						value={form.workModality}
+						onChange={handleSelectChange}
 					/>
 				</Fragment>
 				<ControlGrid columns={3}>
