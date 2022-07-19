@@ -6,7 +6,6 @@ import { useForm } from "../../hooks/useForm";
 import {
 	Alert,
 	ButtonPrimaryPurple,
-	CardDefault,
 	ControlGrid,
 	FormDefault,
 	InputLabel
@@ -21,7 +20,7 @@ const initialForm = {
 };
 
 const ConfigurarCuenta = () => {
-	const { setLoading } = useAuth();
+	const { setLoading, getUserDb } = useAuth();
 	const [userDb, setUserDb] = useState(null);
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
@@ -30,15 +29,10 @@ const ConfigurarCuenta = () => {
 		setLoading(true);
 		const getData = async () => {
 			try {
-				const _idUserDb = JSON.parse(localStorage.getItem("_idUserDb"));
-				if (_idUserDb) {
-					const { data } = await helpHttp().get(
-						`${API_BACKEND}/users/${_idUserDb}`,
-					);
-					if (data) {
-						setUserDb(data);
-						setForm(data.details);
-					}
+				const data = await getUserDb();
+				if (data) {
+					setUserDb(data);
+					setForm(data.details);
 				}
 			} catch (e) {
 				setError({ statusText: `${e.name}: ${e.message}` });
@@ -48,10 +42,10 @@ const ConfigurarCuenta = () => {
 
 		const idTime = setTimeout(() => {
 			setLoading(false);
-		}, 3000);
+		}, 2000);
 
 		return () => clearTimeout(idTime);
-	}, [setForm, setLoading]);
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -75,45 +69,43 @@ const ConfigurarCuenta = () => {
 		<Fragment>
 			{error && <Alert message={error.statusText} />}
 			{userDb && (
-				<CardDefault>
-					<FormDefault onSubmit={handleSubmit}>
-						<Fragment>
-							<InputLabel
-								label="Nombres"
-								name="name"
-								placeholder="Ingrese sus nombres"
-								value={form.name}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="Apellidos"
-								name="lastname"
-								placeholder="Ingrese sus apellidos"
-								value={form.lastname}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="País"
-								name="country"
-								placeholder="Ingrese su País"
-								value={form.country}
-								onChange={handleChange}
-							/>
-							<InputLabel
-								label="Ciudad"
-								name="city"
-								placeholder="Ingrese su Ciudad"
-								value={form.city}
-								onChange={handleChange}
-							/>
-						</Fragment>
-						<ControlGrid>
-							<ButtonPrimaryPurple type="submit">
-								Guardar
-							</ButtonPrimaryPurple>
-						</ControlGrid>
-					</FormDefault>
-				</CardDefault>
+				<FormDefault onSubmit={handleSubmit}>
+					<Fragment>
+						<InputLabel
+							label="Nombres"
+							name="name"
+							placeholder="Ingrese sus nombres"
+							value={form.name}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="Apellidos"
+							name="lastname"
+							placeholder="Ingrese sus apellidos"
+							value={form.lastname}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="País"
+							name="country"
+							placeholder="Ingrese su País"
+							value={form.country}
+							onChange={handleChange}
+						/>
+						<InputLabel
+							label="Ciudad"
+							name="city"
+							placeholder="Ingrese su Ciudad"
+							value={form.city}
+							onChange={handleChange}
+						/>
+					</Fragment>
+					<ControlGrid columns={3}>
+						<ButtonPrimaryPurple type="submit">
+							Guardar
+						</ButtonPrimaryPurple>
+					</ControlGrid>
+				</FormDefault>
 			)}
 		</Fragment>
 	);

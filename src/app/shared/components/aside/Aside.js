@@ -35,10 +35,6 @@ const Container = styled.aside`
 		}
 	}
 
-	* {
-		color: var(--color-white);
-	}
-
 	@media ${device.tabletS} {
 		width: var(--min-width-aside);
 		> div {
@@ -52,13 +48,13 @@ const Container = styled.aside`
 
 const sizeIconTech = 25;
 
-const Aside = ({ userDb }) => {
+const Aside = () => {
 	return (
 		<Container>
 			<div>
 				<section>
 					<div className="logo">
-						<CgUserlane size={"90%"} />
+						<CgUserlane size={"90%"} color={"var(--color-white)"} />
 					</div>
 					<NavLinkComponent
 						name="Dashboard"
@@ -78,6 +74,7 @@ const Aside = ({ userDb }) => {
 						path="preparate"
 						name="Preparate"
 						icon={<FaVideo size={sizeIconTech} />}
+						isPremium={true}
 					/>
 					<NavLinkComponent
 						path="configuracion"

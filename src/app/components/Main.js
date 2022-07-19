@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import RoutesComponents from "../routes/RoutesApp";
+import RoutesApp from "../routes/RoutesApp";
 import { Header } from "../shared/components";
 
 const Container = styled.section`
@@ -14,7 +14,7 @@ const Main = () => {
 	return (
 		<Container>
 			<Header />
-			<RoutesComponents />
+			<RoutesApp />
 		</Container>
 	);
 };

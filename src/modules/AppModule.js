@@ -10,30 +10,6 @@ const Container = styled.div`
 	grid-template-columns: auto 1fr;
 `;
 
-// const AppModule = () => {
-// 	const { user, logout } = useAuth();
-// 	const [userDb, setUserDb] = useState(null);
-
-// 	useEffect(() => {
-// 		const userFetch = async () => {
-// 			const { data } = await helpHttp().get(
-// 				`${API_BACKEND}/users?email=${user.email}`,
-// 			);
-// 			if ((await data.length) === 1) {
-// 				setUserDb(data[0]);
-// 			}
-// 		};
-// 		return () => userFetch();
-// 	}, [user]);
-
-// 	return (
-// 		<Container>
-// 			<Aside userDb={userDb} />
-// 			<Main logout={logout} userDb={userDb} setUserDb={setUserDb} />
-// 		</Container>
-// 	);
-// };
-
 const AppModule = () => {
 	return (
 		<Container>

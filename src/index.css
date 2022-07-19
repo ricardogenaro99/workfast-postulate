@@ -29,7 +29,7 @@
 	--padding-global-y: 45px;
 	--padding-global: var(--padding-global-y) var(--padding-global-x);
 
-	--transition-time: 0.14s;
+	--transition-time: 0.2s;
 	--transition: ease-out var(--transition-time);
 
 	--border-radius-global: 1.5px;

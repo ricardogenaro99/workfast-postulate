@@ -44,21 +44,34 @@ export function AuthProvider({ children }) {
 		return data;
 	};
 
+	const getUserDb = async () => {
+		const { data } = await helpHttp().get(
+			`${API_BACKEND}/users/${storedValue}`,
+		);
+		return data;
+	};
+
+	const getUserDbByEmail = async (email) => {
+		const { data } = await helpHttp().get(
+			`${API_BACKEND}/users?email=${email}`,
+		);
+		return data;
+	};
+
 	const signup = async (email, password) => {
 		setLoading(true);
 		await createUserWithEmailAndPassword(auth, email, password);
 		const tmp = auth.currentUser;
 		await addUserDb(tmp);
 		await signOut(auth);
+		setStoredValue("");
 	};
 
 	const login = async (email, password) => {
 		setLoading(true);
 		await signInWithEmailAndPassword(auth, email, password);
 		const tmp = auth.currentUser;
-		const { data } = await helpHttp().get(
-			`${API_BACKEND}/users?email=${tmp.email}`,
-		);
+		const data = await getUserDbByEmail(tmp.email);
 		if (data.length === 0) {
 			const res = await addUserDb(tmp);
 			await setStoredValue(res._id);
@@ -87,6 +100,10 @@ export function AuthProvider({ children }) {
 			if (currentUser) {
 				if (currentUser.emailVerified) {
 					setUser(currentUser);
+					const data = await getUserDbByEmail(currentUser.email);
+					if (data.length === 1) {
+						await setStoredValue(data[0]._id);
+					}
 				} else {
 					signOut(auth);
 					sendVerification().then(() => setUser(null));
@@ -95,7 +112,6 @@ export function AuthProvider({ children }) {
 				setUser(null);
 			}
 			setTimeout(setLoading, 1000, false);
-			// setLoading(false);
 		});
 		return () => unsubuscribe();
 	}, []);
@@ -111,6 +127,7 @@ export function AuthProvider({ children }) {
 				user,
 				loading,
 				setLoading,
+				getUserDb,
 			}}
 		>
 			{loading && <Loader />}

@@ -1,42 +1,29 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
+import ProtectedRoutePremium from "../shared/utils/ProtectedRoutePremium";
 
 const Container = styled.main`
 	padding: 60px var(--padding-global-x);
 `;
 
-const RoutesApp = ({ userDb, setUserDb }) => {
+const RoutesApp = () => {
 	return (
 		<Container>
 			<Routes>
 				<Route path="/">
+					<Route index element={<Home />} />
+					<Route path="perfil" element={<Perfil />} />
+					<Route path="empleos" element={<Empleos />} />
 					<Route
-						index
-						element={<Home userDb={userDb} setUserDb={setUserDb} />}
-					/>
-					<Route
-						path="perfil"
+						path="preparate"
 						element={
-							<Perfil userDb={userDb} setUserDb={setUserDb} />
+							<ProtectedRoutePremium>
+								<Preparate />
+							</ProtectedRoutePremium>
 						}
 					/>
-					<Route
-						path="empleos"
-						element={
-							<Empleos userDb={userDb} setUserDb={setUserDb} />
-						}
-					/>
-					<Route path="preparate" element={<Preparate />} />
-					<Route
-						path="configuracion"
-						element={
-							<Configuracion
-								userDb={userDb}
-								setUserDb={setUserDb}
-							/>
-						}
-					/>
+					<Route path="configuracion" element={<Configuracion />} />
 				</Route>
 				<Route path="*" element={<h1>Error 404</h1>} />
 			</Routes>
