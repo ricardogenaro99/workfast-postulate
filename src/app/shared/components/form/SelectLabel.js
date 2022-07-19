@@ -1,49 +1,41 @@
-import { useId } from "react";
+import Select from "react-select";
 import styled from "styled-components";
+import { device } from "../../utils/Breakpoints";
 
 const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	border: 1px solid var(--color-grey-ligth);
-	padding: 10px 16px;
+	display: grid;
+	grid-template-columns: 1fr 300px;
+	grid-template-rows: auto;
+	grid-auto-rows: 1fr;
 	gap: 5px;
-	border-radius: var(--border-radius-global);
 	* {
 		background: transparent;
 		font-weight: 400;
 	}
 
-	label {
+	span {
 		color: var(--color-grey);
+		display: flex;
+		align-items: center;
 	}
 
-	input {
-		color: var(--color-black);
-		border: none;
-		outline: none;
+	@media ${device.laptop} {
+		grid-template-columns: 1fr;
 	}
 `;
-const SelectLabel = ({
-	name,
-	type = "text",
-	placeholder,
-	label,
-	value,
-	onChange,
-	validation,
-}) => {
-	const inputId = useId();
+const SelectLabel = ({ label, onChange, options, name }) => {
+	const addNameToOption = () => {
+		return options[name].map((op) => {
+			return op.labelValue
+				? { label: op.labelValue, value: op.labelValue, name }
+				: { ...op.labelValue, name };
+		});
+	};
+
 	return (
 		<Container>
-			<label htmlFor={inputId}>{label}</label>
-			<input
-				id={inputId}
-				type={type}
-				placeholder={placeholder}
-				name={name}
-				value={value}
-				onChange={onChange}
-			/>
+			<span>{label}</span>
+			<Select options={addNameToOption()} onChange={onChange} />
 		</Container>
 	);
 };

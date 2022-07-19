@@ -21,7 +21,7 @@ const ContainerCards = styled.div`
 const Empleos = () => {
 	const [jobsDb, setJobsDb] = useState([]);
 	const [error, setError] = useState(null);
-	const { setLoading } = useAuth();
+	const { setLoading, getUserDb } = useAuth();
 
 	useEffect(() => {
 		setLoading(true);
@@ -53,33 +53,25 @@ const Empleos = () => {
 
 	const handleFavorite = async (_id) => {
 		try {
-			const _idUserDb = JSON.parse(localStorage.getItem("_idUserDb"));
-			if (_idUserDb) {
-				const { data } = await helpHttp().get(
-					`${API_BACKEND}/users/${_idUserDb}`,
-				);
+			const data = await getUserDb();
 
-				data.jobFavorites = data.jobFavorites || [];
+			data.jobFavorites = data.jobFavorites || [];
 
-				const pos = data.jobFavorites.indexOf(_id);
+			const pos = data.jobFavorites.indexOf(_id);
 
-				if (pos === -1) {
-					data.jobFavorites.push(_id);
-				} else {
-					data.jobFavorites.splice(pos, 1);
-				}
-
-				const options = {
-					body: {
-						jobFavorites: data.jobFavorites,
-					},
-				};
-
-				await helpHttp().put(
-					`${API_BACKEND}/users/${_idUserDb}`,
-					options,
-				);
+			if (pos === -1) {
+				data.jobFavorites.push(_id);
+			} else {
+				data.jobFavorites.splice(pos, 1);
 			}
+
+			const options = {
+				body: {
+					jobFavorites: data.jobFavorites,
+				},
+			};
+
+			await helpHttp().put(`${API_BACKEND}/users/${data._id}`, options);
 		} catch (error) {
 			setError(error);
 		}
