@@ -1,8 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
-import { API_BACKEND } from "../../endpoints/apis";
-import { helpHttp } from "../../helpers/helpHttp";
+import { useAuth } from "../../contexts/authContext";
 import { ButtonPrimaryPurple, CardDefaultStyle } from "../../shared/components";
 
 const sizeStar = "20px";
@@ -54,26 +53,25 @@ const ContentContainer = styled.div`
 `;
 
 const CardJob = ({ job, handleFavorite }) => {
+	const { getUserDb } = useAuth();
 	const [favorite, setFavorite] = useState(false);
 	const { details, enterpiseDetails, _id } = job;
 
 	useEffect(() => {
 		const getUser = async () => {
-			const _idUserDb = await JSON.parse(
-				localStorage.getItem("_idUserDb"),
-			);
-			if (_idUserDb) {
-				const { data } = await helpHttp().get(
-					`${API_BACKEND}/users/${_idUserDb}`,
-				);
-
-				if (data.jobFavorites.find((el) => el === _id)) {
-					setFavorite(true);
+			try {
+				const data = await getUserDb();
+				if (data) {
+					if (data.jobFavorites.find((el) => el === _id)) {
+						setFavorite(true);
+					}
 				}
+			} catch (e) {
+				console.log({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
 		getUser();
-	}, [_id]);
+	}, [_id, getUserDb]);
 
 	const handleClick = () => {
 		handleFavorite(_id);

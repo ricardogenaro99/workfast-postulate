@@ -16,47 +16,75 @@ const initialForm = {
 
 const options = {
 	career: [
-		{ value: "chocolate", label: "Chocolate" },
-		{ value: "strawberry", label: "Strawberry" },
-		{ value: "vanilla", label: "Vanilla" },
+		{ labelValue: "Chocolate" },
+		{ labelValue: "Strawberry" },
+		{ labelValue: "Vanilla" },
 	],
-	graduateSchool:[
-
-	]
+	graduateSchool: [
+		{ labelValue: "Ciclo 1" },
+		{ labelValue: "Ciclo 2" },
+		{ labelValue: "Ciclo 3" },
+		{ labelValue: "Ciclo 4" },
+		{ labelValue: "Ciclo 5" },
+		{ labelValue: "Ciclo 6" },
+		{ labelValue: "Ciclo 7" },
+		{ labelValue: "Ciclo 8" },
+		{ labelValue: "Ciclo 9" },
+		{ labelValue: "Ciclo 10" },
+		{ labelValue: "Egresado" },
+	],
+	desiredPosition: [
+		{ labelValue: "Chocolate" },
+		{ labelValue: "Strawberry" },
+		{ labelValue: "Vanilla" },
+	],
+	workModality: [
+		{ labelValue: "Remoto" },
+		{ labelValue: "Presencial" },
+		{ labelValue: "Híbrido" },
+	],
 };
 
 const PerfilForm = () => {
 	const [form, setForm] = useState(initialForm);
 
-	const handleSubmit = (e) => {};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(form);
+	};
 
 	const handleSelectChange = (e) => {
-		console.log(e);
+		const { name, value } = e;
+		setForm({ ...form, [name]: value });
 	};
+
 	return (
 		<Fragment>
 			<FormDefault onSubmit={handleSubmit}>
 				<Fragment>
 					<SelectLabel
 						label="¿Cuál es tu carrera profesional?"
-						value={form.career}
-						options={options.career}
+						options={options}
 						onChange={handleSelectChange}
+						name={"career"}
 					/>
 					<SelectLabel
 						label="¿En qué ciclo te encuentras?"
-						value={form.graduateSchool}
+						options={options}
 						onChange={handleSelectChange}
+						name={"graduateSchool"}
 					/>
 					<SelectLabel
 						label="¿En qué cargo quisieras enfocarte?"
-						value={form.desiredPosition}
+						options={options}
 						onChange={handleSelectChange}
+						name={"desiredPosition"}
 					/>
 					<SelectLabel
 						label="¿En qué modalidad te gustaria laborar?"
-						value={form.workModality}
+						options={options}
 						onChange={handleSelectChange}
+						name={"workModality"}
 					/>
 				</Fragment>
 				<ControlGrid columns={3}>

@@ -1,5 +1,6 @@
 import Select from "react-select";
 import styled from "styled-components";
+import { device } from "../../utils/Breakpoints";
 
 const Container = styled.div`
 	display: grid;
@@ -17,12 +18,24 @@ const Container = styled.div`
 		display: flex;
 		align-items: center;
 	}
+
+	@media ${device.laptop} {
+		grid-template-columns: 1fr;
+	}
 `;
-const SelectLabel = ({ label, onChange, options }) => {
+const SelectLabel = ({ label, onChange, options, name }) => {
+	const addNameToOption = () => {
+		return options[name].map((op) => {
+			return op.labelValue
+				? { label: op.labelValue, value: op.labelValue, name }
+				: { ...op.labelValue, name };
+		});
+	};
+
 	return (
 		<Container>
 			<span>{label}</span>
-			<Select options={options} onChange={onChange} />
+			<Select options={addNameToOption()} onChange={onChange} />
 		</Container>
 	);
 };

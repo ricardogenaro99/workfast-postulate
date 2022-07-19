@@ -1,3 +1,4 @@
+import { AiFillCrown } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { pathDashboard } from "../../../routes/Path";
@@ -34,6 +35,8 @@ const Container = styled(NavLink)`
 	gap: 25px;
 	padding: 15px 20px;
 	border-radius: calc(var(--border-radius-global) * 1.5);
+	position: relative;
+	color: var(--color-white);
 
 	.icon-container {
 		display: flex;
@@ -52,6 +55,12 @@ const Container = styled(NavLink)`
 		}
 	}
 
+	.premium-icon {
+		position: absolute;
+		top: 8px;
+		right: 10px;
+	}
+
 	@media ${device.tabletS} {
 		padding: 5px;
 		justify-content: center;
@@ -61,7 +70,7 @@ const Container = styled(NavLink)`
 	}
 `;
 
-const NavLinkComponent = ({ path = "", name, icon }) => {
+const NavLinkComponent = ({ path = "", name, icon, isPremium = false }) => {
 	return (
 		<Container
 			className={(navData) => (navData.isActive ? "active" : "")}
@@ -69,6 +78,11 @@ const NavLinkComponent = ({ path = "", name, icon }) => {
 		>
 			<span className="icon-container">{icon}</span>
 			<span>{name}</span>
+			{isPremium && (
+				<span className="premium-icon">
+					<AiFillCrown color="orange" />
+				</span>
+			)}
 		</Container>
 	);
 };
