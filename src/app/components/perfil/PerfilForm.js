@@ -1,17 +1,18 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
 	ButtonPrimaryPurple,
 	ControlGrid,
 	FormDefault
 } from "../../shared/components";
 import SelectLabel from "../../shared/components/form/SelectLabel";
+import { formIsValid, validateForm } from "../../shared/utils/Functions";
 
 const initialForm = {
 	career: "",
 	graduateSchool: "",
 	desiredPosition: "",
 	workModality: "",
-	desiredSalary: "",
+	desiredSalary: "c",
 };
 
 const options = {
@@ -45,13 +46,27 @@ const options = {
 	],
 };
 
-const PerfilForm = () => {
+const ProfileForm = () => {
 	const [form, setForm] = useState(initialForm);
+	const [formReview, setFormReview] = useState([]);
+	const [clickSubmit, setClickSubmit] = useState(false);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(form);
+		setClickSubmit(true);
+		const res = formIsValid(form);
+		if (res) {
+			console.log(form);
+		} else {
+			console.error(form);
+		}
 	};
+
+	useEffect(() => {
+		if (clickSubmit) {
+			setFormReview(validateForm(form));
+		}
+	}, [form, clickSubmit]);
 
 	const handleSelectChange = (e) => {
 		const { name, value } = e;
@@ -67,24 +82,28 @@ const PerfilForm = () => {
 						options={options}
 						onChange={handleSelectChange}
 						name={"career"}
+						formReview={formReview}
 					/>
 					<SelectLabel
 						label="¿En qué ciclo te encuentras?"
 						options={options}
 						onChange={handleSelectChange}
 						name={"graduateSchool"}
+						formReview={formReview}
 					/>
 					<SelectLabel
 						label="¿En qué cargo quisieras enfocarte?"
 						options={options}
 						onChange={handleSelectChange}
 						name={"desiredPosition"}
+						formReview={formReview}
 					/>
 					<SelectLabel
 						label="¿En qué modalidad te gustaria laborar?"
 						options={options}
 						onChange={handleSelectChange}
 						name={"workModality"}
+						formReview={formReview}
 					/>
 				</Fragment>
 				<ControlGrid columns={3}>
@@ -97,4 +116,4 @@ const PerfilForm = () => {
 	);
 };
 
-export default PerfilForm;
+export default ProfileForm;
