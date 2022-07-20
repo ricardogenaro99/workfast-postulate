@@ -1,46 +1,18 @@
+import { useEffect, useState } from "react";
 import Select from "react-select";
-import styled from "styled-components";
-import { device } from "../../utils/Breakpoints";
+import {
+	ContainerErrors,
+	ContainerInputSelectLabelWithErrors,
+	ContainerSelectLabel
+} from "./StyledFormComponents";
 
-const Container = styled.div`
-	display: grid;
-	gap: 8px;
-	> div {
-		display: grid;
-		grid-template-columns: 1fr 300px;
-		grid-template-rows: auto;
-		grid-auto-rows: 1fr;
-		gap: 8px;
-
-		span {
-			color: var(--color-grey);
-			display: flex;
-			align-items: center;
-
-			&.input-error {
-				color: red;
-				font-size: 0.8em;
-			}
-		}
-
-		@media ${device.laptop} {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	* {
-		background: transparent;
-		font-weight: 400;
-	}
-`;
 const SelectLabel = ({ label, onChange, options, name, formReview = [] }) => {
-	const renderError = () => {
-		const res = formReview.find((e) => e.name === name);
-		if (res) {
-			return res.errors;
-		}
-		return [];
-	};
+	const [errors, setErrors] = useState([]);
+
+	useEffect(() => {
+		const res = formReview.find((e) => e.name === "a");
+		setErrors(res ? res.errors : []);
+	}, [formReview]);
 
 	const addNameToOption = () => {
 		return options[name].map((op) => {
@@ -51,19 +23,21 @@ const SelectLabel = ({ label, onChange, options, name, formReview = [] }) => {
 	};
 
 	return (
-		<Container>
-			<div>
+		<ContainerInputSelectLabelWithErrors>
+			<ContainerSelectLabel>
 				<span>{label}</span>
 				<Select options={addNameToOption()} onChange={onChange} />
-			</div>
-			<div>
-				{renderError().map((error, i) => (
-					<span key={i} className="input-error">
-						{error}
-					</span>
-				))}
-			</div>
-		</Container>
+			</ContainerSelectLabel>
+			{errors.length !== 0 && (
+				<ContainerErrors>
+					{errors.map((error, i) => (
+						<span key={i} className="input-error">
+							{error}
+						</span>
+					))}
+				</ContainerErrors>
+			)}
+		</ContainerInputSelectLabelWithErrors>
 	);
 };
 

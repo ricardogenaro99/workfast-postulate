@@ -6,7 +6,7 @@ import {
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	signOut
+	signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
@@ -28,12 +28,12 @@ export function AuthProvider({ children }) {
 	const [loading, setLoading] = useState(false);
 	const [storedValue, setStoredValue] = useLocalStorage("_idUserDb");
 
-	const addUserDb = async (user) => {
+	const addUserDb = async (userParam) => {
 		const options = {
 			body: {
 				details: {
-					authId: user.uid,
-					email: user.email,
+					authId: userParam.uid,
+					email: userParam.email,
 				},
 			},
 			headers: {
@@ -101,9 +101,7 @@ export function AuthProvider({ children }) {
 				if (currentUser.emailVerified) {
 					setUser(currentUser);
 					const data = await getUserDbByEmail(currentUser.email);
-					if (data.length === 1) {
-						await setStoredValue(data[0]._id);
-					}
+					await setStoredValue(data[0]._id);
 				} else {
 					signOut(auth);
 					sendVerification().then(() => setUser(null));
@@ -114,7 +112,7 @@ export function AuthProvider({ children }) {
 			setTimeout(setLoading, 1000, false);
 		});
 		return () => unsubuscribe();
-	}, []);
+	}, [setStoredValue]);
 
 	return (
 		<authContext.Provider

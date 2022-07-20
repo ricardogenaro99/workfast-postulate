@@ -3,11 +3,11 @@ import { auth } from "../../config/firebase";
 export const helpHttp = () => {
 	const customFetch = async (endpoint, options) => {
 		const token = (await auth.currentUser.getIdToken()) || "";
-
 		let defaultHeader = {
 			Accept: "application/json",
 			"content-type": "application/json",
 			Authorization: `Bearer ${token}`,
+			// "Access-Control-Allow-Origin": window.location.origin,
 		};
 
 		const controller = new AbortController();

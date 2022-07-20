@@ -12,7 +12,7 @@ const initialForm = {
 	graduateSchool: "",
 	desiredPosition: "",
 	workModality: "",
-	desiredSalary: "c",
+	desiredSalary: 1200,
 };
 
 const options = {
