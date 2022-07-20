@@ -10,6 +10,7 @@ import {
 	FormDefault,
 	InputLabel
 } from "../../shared/components";
+import { formIsValid, validateForm } from "../../shared/utils/Functions";
 
 const initialForm = {
 	name: "",
@@ -24,6 +25,8 @@ const ConfigurarCuenta = () => {
 	const [userDb, setUserDb] = useState(null);
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
+	const [clickSubmit, setClickSubmit] = useState(false);
+	const [formReview, setFormReview] = useState([]);
 
 	useEffect(() => {
 		setLoading(true);
@@ -47,22 +50,35 @@ const ConfigurarCuenta = () => {
 		return () => clearTimeout(idTime);
 	}, []);
 
+	useEffect(() => {
+		if (clickSubmit) {
+			setFormReview(validateForm(form));
+		}
+	}, [form, clickSubmit]);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true);
-		const options = {
-			body: {
-				details: {
-					...userDb.details,
-					name: form.name,
-					lastname: form.lastname,
-					city: form.city,
-					country: form.country,
+
+		setClickSubmit(true);
+		const res = formIsValid(form);
+		if (res) {
+			setLoading(true);
+			const options = {
+				body: {
+					details: {
+						...userDb.details,
+						name: form.name,
+						lastname: form.lastname,
+						city: form.city,
+						country: form.country,
+					},
 				},
-			},
-		};
-		await helpHttp().put(`${API_BACKEND}/users/${userDb._id}`, options);
-		setLoading(false);
+			};
+			await helpHttp().put(`${API_BACKEND}/users/${userDb._id}`, options);
+			setLoading(false);
+		} else {
+			console.error(form);
+		}
 	};
 
 	return (
@@ -77,6 +93,7 @@ const ConfigurarCuenta = () => {
 							placeholder="Ingrese sus nombres"
 							value={form.name}
 							onChange={handleChange}
+							formReview={formReview}
 						/>
 						<InputLabel
 							label="Apellidos"
@@ -84,6 +101,7 @@ const ConfigurarCuenta = () => {
 							placeholder="Ingrese sus apellidos"
 							value={form.lastname}
 							onChange={handleChange}
+							formReview={formReview}
 						/>
 						<InputLabel
 							label="País"
@@ -91,6 +109,7 @@ const ConfigurarCuenta = () => {
 							placeholder="Ingrese su País"
 							value={form.country}
 							onChange={handleChange}
+							formReview={formReview}
 						/>
 						<InputLabel
 							label="Ciudad"
@@ -98,6 +117,7 @@ const ConfigurarCuenta = () => {
 							placeholder="Ingrese su Ciudad"
 							value={form.city}
 							onChange={handleChange}
+							formReview={formReview}
 						/>
 					</Fragment>
 					<ControlGrid columns={3}>
