@@ -1,6 +1,8 @@
 import { useId } from "react";
 import {
-	ContainerErrors, ContainerInputLabel, ContainerInputSelectLabelWithErrors
+	ContainerErrors,
+	ContainerInputLabel,
+	ContainerInputSelectLabelWithErrors
 } from "./StyledFormComponents";
 
 const InputLabel = ({
@@ -11,6 +13,7 @@ const InputLabel = ({
 	value,
 	onChange,
 	formReview = [],
+	inputElement,
 }) => {
 	const inputId = useId();
 
@@ -26,14 +29,18 @@ const InputLabel = ({
 		<ContainerInputSelectLabelWithErrors>
 			<ContainerInputLabel>
 				<label htmlFor={inputId}>{label}</label>
-				<input
-					id={inputId}
-					type={type}
-					placeholder={placeholder}
-					name={name}
-					value={value}
-					onChange={onChange}
-				/>
+				{inputElement ? (
+					inputElement
+				) : (
+					<input
+						id={inputId}
+						type={type}
+						placeholder={placeholder}
+						name={name}
+						value={value}
+						onChange={onChange}
+					/>
+				)}
 			</ContainerInputLabel>
 			<ContainerErrors>
 				{renderError().map((error, i) => (

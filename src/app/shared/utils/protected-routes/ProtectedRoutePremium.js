@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../../contexts/authContext";
-import { pathDashboard } from "../../routes/Path";
+import { useAuth } from "../../../contexts/authContext";
+import CheckoutForm from "../../components/pasarela-pago/CheckoutForm";
 
 export default function ProtectedRoutePremium({ children }) {
 	const { getUserDb } = useAuth();
@@ -16,10 +15,6 @@ export default function ProtectedRoutePremium({ children }) {
 	}, [getUserDb]);
 
 	if (isPremium !== null) {
-		return isPremium ? (
-			<>{children}</>
-		) : (
-			<Navigate to={`${pathDashboard}`} />
-		);
+		return isPremium ? <>{children}</> : <CheckoutForm />;
 	}
 }
