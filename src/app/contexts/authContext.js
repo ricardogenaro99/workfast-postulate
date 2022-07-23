@@ -6,7 +6,7 @@ import {
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	signOut,
+	signOut
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
@@ -64,7 +64,6 @@ export function AuthProvider({ children }) {
 		const tmp = auth.currentUser;
 		await addUserDb(tmp);
 		await signOut(auth);
-		setStoredValue("");
 	};
 
 	const login = async (email, password) => {
@@ -112,7 +111,7 @@ export function AuthProvider({ children }) {
 			setTimeout(setLoading, 1000, false);
 		});
 		return () => unsubuscribe();
-	}, [setStoredValue]);
+	}, []);
 
 	return (
 		<authContext.Provider
