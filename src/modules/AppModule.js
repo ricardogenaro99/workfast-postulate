@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import Main from "../app/components/Main";
 import { Aside } from "../app/shared/components";
+import runtimeEnv from "@mars/heroku-js-runtime-env";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const env = runtimeEnv();
+
+const stripePromise = loadStripe(env.REACT_APP_STRIPE_API_KEY);
 
 const Container = styled.div`
 	width: 100%;
@@ -12,10 +19,12 @@ const Container = styled.div`
 
 const AppModule = () => {
 	return (
-		<Container>
-			<Aside />
-			<Main />
-		</Container>
+		<Elements stripe={stripePromise}>
+			<Container>
+				<Aside />
+				<Main />
+			</Container>
+		</Elements>
 	);
 };
 

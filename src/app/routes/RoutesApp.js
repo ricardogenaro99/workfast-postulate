@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
-import ProtectedRoutePremium from "../shared/utils/ProtectedRoutePremium";
+import ProtectedRoutePremium from "../shared/utils/protected-routes/ProtectedRoutePremium";
 
 const Container = styled.main`
 	padding: 60px var(--padding-global-x);
