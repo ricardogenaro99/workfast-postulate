@@ -4,8 +4,8 @@ import Register from "./app/components/auth/Register";
 import ResetPassword from "./app/components/auth/ResetPassword";
 import { AuthProvider } from "./app/contexts/authContext";
 import { pathAuth, pathDashboard } from "./app/routes/Path";
-import ProtectedRoute from "./app/shared/utils/ProtectedRoute";
-import RestrictAuth from "./app/shared/utils/RestrictAuth";
+import ProtectedRoute from "./app/shared/utils/protected-routes/ProtectedRoute";
+import RestrictAuth from "./app/shared/utils/protected-routes/RestrictAuth";
 import { AppModule } from "./modules";
 
 function App() {

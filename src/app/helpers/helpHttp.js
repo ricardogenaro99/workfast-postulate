@@ -7,7 +7,6 @@ export const helpHttp = () => {
 			Accept: "application/json",
 			"content-type": "application/json",
 			Authorization: `Bearer ${token}`,
-			// "Access-Control-Allow-Origin": window.location.origin,
 		};
 
 		const controller = new AbortController();
