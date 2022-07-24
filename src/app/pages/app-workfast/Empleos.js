@@ -21,13 +21,13 @@ const ContainerCards = styled.div`
 const Empleos = () => {
 	const [jobsDb, setJobsDb] = useState([]);
 	const [error, setError] = useState(null);
-	const { setLoading, getUserDb } = useAuth();
+	const { setLoading, getUserDb, userId } = useAuth();
 
 	useEffect(() => {
 		setLoading(true);
 		const getData = async () => {
 			try {
-				const res = await helpHttp().get(`${API_BACKEND}/jobs/`);
+				const res = await helpHttp().get(`${API_BACKEND}/jobs`);
 				if (res.err) {
 					setError(res);
 					setJobsDb([]);
@@ -67,13 +67,17 @@ const Empleos = () => {
 
 			const options = {
 				body: {
+					userId,
 					jobFavorites: data.jobFavorites,
 				},
 			};
 
-			await helpHttp().put(`${API_BACKEND}/users/${data._id}`, options);
-		} catch (error) {
-			setError(error);
+			await helpHttp().post(
+				`${API_BACKEND}/users/save-favorite-jobs`,
+				options,
+			);
+		} catch (err) {
+			setError(err);
 		}
 	};
 

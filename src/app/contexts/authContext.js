@@ -12,7 +12,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
 import { API_BACKEND } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { Loader } from "../shared/components";
 
 export const authContext = createContext();
@@ -26,7 +25,7 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState(undefined);
 	const [loading, setLoading] = useState(false);
-	const [storedValue, setStoredValue] = useLocalStorage("_idUserDb");
+	const [userId, setUserId] = useState(null);
 
 	const addUserDb = async (userParam) => {
 		const options = {
@@ -36,18 +35,16 @@ export function AuthProvider({ children }) {
 					email: userParam.email,
 				},
 			},
-			headers: {
-				"content-type": "application/json",
-			},
 		};
-		const { data } = await helpHttp().post(`${API_BACKEND}/users`, options);
+		const { data } = await helpHttp().post(
+			`${API_BACKEND}/save-user`,
+			options,
+		);
 		return data;
 	};
 
 	const getUserDb = async () => {
-		const { data } = await helpHttp().get(
-			`${API_BACKEND}/users/${storedValue}`,
-		);
+		const { data } = await helpHttp().get(`${API_BACKEND}/users/${userId}`);
 		return data;
 	};
 
@@ -71,18 +68,18 @@ export function AuthProvider({ children }) {
 		await signInWithEmailAndPassword(auth, email, password);
 		const tmp = auth.currentUser;
 		const data = await getUserDbByEmail(tmp.email);
-		if (data.length === 0) {
-			const res = await addUserDb(tmp);
-			await setStoredValue(res._id);
-		} else {
-			await setStoredValue(data[0]._id);
-		}
+		setUserId(data[0]._id);
 	};
 
-	const logout = () => {
-		setStoredValue();
+	const logout = (timeOut = true) => {
+		resetStates();
 		setLoading(true);
-		setTimeout(signOut, 500, auth);
+		timeOut ? setTimeout(signOut, 500, auth) : signOut(auth);
+	};
+
+	const resetStates = () => {
+		setUser(null);
+		setUserId(null);
 	};
 
 	const loginWithGoogle = () => {
@@ -97,16 +94,16 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const unsubuscribe = onAuthStateChanged(auth, async (currentUser) => {
 			if (currentUser) {
+				const data = await getUserDbByEmail(currentUser.email);
 				if (currentUser.emailVerified) {
+					setUserId(data[0]._id);
 					setUser(currentUser);
-					const data = await getUserDbByEmail(currentUser.email);
-					await setStoredValue(data[0]._id);
 				} else {
 					signOut(auth);
-					sendVerification().then(() => setUser(null));
+					sendVerification().then(() => resetStates());
 				}
 			} else {
-				setUser(null);
+				resetStates();
 			}
 			setTimeout(setLoading, 1000, false);
 		});
@@ -125,6 +122,7 @@ export function AuthProvider({ children }) {
 				loading,
 				setLoading,
 				getUserDb,
+				userId,
 			}}
 		>
 			{loading && <Loader />}

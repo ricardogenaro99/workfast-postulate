@@ -9,7 +9,7 @@ export default function ProtectedRoutePremium({ children }) {
 	useEffect(() => {
 		const getData = async () => {
 			const data = await getUserDb();
-			setIsPremium(data.isPremium);
+			setIsPremium(data.premium.isPremium);
 		};
 		getData();
 	}, [getUserDb]);

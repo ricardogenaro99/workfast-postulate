@@ -67,7 +67,7 @@ const CardJob = ({ job, handleFavorite }) => {
 					}
 				}
 			} catch (e) {
-				console.log({ statusText: `${e.name}: ${e.message}` });
+				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
 		getUser();
