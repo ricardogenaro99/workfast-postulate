@@ -51,9 +51,6 @@ const CheckoutForm = () => {
 					id,
 					userDb,
 				},
-				headers: {
-					"content-type": "application/json",
-				},
 			};
 
 			try {
@@ -61,12 +58,12 @@ const CheckoutForm = () => {
 					`${API_BACKEND}/checkouts`,
 					options,
 				);
-
-				elements.getElement(CardNumberElement).clear();
-				elements.getElement(CardExpiryElement).clear();
-				elements.getElement(CardCvcElement).clear();
-
-				console.log(data);
+				if (data) {
+					elements.getElement(CardNumberElement).clear();
+					elements.getElement(CardExpiryElement).clear();
+					elements.getElement(CardCvcElement).clear();
+					window.location.reload();
+				}
 			} catch (error) {
 				console.log(error);
 			}

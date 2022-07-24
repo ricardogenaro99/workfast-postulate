@@ -42,11 +42,19 @@ export const helpHttp = () => {
 
 	const post = (url, options = {}) => {
 		options.method = "POST";
+		options.headers = {
+			...options.headers,
+			"content-type": "application/json",
+		};
 		return customFetch(url, options);
 	};
 
 	const put = (url, options = {}) => {
 		options.method = "PUT";
+		options.headers = {
+			...options.headers,
+			"content-type": "application/json",
+		};
 		return customFetch(url, options);
 	};
 

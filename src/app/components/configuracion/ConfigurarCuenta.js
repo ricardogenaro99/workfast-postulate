@@ -8,7 +8,7 @@ import {
 	ButtonPrimaryPurple,
 	ControlGrid,
 	FormDefault,
-	InputLabel
+	InputLabel,
 } from "../../shared/components";
 import { formIsValid, validateForm } from "../../shared/utils/Functions";
 
@@ -21,8 +21,7 @@ const initialForm = {
 };
 
 const ConfigurarCuenta = () => {
-	const { setLoading, getUserDb } = useAuth();
-	const [userDb, setUserDb] = useState(null);
+	const { setLoading, getUserDb, userId } = useAuth();
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
 	const [clickSubmit, setClickSubmit] = useState(false);
@@ -34,9 +33,9 @@ const ConfigurarCuenta = () => {
 			try {
 				const data = await getUserDb();
 				if (data) {
-					setUserDb(data);
 					setForm(data.details);
 				}
+				setError(null);
 			} catch (e) {
 				setError({ statusText: `${e.name}: ${e.message}` });
 			}
@@ -65,16 +64,11 @@ const ConfigurarCuenta = () => {
 			setLoading(true);
 			const options = {
 				body: {
-					details: {
-						...userDb.details,
-						name: form.name,
-						lastname: form.lastname,
-						city: form.city,
-						country: form.country,
-					},
+					userId,
+					details: form,
 				},
 			};
-			await helpHttp().put(`${API_BACKEND}/users/${userDb._id}`, options);
+			await helpHttp().post(`${API_BACKEND}/users/save-details`, options);
 			setLoading(false);
 		} else {
 			console.error(form);
@@ -84,7 +78,7 @@ const ConfigurarCuenta = () => {
 	return (
 		<Fragment>
 			{error && <Alert message={error.statusText} />}
-			{userDb && (
+			{userId && !error && (
 				<FormDefault onSubmit={handleSubmit}>
 					<Fragment>
 						<InputLabel
