@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardJob from "../../components/empleos/CardJob";
-import { useAuth } from "../../contexts/authContext";
+import { useGlobal } from "../../contexts/globalContext";
 import { API_BACKEND } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert } from "../../shared/components";
@@ -21,7 +21,7 @@ const ContainerCards = styled.div`
 const Empleos = () => {
 	const [jobsDb, setJobsDb] = useState([]);
 	const [error, setError] = useState(null);
-	const { setLoading, getUserDb, userId } = useAuth();
+	const { setLoading, getUserDb, userId } = useGlobal();
 
 	useEffect(() => {
 		setLoading(true);

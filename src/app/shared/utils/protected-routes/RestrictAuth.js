@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/authContext";
+import { useGlobal } from "../../../contexts/globalContext";
 import { pathDashboard } from "../../../routes/Path";
 
 export default function RestrictAuth({ children }) {
-	const { user } = useAuth();
+	const { user } = useGlobal();
 	if (user) return <Navigate to={`${pathDashboard}`} />;
 	return <>{children}</>;
 }

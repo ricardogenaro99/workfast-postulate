@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/authContext";
+import { useGlobal } from "../../contexts/globalContext";
 import { useForm } from "../../hooks/useForm";
 import { pathAuth } from "../../routes/Path";
 import {
@@ -16,7 +16,7 @@ const initialForm = {
 
 const Login = () => {
 	const navigate = useNavigate();
-	const { login, loading, setLoading, user } = useAuth();
+	const { login, loading, setLoading, user } = useGlobal();
 	const { form, handleChange } = useForm(initialForm);
 	const handleRegister = () => navigate(`${pathAuth}/register`);
 
