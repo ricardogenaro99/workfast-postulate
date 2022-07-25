@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
-import { useAuth } from "../../contexts/authContext";
+import { useGlobal } from "../../contexts/globalContext";
 import { ButtonPrimaryPurple, CardDefaultStyle } from "../../shared/components";
 
 const sizeStar = "20px";
@@ -53,7 +53,7 @@ const ContentContainer = styled.div`
 `;
 
 const CardJob = ({ job, handleFavorite }) => {
-	const { getUserDb } = useAuth();
+	const { getUserDb } = useGlobal();
 	const [favorite, setFavorite] = useState(false);
 	const { details, enterpiseDetails, _id } = job;
 

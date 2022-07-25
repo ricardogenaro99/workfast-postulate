@@ -1,6 +1,6 @@
 import { AiOutlinePoweroff } from "react-icons/ai";
 import styled from "styled-components";
-import { useAuth } from "../../../contexts/authContext";
+import { useGlobal } from "../../../contexts/globalContext";
 import { device } from "../../utils/Breakpoints";
 
 const Container = styled.header`
@@ -31,7 +31,7 @@ const Container = styled.header`
 `;
 
 const Header = () => {
-	const { logout } = useAuth();
+	const { logout } = useGlobal();
 
 	return (
 		<Container>

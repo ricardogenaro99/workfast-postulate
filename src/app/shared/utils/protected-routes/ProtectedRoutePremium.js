@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/authContext";
+import { useGlobal } from "../../../contexts/globalContext";
 import CheckoutForm from "../../components/pasarela-pago/CheckoutForm";
 
 export default function ProtectedRoutePremium({ children }) {
-	const { getUserDb } = useAuth();
+	const { getUserDb } = useGlobal();
 	const [isPremium, setIsPremium] = useState(null);
 
 	useEffect(() => {

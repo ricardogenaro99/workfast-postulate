@@ -13,7 +13,7 @@ import ControlGrid from "../form/ControlGrid";
 import { FormDefault } from "../form/FormContainer";
 import InputLabel from "../form/InputLabel";
 
-import { useAuth } from "../../../contexts/authContext";
+import { useGlobal } from "../../../contexts/globalContext";
 import { API_BACKEND } from "../../../endpoints/apis";
 import { helpHttp } from "../../../helpers/helpHttp";
 
@@ -29,7 +29,7 @@ const CheckoutForm = () => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [loading, setLoading] = useState(false);
-	const { getUserDb } = useAuth();
+	const { getUserDb } = useGlobal();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

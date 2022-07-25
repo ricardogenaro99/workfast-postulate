@@ -1,15 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import { useGlobal } from "../contexts/globalContext";
 import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
+import PopPup from "../shared/components/pop-pup/PopPup";
 import ProtectedRoutePremium from "../shared/utils/protected-routes/ProtectedRoutePremium";
 
 const Container = styled.main`
 	padding: 60px var(--padding-global-x);
+	position: relative;
 `;
 
 const RoutesApp = () => {
+	const { popPup } = useGlobal();
 	return (
 		<Container>
+			{popPup && <PopPup message={popPup} />}
 			<Routes>
 				<Route path="/">
 					<Route index element={<Home />} />
