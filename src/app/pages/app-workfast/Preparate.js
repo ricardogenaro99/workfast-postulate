@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ListOfLists from "../../components/preparate/ListOfLists";
-import { useAuth } from "../../contexts/authContext";
+import { useGlobal } from "../../contexts/globalContext";
 import { ContainerGapDefault } from "../../shared/templates";
 
 const listOfLists = [
@@ -34,7 +34,7 @@ const listOfLists = [
 	},
 ];
 const Preparate = () => {
-	const { setLoading } = useAuth();
+	const { setLoading } = useGlobal();
 
 	useEffect(() => {
 		setLoading(true);

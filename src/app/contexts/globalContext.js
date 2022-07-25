@@ -14,18 +14,19 @@ import { API_BACKEND } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
 import { Loader } from "../shared/components";
 
-export const authContext = createContext();
+export const globalContext = createContext();
 
-export const useAuth = () => {
-	const context = useContext(authContext);
+export const useGlobal = () => {
+	const context = useContext(globalContext);
 	if (!context) throw new Error("There is no auth provider");
 	return context;
 };
 
-export function AuthProvider({ children }) {
+export function GlobalProvider({ children }) {
 	const [user, setUser] = useState(undefined);
 	const [loading, setLoading] = useState(false);
 	const [userId, setUserId] = useState(null);
+	const [popPup, setPopPup] = useState();
 
 	const addUserDb = async (userParam) => {
 		const options = {
@@ -111,22 +112,24 @@ export function AuthProvider({ children }) {
 	}, []);
 
 	return (
-		<authContext.Provider
+		<globalContext.Provider
 			value={{
-				signup,
 				login,
+				signup,
 				logout,
 				loginWithGoogle,
 				resetPassword,
 				user,
+				userId,
+				getUserDb,
 				loading,
 				setLoading,
-				getUserDb,
-				userId,
+				popPup,
+				setPopPup,
 			}}
 		>
 			{loading && <Loader />}
 			{children}
-		</authContext.Provider>
+		</globalContext.Provider>
 	);
 }

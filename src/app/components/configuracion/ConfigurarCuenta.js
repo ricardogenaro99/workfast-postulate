@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+import { useGlobal } from "../../contexts/globalContext";
 import { API_BACKEND } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { useForm } from "../../hooks/useForm";
@@ -21,7 +21,7 @@ const initialForm = {
 };
 
 const ConfigurarCuenta = () => {
-	const { setLoading, getUserDb, userId } = useAuth();
+	const { setLoading, getUserDb, userId , setPopPup} = useGlobal();
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
 	const [clickSubmit, setClickSubmit] = useState(false);
@@ -70,8 +70,9 @@ const ConfigurarCuenta = () => {
 			};
 			await helpHttp().post(`${API_BACKEND}/users/save-details`, options);
 			setLoading(false);
+			setPopPup("Se guardo exitosamente!")
 		} else {
-			console.error(form);
+			setPopPup("Debe completar todos los campos.")
 		}
 	};
 
