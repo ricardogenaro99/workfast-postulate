@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardJob from "../../components/empleos/CardJob";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_BACKEND } from "../../endpoints/apis";
+import { API_JOBS , API_USERS} from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert } from "../../shared/components";
 import { ContainerGapDefault, SectionTitle } from "../../shared/templates";
@@ -27,7 +27,7 @@ const Empleos = () => {
 		setLoading(true);
 		const getData = async () => {
 			try {
-				const res = await helpHttp().get(`${API_BACKEND}/jobs`);
+				const res = await helpHttp().get(`${API_JOBS}`);
 				if (res.err) {
 					setError(res);
 					setJobsDb([]);
@@ -73,7 +73,7 @@ const Empleos = () => {
 			};
 
 			await helpHttp().post(
-				`${API_BACKEND}/users/save-favorite-jobs`,
+				`${API_USERS}/save-favorite-jobs`,
 				options,
 			);
 		} catch (err) {
