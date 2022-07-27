@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/firebase";
-import { API_BACKEND } from "../endpoints/apis";
+import { API_USERS } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
 import { Loader } from "../shared/components";
 
@@ -38,21 +38,19 @@ export function GlobalProvider({ children }) {
 			},
 		};
 		const { data } = await helpHttp().post(
-			`${API_BACKEND}/save-user`,
+			`${API_USERS}/save-user`,
 			options,
 		);
 		return data;
 	};
 
 	const getUserDb = async () => {
-		const { data } = await helpHttp().get(`${API_BACKEND}/users/${userId}`);
+		const { data } = await helpHttp().get(`${API_USERS}/${userId}`);
 		return data;
 	};
 
 	const getUserDbByEmail = async (email) => {
-		const { data } = await helpHttp().get(
-			`${API_BACKEND}/users?email=${email}`,
-		);
+		const { data } = await helpHttp().get(`${API_USERS}?email=${email}`);
 		return data;
 	};
 

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_BACKEND } from "../../endpoints/apis";
+import { API_USERS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { useForm } from "../../hooks/useForm";
 import {
@@ -68,7 +68,7 @@ const ConfigurarCuenta = () => {
 					details: form,
 				},
 			};
-			await helpHttp().post(`${API_BACKEND}/users/save-details`, options);
+			await helpHttp().post(`${API_USERS}/save-details`, options);
 			setLoading(false);
 			setPopPup("Se guardo exitosamente!")
 		} else {
