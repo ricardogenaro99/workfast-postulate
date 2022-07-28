@@ -50,12 +50,21 @@ export function GlobalProvider({ children }) {
 	};
 
 	const getUserDbByEmail = async (email) => {
-		const { data } = await helpHttp().get(`${API_USERS}?email=${email}`);
+		const options = {
+			body: {
+				email,
+			},
+		};
+		const { data } = await helpHttp().post(
+			`${API_USERS}/get-user-email`,
+			options,
+		);
 		return data;
 	};
 
 	const signup = async (email, password) => {
 		setLoading(true);
+		await getUserDbByEmail(email);
 		await createUserWithEmailAndPassword(auth, email, password);
 		const tmp = auth.currentUser;
 		await addUserDb(tmp);
@@ -64,10 +73,11 @@ export function GlobalProvider({ children }) {
 
 	const login = async (email, password) => {
 		setLoading(true);
-		await signInWithEmailAndPassword(auth, email, password);
-		const tmp = auth.currentUser;
-		const data = await getUserDbByEmail(tmp.email);
-		setUserId(data[0]._id);
+		const data = await getUserDbByEmail(email);
+		if (data.length === 1) {
+			await signInWithEmailAndPassword(auth, email, password);
+			setUserId(data[0]._id);
+		}
 	};
 
 	const logout = (timeOut = true) => {
