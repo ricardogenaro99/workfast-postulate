@@ -63,6 +63,7 @@ const Job = () => {
 		const getData = async () => {
 			try {
 				const res = await helpHttp().get(`${API_JOBS}/${params.id}`);
+				console.log(res);
 				if (res.err) {
 					setError(res);
 					setJobDb();
@@ -76,11 +77,11 @@ const Job = () => {
 			} catch (e) {
 				setError({ statusText: `${e.name}: ${e.message}` });
 			} finally {
-				setLoading(false);
+				await setLoading(false);
 			}
 		};
 		getData();
-	}, []);
+	}, [params.id, setLoading]);
 
 	return (
 		<Fragment>
