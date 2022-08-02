@@ -1,4 +1,11 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const breatheAnimation = keyframes`
+	0% { opacity: 0}
+	5% { opacity: .7 }
+	85% { opacity: .7 }
+	100% { opacity: 0 }
+`;
 
 const Container = styled.div`
 	height: auto;
@@ -6,10 +13,13 @@ const Container = styled.div`
 	background: ${(props) => props.background};
 	color: ${(props) => props.color};
 	outline: 1px solid ${(props) => props.color};
-	opacity: 0.75;
+	opacity: 0;
+	animation-name: ${breatheAnimation};
+	animation-duration: 5s;
+	box-shadow: ${(props) => props.color} 0px 0px 5px 0px;
 `;
 const Alert = ({ type = "error", message }) => {
-	const getColors = (type) => {
+	const getColors = () => {
 		const colors = { color: "", background: "" };
 		switch (type) {
 			case "succes":
@@ -37,7 +47,7 @@ const Alert = ({ type = "error", message }) => {
 		return colors;
 	};
 
-	const { color, background } = getColors(type);
+	const { color, background } = getColors();
 
 	return (
 		<Container background={background} color={color}>

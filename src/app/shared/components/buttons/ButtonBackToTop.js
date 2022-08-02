@@ -11,7 +11,7 @@ const Container = styled.button`
 	border-radius: 100%;
 	box-shadow: 2px 2px 3px #999;
 	z-index: 1000;
-	transition: 0.3s;
+	transition: 0.27s;
 	display: flex;
 	justify-content: center;
 	align-items: center;

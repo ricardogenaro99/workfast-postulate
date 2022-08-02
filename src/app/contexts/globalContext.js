@@ -18,12 +18,12 @@ export const globalContext = createContext();
 
 export const useGlobal = () => {
 	const context = useContext(globalContext);
-	if (!context) throw new Error("There is no auth provider");
+	if (!context) throw new Error("No hay proveedor de autenticación.");
 	return context;
 };
 
 export function GlobalProvider({ children }) {
-	const [user, setUser] = useState(undefined);
+	const [user, setUser] = useState();
 	const [loading, setLoading] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [popPup, setPopPup] = useState();

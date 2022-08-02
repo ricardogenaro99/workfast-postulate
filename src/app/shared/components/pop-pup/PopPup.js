@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
@@ -8,8 +8,8 @@ const margin = "2%";
 
 const breatheAnimation = keyframes`
 	0% { opacity: 0}
-	25% { opacity: .9 }
-	75% { opacity: .9 }
+	20% { opacity: .8 }
+	75% { opacity: .8 }
 	100% { opacity: 0 }
 `;
 
@@ -17,16 +17,17 @@ const Container = styled.div`
 	position: absolute;
 	top: ${margin};
 	right: ${margin};
-	background: var(--color-purple);
-	outline: 1px solid var(--color-purple-active);
+	background: var(--color-purple-active);
+	outline: 1px solid var(--color-purple);
 	padding: 20px 5%;
 	border-radius: calc(var(--border-radius-global) * 1.5);
 	opacity: 0;
 	font-weight: 500;
 	color: var(--color-white);
 	animation-name: ${breatheAnimation};
-	animation-duration: 4s;
+	animation-duration: 5s;
 
+	box-shadow: var(--color-purple-ligth) 0px 0px 10px 0px;
 	button {
 		position: absolute;
 		top: 3px;
@@ -41,7 +42,7 @@ const Container = styled.div`
 const PopPup = ({ message }) => {
 	const location = useLocation();
 	const { setPopPup } = useGlobal();
-	const [path] = useState(location.pathname);
+	const path = useRef(location.pathname);
 
 	useEffect(() => {
 		const idTime = setTimeout(() => {
@@ -52,10 +53,10 @@ const PopPup = ({ message }) => {
 	}, [setPopPup]);
 
 	useEffect(() => {
-		if (path !== location.pathname) {
+		if (path.current !== location.pathname) {
 			setPopPup();
 		}
-	}, [location.pathname, path, setPopPup]);
+	}, [location.pathname, setPopPup]);
 
 	const handleClose = () => {
 		setPopPup();

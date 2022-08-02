@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const ButtonDefault = styled.button`
 	padding: 10px 5%;
-	transition-duration: 0.3s;
+	transition-duration: 0.27s;
 	font-weight: 500;
 	border-radius: var(--border-radius-global);
 `;

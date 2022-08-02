@@ -16,7 +16,7 @@ const initialForm = {
 
 const Login = () => {
 	const navigate = useNavigate();
-	const { login, loading, setLoading, user } = useGlobal();
+	const { login } = useGlobal();
 	const { form, handleChange } = useForm(initialForm);
 	const handleRegister = () => navigate(`${pathAuth}/register`);
 
@@ -26,9 +26,6 @@ const Login = () => {
 			form={form}
 			onChange={handleChange}
 			action={login}
-			loading={loading}
-			setLoading={setLoading}
-			user={user}
 		>
 			<ControlGrid>
 				<ButtonPrimaryWhite type="button" onClick={handleRegister}>
