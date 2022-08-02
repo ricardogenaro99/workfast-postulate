@@ -1,17 +1,13 @@
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
 import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
-import {
-	Alert,
-	ButtonBackToTop,
-	ButtonPrimaryPurple
-} from "../../shared/components";
+import { Alert, ButtonPrimaryPurple } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
-import { size } from "../../shared/utils/Breakpoints";
+import { device, size } from "../../shared/utils/Breakpoints";
 
 const gap = "40px";
 
@@ -24,10 +20,12 @@ const Container = styled.article`
 	> section {
 		&.image-container {
 			overflow: hidden;
+			min-height: 250px;
 			max-height: 400px;
 			img {
 				object-fit: cover;
 				width: 100%;
+				height: 100%;
 			}
 		}
 
@@ -43,6 +41,13 @@ const Container = styled.article`
 				display: grid;
 				grid-template-columns: 1fr;
 				gap: calc(${gap} / 3);
+			}
+
+			@media ${device.tablet} {
+				grid-template-columns: 1fr;
+				.info-right {
+					grid-row-start: 1;
+				}
 			}
 		}
 	}
@@ -78,7 +83,7 @@ const Job = () => {
 	}, []);
 
 	return (
-		<>
+		<Fragment>
 			{error && <Alert message={error.statusText} />}
 			{jobDb && (
 				<SectionTitle
@@ -97,10 +102,10 @@ const Job = () => {
 							/>
 						</section>
 						<section className="info-container">
-							<div className="info-left info-bottom">
+							<div className="info-left">
 								<p>{jobDb.details.description}</p>
 							</div>
-							<div className="info-right info-top">
+							<div className="info-right">
 								<span>
 									<b>Pulicado el:</b>{" "}
 									{dayjs(jobDb.createdAt).format(
@@ -121,10 +126,9 @@ const Job = () => {
 							</div>
 						</section>
 					</Container>
-					<ButtonBackToTop />
 				</SectionTitle>
 			)}
-		</>
+		</Fragment>
 	);
 };
 
