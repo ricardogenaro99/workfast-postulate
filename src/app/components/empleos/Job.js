@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -6,14 +7,13 @@ import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import {
 	Alert,
-	ButtonPrimaryPurple,
-	ButtonPrimaryWhite,
-	ControlGrid
+	ButtonBackToTop,
+	ButtonPrimaryPurple
 } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
 import { size } from "../../shared/utils/Breakpoints";
 
-const gap = "35px";
+const gap = "40px";
 
 const Container = styled.article`
 	display: grid;
@@ -33,9 +33,9 @@ const Container = styled.article`
 
 		&.info-container {
 			display: grid;
-			grid-template-columns: 2fr 1fr;
+			grid-template-columns: 1fr 230px;
 			gap: ${gap};
-
+			align-items: start;
 			.info-left {
 			}
 
@@ -81,11 +81,18 @@ const Job = () => {
 		<>
 			{error && <Alert message={error.statusText} />}
 			{jobDb && (
-				<SectionTitle title={jobDb.details.name} maxWidth={size.laptop}>
+				<SectionTitle
+					title={jobDb.details.name}
+					maxWidth={size.laptop}
+					margin="0 auto"
+				>
 					<Container>
 						<section className="image-container">
 							<img
-								src="https://lamanzanamordida.net/app/uploads-lamanzanamordida.net/2022/06/apple-park-visitor-center.jpg"
+								src={
+									jobDb.details.image ||
+									"https://lamanzanamordida.net/app/uploads-lamanzanamordida.net/2022/06/apple-park-visitor-center.jpg"
+								}
 								alt="job"
 							/>
 						</section>
@@ -95,7 +102,10 @@ const Job = () => {
 							</div>
 							<div className="info-right info-top">
 								<span>
-									<b>Pulicado el:</b> {jobDb.createdAt}
+									<b>Pulicado el:</b>{" "}
+									{dayjs(jobDb.createdAt).format(
+										"MMMM D, YYYY",
+									)}
 								</span>
 								<span>
 									<b>Ubicación:</b> {jobDb.details.city},{" "}
@@ -105,17 +115,13 @@ const Job = () => {
 									<b>Empresa:</b>{" "}
 									{jobDb.enterpiseDetails.name}
 								</span>
-								<ControlGrid columns={2}>
-									<ButtonPrimaryWhite>
-										Guardar
-									</ButtonPrimaryWhite>
-									<ButtonPrimaryPurple>
-										Postular
-									</ButtonPrimaryPurple>
-								</ControlGrid>
+								<ButtonPrimaryPurple>
+									Postular
+								</ButtonPrimaryPurple>
 							</div>
 						</section>
 					</Container>
+					<ButtonBackToTop />
 				</SectionTitle>
 			)}
 		</>

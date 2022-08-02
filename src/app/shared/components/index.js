@@ -1,6 +1,7 @@
 import Accordion from "./accordion/Accordion";
 import Alert from "./alert/Alert";
 import Aside from "./aside/Aside";
+import ButtonBackToTop from "./buttons/ButtonBackToTop";
 import {
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
@@ -8,7 +9,7 @@ import {
 	LinkPrimaryWhite
 } from "./buttons/Buttons";
 import { CardDefault, CardDefaultStyle } from "./card/CardDefault";
-import {ControlGrid} from "./form/ControlGrid";
+import { ControlGrid } from "./form/ControlGrid";
 import { FormDefault } from "./form/FormContainer";
 import InputLabel from "./form/InputLabel";
 import Header from "./header/Header";
@@ -21,6 +22,7 @@ export {
 	ControlGrid,
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
+	ButtonBackToTop,
 	LinkPrimaryPurple,
 	LinkPrimaryWhite,
 	Loader,

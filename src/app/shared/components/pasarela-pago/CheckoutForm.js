@@ -64,8 +64,8 @@ const CheckoutForm = () => {
 					elements.getElement(CardCvcElement).clear();
 					window.location.reload();
 				}
-			} catch (error) {
-				console.log(error);
+			} catch (err) {
+				console.err(err);
 			}
 		}
 	};
