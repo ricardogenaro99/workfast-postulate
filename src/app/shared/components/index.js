@@ -1,9 +1,14 @@
 import Accordion from "./accordion/Accordion";
 import Alert from "./alert/Alert";
 import Aside from "./aside/Aside";
-import { ButtonPrimaryPurple, ButtonPrimaryWhite } from "./buttons/Buttons";
+import {
+	ButtonPrimaryPurple,
+	ButtonPrimaryWhite,
+	LinkPrimaryPurple,
+	LinkPrimaryWhite
+} from "./buttons/Buttons";
 import { CardDefault, CardDefaultStyle } from "./card/CardDefault";
-import ControlGrid from "./form/ControlGrid";
+import {ControlGrid} from "./form/ControlGrid";
 import { FormDefault } from "./form/FormContainer";
 import InputLabel from "./form/InputLabel";
 import Header from "./header/Header";
@@ -16,6 +21,8 @@ export {
 	ControlGrid,
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
+	LinkPrimaryPurple,
+	LinkPrimaryWhite,
 	Loader,
 	Alert,
 	CardDefault,

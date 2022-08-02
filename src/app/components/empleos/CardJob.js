@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
-import { ButtonPrimaryPurple, CardDefaultStyle } from "../../shared/components";
+import { CardDefaultStyle, LinkPrimaryPurple } from "../../shared/components";
 
 const sizeStar = "20px";
 
@@ -70,10 +70,10 @@ const CardJob = ({ job, handleFavorite }) => {
 				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
-		getUser();
+		return () => getUser();
 	}, [_id, getUserDb]);
 
-	const handleClick = () => {
+	const handleClickFavorite = () => {
 		handleFavorite(_id);
 		setFavorite(!favorite);
 	};
@@ -87,16 +87,16 @@ const CardJob = ({ job, handleFavorite }) => {
 				</span>
 				<h4>{enterpiseDetails.name}</h4>
 				{favorite ? (
-					<AiFillStar color="orange" onClick={() => handleClick()} />
+					<AiFillStar color="orange" onClick={handleClickFavorite} />
 				) : (
 					<AiOutlineStar
 						color="orange"
-						onClick={() => handleClick()}
+						onClick={handleClickFavorite}
 					/>
 				)}
 			</div>
 			<ContentContainer>{details.description}</ContentContainer>
-			<ButtonPrimaryPurple>Conocer más...</ButtonPrimaryPurple>
+			<LinkPrimaryPurple to={_id}>Conocer más...</LinkPrimaryPurple>
 		</Container>
 	);
 };

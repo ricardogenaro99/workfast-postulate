@@ -9,7 +9,7 @@ import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { ButtonPrimaryPurple } from "../buttons/Buttons";
 import { CardDefault } from "../card/CardDefault";
-import ControlGrid from "../form/ControlGrid";
+import { ControlGrid } from "../form/ControlGrid";
 import { FormDefault } from "../form/FormContainer";
 import InputLabel from "../form/InputLabel";
 

@@ -19,7 +19,7 @@ const RoutesApp = () => {
 				<Route path="/">
 					<Route index element={<Home />} />
 					<Route path="perfil" element={<Perfil />} />
-					<Route path="empleos" element={<Empleos />} />
+					<Route path="empleos/*" element={<Empleos />} />
 					<Route
 						path="preparate"
 						element={
