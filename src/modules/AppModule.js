@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import Main from "../app/components/Main";
-import { Aside } from "../app/shared/components";
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import styled from "styled-components";
+import Main from "../app/components/Main";
+import { Aside } from "../app/shared/components";
 
 const env = runtimeEnv();
 

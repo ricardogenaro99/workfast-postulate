@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../contexts/globalContext";
 import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
+import { ButtonBackToTop } from "../shared/components";
 import PopPup from "../shared/components/pop-pup/PopPup";
 import ProtectedRoutePremium from "../shared/utils/protected-routes/ProtectedRoutePremium";
 
@@ -32,6 +33,7 @@ const RoutesApp = () => {
 				</Route>
 				<Route path="*" element={<h1>Error 404</h1>} />
 			</Routes>
+			<ButtonBackToTop />
 		</Container>
 	);
 };

@@ -16,8 +16,8 @@ const Container = styled.button`
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	bottom: 50px;
-	right: 30px;
+	bottom: 30px;
+	right: 20px;
 
 	&:hover {
 		box-shadow: var(--color-purple) 0px 0px 8px 1px;
@@ -34,7 +34,7 @@ const Container = styled.button`
 
 const ButtonBackToTop = () => {
 	const handleClick = () => {
-		window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 	return (
 		<Container onClick={handleClick}>
