@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardJob from "../../components/empleos/CardJob";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_JOBS, API_USERS } from "../../endpoints/apis";
+import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
@@ -21,11 +21,9 @@ const Container = styled.div`
 const JobList = () => {
 	const [jobsDb, setJobsDb] = useState([]);
 	const [error, setError] = useState(null);
-	const { setLoading, getUserDb, userId } = useGlobal();
-
+	const { setLoading } = useGlobal();
 
 	useEffect(() => {
-		setLoading(true);
 		const getData = async () => {
 			try {
 				const res = await helpHttp().get(`${API_JOBS}`);
@@ -43,52 +41,22 @@ const JobList = () => {
 				setError({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
-		getData();
 
-		const idTime = setTimeout(() => {
+		const load = async () => {
+			setLoading(true);
+			await getData();
 			setLoading(false);
-		}, 3000);
+		};
 
-		return () => clearTimeout(idTime);
+		load();
 	}, [setLoading]);
-
-	const handleFavorite = async (_id) => {
-		try {
-			const data = await getUserDb();
-
-			data.jobFavorites = data.jobFavorites || [];
-
-			const pos = data.jobFavorites.indexOf(_id);
-
-			if (pos === -1) {
-				data.jobFavorites.push(_id);
-			} else {
-				data.jobFavorites.splice(pos, 1);
-			}
-
-			const options = {
-				body: {
-					userId,
-					jobFavorites: data.jobFavorites,
-				},
-			};
-
-			await helpHttp().post(`${API_USERS}/save-favorite-jobs`, options);
-		} catch (err) {
-			setError(err);
-		}
-	};
 
 	return (
 		<SectionTitle title={"Estos empleos se ajustan a tu perfil"}>
 			<Container>
 				{error && <Alert message={error.statusText} />}
 				{jobsDb.map((job, i) => (
-					<CardJob
-						key={i}
-						job={job}
-						handleFavorite={handleFavorite}
-					/>
+					<CardJob key={i} job={job} />
 				))}
 			</Container>
 		</SectionTitle>

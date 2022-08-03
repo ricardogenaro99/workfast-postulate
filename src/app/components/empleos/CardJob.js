@@ -2,6 +2,8 @@ import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
+import { API_USERS } from "../../endpoints/apis";
+import { helpHttp } from "../../helpers/helpHttp";
 import { CardDefaultStyle, LinkPrimaryPurple } from "../../shared/components";
 
 const sizeStar = "20px";
@@ -52,30 +54,50 @@ const ContentContainer = styled.div`
 	);
 `;
 
-const CardJob = ({ job, handleFavorite }) => {
-	const { getUserDb } = useGlobal();
+const CardJob = ({ job }) => {
+	const { userId, setPopPup } = useGlobal();
 	const [favorite, setFavorite] = useState(false);
-	const { details, enterpiseDetails, _id } = job;
+	const { details, enterpriseRef, _id } = job;
 
 	useEffect(() => {
 		const getUser = async () => {
 			try {
-				const data = await getUserDb();
-				if (data) {
-					if (data.jobFavorites.find((el) => el === _id)) {
-						setFavorite(true);
-					}
-				}
+				const options = {
+					body: {
+						userId,
+						jobId: _id,
+					},
+				};
+
+				const { data } = await helpHttp().post(
+					`${API_USERS}/is-favorite-job`,
+					options,
+				);
+				setFavorite(data);
 			} catch (e) {
 				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
-		return () => getUser();
-	}, [_id, getUserDb]);
+		getUser();
+	}, [_id, userId]);
 
-	const handleClickFavorite = () => {
-		handleFavorite(_id);
-		setFavorite(!favorite);
+	const handleClickFavorite = async () => {
+		try {
+			const options = {
+				body: {
+					userId,
+					jobId: _id,
+				},
+			};
+			const { message } = await helpHttp().post(
+				`${API_USERS}/save-favorite-jobs`,
+				options,
+			);
+			setPopPup(message);
+			setFavorite(!favorite);
+		} catch (err) {
+			setPopPup("Ocurrio un error inesperado");
+		}
 	};
 
 	return (
@@ -85,7 +107,7 @@ const CardJob = ({ job, handleFavorite }) => {
 				<span>
 					{details.city}, {details.country}
 				</span>
-				<h4>{enterpiseDetails.name}</h4>
+				<h4>{enterpriseRef.details.name}</h4>
 				{favorite ? (
 					<AiFillStar color="orange" onClick={handleClickFavorite} />
 				) : (
