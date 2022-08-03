@@ -1,11 +1,16 @@
 import dayjs from "dayjs";
 import React, { Fragment, useEffect, useState } from "react";
+import { AiOutlineStar, AiOutlineTrophy } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_JOBS } from "../../endpoints/apis";
+import { API_JOBS, API_USERS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
-import { Alert, ButtonPrimaryPurple } from "../../shared/components";
+import {
+	Alert,
+	ButtonPrimaryPurple,
+	ButtonPrimaryWhite
+} from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
 import { device, size } from "../../shared/utils/Breakpoints";
 
@@ -55,15 +60,33 @@ const Container = styled.article`
 const Job = () => {
 	const [jobDb, setJobDb] = useState();
 	const [error, setError] = useState(null);
-	const { setLoading } = useGlobal();
+	const { userId, setLoading, setPopPup } = useGlobal();
 	const params = useParams();
+	const [favorite, setFavorite] = useState(false);
 
 	useEffect(() => {
-		setLoading(true);
+		const getFavorite = async () => {
+			try {
+				const options = {
+					body: {
+						userId,
+						jobId: params.id,
+					},
+				};
+
+				const { data } = await helpHttp().post(
+					`${API_USERS}/is-favorite-job`,
+					options,
+				);
+				setFavorite(data);
+			} catch (e) {
+				console.error({ statusText: `${e.name}: ${e.message}` });
+			}
+		};
+
 		const getData = async () => {
 			try {
 				const res = await helpHttp().get(`${API_JOBS}/${params.id}`);
-				console.log(res);
 				if (res.err) {
 					setError(res);
 					setJobDb();
@@ -76,12 +99,37 @@ const Job = () => {
 				}
 			} catch (e) {
 				setError({ statusText: `${e.name}: ${e.message}` });
-			} finally {
-				await setLoading(false);
 			}
 		};
-		getData();
-	}, [params.id, setLoading]);
+
+		const load = async () => {
+			setLoading(true);
+			await getFavorite();
+			await getData();
+			setLoading(false);
+		};
+
+		load();
+	}, [params.id, setLoading, userId]);
+
+	const handleClickFavorite = async () => {
+		try {
+			const options = {
+				body: {
+					userId,
+					jobId: params.id,
+				},
+			};
+			const { message } = await helpHttp().post(
+				`${API_USERS}/save-favorite-jobs`,
+				options,
+			);
+			setPopPup(message);
+			setFavorite(!favorite);
+		} catch (err) {
+			setPopPup("Ocurrio un error inesperado");
+		}
+	};
 
 	return (
 		<Fragment>
@@ -119,10 +167,17 @@ const Job = () => {
 								</span>
 								<span>
 									<b>Empresa:</b>{" "}
-									{jobDb.enterpiseDetails.name}
+									{jobDb.enterpriseRef.details.name}
 								</span>
+								<ButtonPrimaryWhite
+									onClick={handleClickFavorite}
+								>
+									<AiOutlineStar />
+									{favorite ? "Quitar de" : "Añadir a"}{" "}
+									favoritos
+								</ButtonPrimaryWhite>
 								<ButtonPrimaryPurple>
-									Postular
+									<AiOutlineTrophy /> Postular
 								</ButtonPrimaryPurple>
 							</div>
 						</section>
