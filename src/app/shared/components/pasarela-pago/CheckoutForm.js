@@ -5,7 +5,7 @@ import {
 	useElements,
 	useStripe
 } from "@stripe/react-stripe-js";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { ButtonPrimaryPurple } from "../buttons/Buttons";
 import { CardDefault } from "../card/CardDefault";
@@ -28,45 +28,40 @@ const Container = styled.div`
 const CheckoutForm = () => {
 	const stripe = useStripe();
 	const elements = useElements();
-	const [loading, setLoading] = useState(false);
-	const { getUserDb } = useGlobal();
+	const { getUserDb, setLoading, setPopPup } = useGlobal();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true);
 
-		const { error, paymentMethod } = await stripe.createPaymentMethod({
-			type: "card",
-			card: elements.getElement(CardNumberElement),
-		});
+		try {
+			const { error, paymentMethod } = await stripe.createPaymentMethod({
+				type: "card",
+				card: elements.getElement(CardNumberElement),
+			});
+			
+			if (!error) {
+				setLoading(true);
+				const { id } = paymentMethod;
+				const userDb = await getUserDb();
 
-		setLoading(false);
+				const options = {
+					body: {
+						id,
+						userDb,
+					},
+				};
 
-		if (!error) {
-			const { id } = paymentMethod;
-			const userDb = await getUserDb();
-
-			const options = {
-				body: {
-					id,
-					userDb,
-				},
-			};
-
-			try {
-				const { data } = await helpHttp().post(
-					`${API_BACKEND}/checkouts`,
-					options,
-				);
-				if (data) {
-					elements.getElement(CardNumberElement).clear();
-					elements.getElement(CardExpiryElement).clear();
-					elements.getElement(CardCvcElement).clear();
-					window.location.reload();
-				}
-			} catch (err) {
-				console.err(err);
+				await helpHttp().post(`${API_BACKEND}/checkouts`, options);
+				elements.getElement(CardNumberElement).clear();
+				elements.getElement(CardExpiryElement).clear();
+				elements.getElement(CardCvcElement).clear();
+				window.location.reload();
+			} else {
+				throw new Error(error.message);
 			}
+		} catch (err) {
+			setLoading(false);
+			setPopPup(err.message);
 		}
 	};
 
@@ -97,13 +92,7 @@ const CheckoutForm = () => {
 								disabled={!stripe}
 								type="submit"
 							>
-								{loading ? (
-									<div role="status">
-										<span>Cargando...</span>
-									</div>
-								) : (
-									"Adquirir Membresía"
-								)}
+								Adquirir Membresía
 							</ButtonPrimaryPurple>
 						</ControlGrid>
 					</Fragment>

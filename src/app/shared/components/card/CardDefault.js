@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../utils/Breakpoints";
+import { device } from "../../utils/breakpoints";
 
 export const CardDefaultStyle = styled.div`
 	border: 1px solid var(--color-grey-ligth);
@@ -7,7 +7,7 @@ export const CardDefaultStyle = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: var(--padding-global-y) 40px;
-	gap: 20px;
+	gap: var(--gap-default-M);
 	border-radius: var(--border-radius-global);
 	box-shadow: rgb(0 0 0 / 15%) 0px 0px 8px 0px;
 

@@ -33,7 +33,7 @@ const options = {
 	],
 };
 
-const ConfigurarCuenta = () => {
+const PerfilFormPersonal = () => {
 	const { setLoading, getUserDb, userId, setPopPup } = useGlobal();
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
@@ -100,38 +100,60 @@ const ConfigurarCuenta = () => {
 			{userId && !error && (
 				<FormDefault onSubmit={handleSubmit}>
 					<Fragment>
-						<InputLabel
-							label="Nombres"
-							name="name"
-							placeholder="Ingrese sus nombres"
-							value={form.name}
-							onChange={handleChange}
-							formReview={formReview}
-						/>
-						<InputLabel
-							label="Apellidos"
-							name="lastname"
-							placeholder="Ingrese sus apellidos"
-							value={form.lastname}
-							onChange={handleChange}
-							formReview={formReview}
-						/>
-						<SelectLabel
-							label="Seleccione su País"
-							name={"country"}
-							options={options}
-							onChange={handleSelectChange}
-							value={form.country}
-							formReview={formReview}
-						/>
-						<SelectLabel
-							label="Seleccione su Ciudad"
-							name={"city"}
-							options={options}
-							onChange={handleSelectChange}
-							value={form.city}
-							formReview={formReview}
-						/>
+						<ControlGrid columns={2} textAlign="initial">
+							<InputLabel
+								label="Nombres"
+								name="name"
+								placeholder="Ingrese sus nombres"
+								value={form.name}
+								onChange={handleChange}
+								formReview={formReview}
+							/>
+							<InputLabel
+								label="Apellidos"
+								name="lastname"
+								placeholder="Ingrese sus apellidos"
+								value={form.lastname}
+								onChange={handleChange}
+								formReview={formReview}
+							/>
+						</ControlGrid>
+						<ControlGrid columns={2} textAlign="initial">
+							<SelectLabel
+								label="Seleccione su País"
+								name={"country"}
+								options={options}
+								onChange={handleSelectChange}
+								value={form.country}
+								formReview={formReview}
+							/>
+							<SelectLabel
+								label="Seleccione su Ciudad"
+								name={"city"}
+								options={options}
+								onChange={handleSelectChange}
+								value={form.city}
+								formReview={formReview}
+							/>
+						</ControlGrid>
+						{/* <ControlGrid columns={2} textAlign="initial">
+							<InputLabel
+								label="País"
+								name="country"
+								placeholder="Ingrese su País"
+								value={form.country}
+								onChange={handleChange}
+								formReview={formReview}
+							/>
+							<InputLabel
+								label="Ciudad"
+								name="city"
+								placeholder="Ingrese su Ciudad"
+								value={form.city}
+								onChange={handleChange}
+								formReview={formReview}
+							/>
+						</ControlGrid> */}
 					</Fragment>
 					<ControlGrid columns={3}>
 						<ButtonPrimaryPurple type="submit">
@@ -144,4 +166,4 @@ const ConfigurarCuenta = () => {
 	);
 };
 
-export default ConfigurarCuenta;
+export default PerfilFormPersonal;

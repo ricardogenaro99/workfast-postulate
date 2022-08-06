@@ -4,7 +4,7 @@ import { MdWork } from "react-icons/md";
 import { RiProfileFill } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import styled from "styled-components";
-import { device } from "../../utils/Breakpoints";
+import { device } from "../../utils/breakpoints";
 import NavLinkComponent from "./NavLinkComponent";
 
 const Container = styled.aside`

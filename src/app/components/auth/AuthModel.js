@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../../../config/firebase";
@@ -10,6 +10,8 @@ import {
 	FormDefault,
 	InputLabel
 } from "../../shared/components";
+import { MESSAGES } from "../../shared/utils/const";
+import { formIsValid, validateForm } from "../../shared/utils/functions";
 
 const Container = styled.div`
 	width: 100%;
@@ -47,6 +49,15 @@ const AuthModel = ({
 }) => {
 	const { setLoading } = useGlobal();
 	const [error, setError] = useState();
+	const [clickSubmit, setClickSubmit] = useState(false);
+	const [formReview, setFormReview] = useState([]);
+
+	useEffect(() => {
+		if (clickSubmit) {
+			setFormReview(validateForm(form));
+		}
+	}, [clickSubmit, form]);
+
 	const navigate = useNavigate();
 
 	const writeError = (message, type) => {
@@ -59,25 +70,21 @@ const AuthModel = ({
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
-			await action(form.email, form.password);
-			if (!auth.currentUser) {
-				writeError(
-					"Le enviamos un correo para validar su cuenta!",
-					"danger",
-				);
-				return;
+		setClickSubmit(true);
+		if (formIsValid(form)) {
+			try {
+				await action(form.email, form.password);
+				if (!auth.currentUser) {
+					writeError(MESSAGES.notCurrentUser, "error");
+				}
+				if (auth.currentUser.emailVerified) {
+					navigate(pathDashboard);
+				} else {
+					writeError(MESSAGES.emailUnverified, "danger");
+				}
+			} catch (err) {
+				writeError(err.message);
 			}
-			if (auth.currentUser.emailVerified) {
-				navigate(pathDashboard);
-			} else {
-				writeError(
-					"Le enviamos un correo para validar su cuenta!",
-					"danger",
-				);
-			}
-		} catch (err) {
-			writeError(err.message);
 		}
 	};
 
@@ -99,6 +106,7 @@ const AuthModel = ({
 								placeholder="correo@fast.work"
 								value={form.email}
 								onChange={onChange}
+								formReview={formReview}
 							/>
 							{!resetPassword && (
 								<InputLabel
@@ -108,6 +116,7 @@ const AuthModel = ({
 									placeholder="***************"
 									value={form.password}
 									onChange={onChange}
+									formReview={formReview}
 								/>
 							)}
 						</Fragment>

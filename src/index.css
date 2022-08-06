@@ -32,7 +32,13 @@
 	--transition-time: 0.2s;
 	--transition: ease-out var(--transition-time);
 
-	--border-radius-global: 1.5px;
+	--border-radius-global: 4px;
+
+	--gap-default-XS: 4px;
+	--gap-default-S: 8px;
+	--gap-default-M: 18px;
+	--gap-default-L: 24px;
+	--gap-default-XL: 30px;
 }
 
 body {

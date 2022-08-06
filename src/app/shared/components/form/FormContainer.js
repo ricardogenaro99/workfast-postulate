@@ -4,12 +4,12 @@ import styled from "styled-components";
 const Container = styled.form`
 	display: flex;
 	flex-direction: column;
-	gap: 31px;
+	gap: VAR(--gap-default-L);
 
 	> section {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: var(--gap-default-M);
 	}
 `;
 
