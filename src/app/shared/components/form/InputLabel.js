@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import {
 	ContainerErrors,
 	ContainerInputLabel,
@@ -12,18 +12,18 @@ const InputLabel = ({
 	label,
 	value,
 	onChange,
-	formReview = [],
+	formReview,
 	inputElement,
 }) => {
 	const inputId = useId();
+	const [errors, setErrors] = useState([]);
 
-	const renderError = () => {
-		const res = formReview.find((e) => e.name === name);
-		if (res) {
-			return res.errors;
+	useEffect(() => {
+		if (formReview) {
+			const res = formReview.find((e) => e.name === name);
+			setErrors(res ? res.errors : []);
 		}
-		return [];
-	};
+	}, [formReview, name]);
 
 	return (
 		<ContainerInputSelectLabelWithErrors>
@@ -42,13 +42,15 @@ const InputLabel = ({
 					/>
 				)}
 			</ContainerInputLabel>
-			<ContainerErrors>
-				{renderError().map((error, i) => (
-					<span key={i} className="input-error">
-						{error}
-					</span>
-				))}
-			</ContainerErrors>
+			{errors.length !== 0 && (
+				<ContainerErrors>
+					{errors.map((error, i) => (
+						<span key={i} className="input-error">
+							{error}
+						</span>
+					))}
+				</ContainerErrors>
+			)}
 		</ContainerInputSelectLabelWithErrors>
 	);
 };

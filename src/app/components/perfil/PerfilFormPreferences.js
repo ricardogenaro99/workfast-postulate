@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import {
 	ButtonPrimaryPurple,
 	ControlGrid,
-	FormDefault
+	FormDefault,
 } from "../../shared/components";
 import SelectLabel from "../../shared/components/form/SelectLabel";
 import { formIsValid, validateForm } from "../../shared/utils/Functions";
@@ -22,11 +22,6 @@ const options = {
 		{ labelValue: "Vanilla" },
 	],
 	graduateSchool: [
-		{ labelValue: "Ciclo 1" },
-		{ labelValue: "Ciclo 2" },
-		{ labelValue: "Ciclo 3" },
-		{ labelValue: "Ciclo 4" },
-		{ labelValue: "Ciclo 5" },
 		{ labelValue: "Ciclo 6" },
 		{ labelValue: "Ciclo 7" },
 		{ labelValue: "Ciclo 8" },
@@ -46,10 +41,16 @@ const options = {
 	],
 };
 
-const ProfileForm = () => {
+const PerfilFormPreferences = () => {
 	const [form, setForm] = useState(initialForm);
 	const [formReview, setFormReview] = useState([]);
 	const [clickSubmit, setClickSubmit] = useState(false);
+
+	useEffect(() => {
+		if (clickSubmit) {
+			setFormReview(validateForm(form));
+		}
+	}, [form, clickSubmit]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -62,12 +63,6 @@ const ProfileForm = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (clickSubmit) {
-			setFormReview(validateForm(form));
-		}
-	}, [form, clickSubmit]);
-
 	const handleSelectChange = (e) => {
 		const { name, value } = e;
 		setForm({ ...form, [name]: value });
@@ -77,34 +72,38 @@ const ProfileForm = () => {
 		<Fragment>
 			<FormDefault onSubmit={handleSubmit}>
 				<Fragment>
-					<SelectLabel
-						label="¿Cuál es tu carrera profesional?"
-						options={options}
-						onChange={handleSelectChange}
-						name={"career"}
-						formReview={formReview}
-					/>
-					<SelectLabel
-						label="¿En qué ciclo te encuentras?"
-						options={options}
-						onChange={handleSelectChange}
-						name={"graduateSchool"}
-						formReview={formReview}
-					/>
-					<SelectLabel
-						label="¿En qué cargo quisieras enfocarte?"
-						options={options}
-						onChange={handleSelectChange}
-						name={"desiredPosition"}
-						formReview={formReview}
-					/>
-					<SelectLabel
-						label="¿En qué modalidad te gustaria laborar?"
-						options={options}
-						onChange={handleSelectChange}
-						name={"workModality"}
-						formReview={formReview}
-					/>
+					<ControlGrid columns={2} textAlign="initial">
+						<SelectLabel
+							label="¿Cuál es tu carrera profesional?"
+							options={options}
+							onChange={handleSelectChange}
+							name={"career"}
+							formReview={formReview}
+						/>
+						<SelectLabel
+							label="¿En qué ciclo te encuentras?"
+							options={options}
+							onChange={handleSelectChange}
+							name={"graduateSchool"}
+							formReview={formReview}
+						/>
+					</ControlGrid>
+					<ControlGrid columns={2} textAlign="initial">
+						<SelectLabel
+							label="¿En qué cargo quisieras enfocarte?"
+							options={options}
+							onChange={handleSelectChange}
+							name={"desiredPosition"}
+							formReview={formReview}
+						/>
+						<SelectLabel
+							label="¿En qué modalidad te gustaria laborar?"
+							options={options}
+							onChange={handleSelectChange}
+							name={"workModality"}
+							formReview={formReview}
+						/>
+					</ControlGrid>
 				</Fragment>
 				<ControlGrid columns={3}>
 					<ButtonPrimaryPurple type="submit">
@@ -116,4 +115,4 @@ const ProfileForm = () => {
 	);
 };
 
-export default ProfileForm;
+export default PerfilFormPreferences;

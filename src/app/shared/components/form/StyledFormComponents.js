@@ -1,9 +1,22 @@
 import styled from "styled-components";
-import { device } from "../../utils/Breakpoints";
+
+const gapDefault = "5px";
+
+const styleDefault = `
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--color-grey-ligth);
+	border-radius: var(--border-radius-global);
+	padding: 10px 16px;
+	min-height: 70px;
+	gap: var(--gap-default-XS);
+	justify-content: center;
+`;
 
 export const ContainerInputSelectLabelWithErrors = styled.div`
-	display: grid;
-	gap: 8px;
+
+	display: flex;
+	flex-direction: column;
 	* {
 		background: transparent;
 		font-weight: 400;
@@ -11,12 +24,7 @@ export const ContainerInputSelectLabelWithErrors = styled.div`
 `;
 
 export const ContainerInputLabel = styled.div`
-	display: flex;
-	flex-direction: column;
-	border: 1px solid var(--color-grey-ligth);
-	padding: 10px 16px;
-	gap: 5px;
-	border-radius: var(--border-radius-global);
+	${styleDefault}
 
 	label {
 		color: var(--color-grey);
@@ -30,28 +38,23 @@ export const ContainerInputLabel = styled.div`
 `;
 
 export const ContainerSelectLabel = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 300px;
-	grid-template-rows: auto;
-	grid-auto-rows: 1fr;
-	gap: 8px;
+	${styleDefault}
+	gap: 0;
+	padding-bottom: 0;
 
 	span {
 		color: var(--color-grey);
 		display: flex;
 		align-items: center;
 	}
-
-	@media ${device.laptop} {
-		grid-template-columns: 1fr;
-	}
 `;
 
 export const ContainerErrors = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: var(--gap-default-XS);
 	border-radius: var(--border-radius-global);
+	padding: 0 16px;
 
 	.input-error {
 		color: red;

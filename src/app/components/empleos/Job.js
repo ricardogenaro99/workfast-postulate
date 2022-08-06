@@ -48,7 +48,7 @@ const Container = styled.article`
 				gap: calc(${gap} / 3);
 			}
 
-			@media ${device.tablet} {
+			@media ${device.tabletM} {
 				grid-template-columns: 1fr;
 				.info-right {
 					grid-row-start: 1;
@@ -137,7 +137,7 @@ const Job = () => {
 			{jobDb && (
 				<SectionTitle
 					title={jobDb.details.name}
-					maxWidth={size.laptop}
+					maxWidth={size.laptopS}
 					margin="0 auto"
 				>
 					<Container>

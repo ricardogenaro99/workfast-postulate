@@ -66,8 +66,7 @@ export function GlobalProvider({ children }) {
 		setLoading(true);
 		await getUserDbByEmail(email);
 		await createUserWithEmailAndPassword(auth, email, password);
-		const tmp = auth.currentUser;
-		await addUserDb(tmp);
+		await addUserDb(auth.currentUser);
 		await signOut(auth);
 	};
 
@@ -80,10 +79,10 @@ export function GlobalProvider({ children }) {
 		}
 	};
 
-	const logout = (timeOut = true) => {
+	const logout = () => {
 		resetStates();
 		setLoading(true);
-		timeOut ? setTimeout(signOut, 500, auth) : signOut(auth);
+		setTimeout(signOut, 500, auth);
 	};
 
 	const resetStates = () => {

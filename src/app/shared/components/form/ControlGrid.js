@@ -4,21 +4,12 @@ import { device } from "../../utils/Breakpoints";
 export const ControlGrid = styled.div`
 	display: grid;
 	grid-template-columns: repeat(${(props) => props.columns || 2}, 1fr);
-	gap: 15px;
+	gap: var(--gap-default-M);
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 	text-align: ${(props) => props.textAlign || "center"};
 
-	@media ${device.mobileM} {
+	@media ${device.tabletL} {
 		grid-template-columns: 1fr;
 	}
 `;
-// export const ControlGrid = ({ children, columns = 2, textAlign = "center" }) => {
-// 	return (
-// 		<Container columns={columns} textAlign={textAlign}>
-// 			{children}
-// 		</Container>
-// 	);
-// };
-
-// export default ControlGrid;
