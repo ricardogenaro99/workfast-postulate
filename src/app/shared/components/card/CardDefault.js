@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../utils/Breakpoints";
+import { device } from "../../utils/breakpoints";
 
 export const CardDefaultStyle = styled.div`
 	border: 1px solid var(--color-grey-ligth);

@@ -8,11 +8,14 @@ import {
 	signInWithPopup,
 	signOut
 } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import { API_USERS } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
+import { pathAuth } from "../routes/Path";
 import { Loader } from "../shared/components";
+import { MESSAGES, USER_ROLE } from "../shared/utils/const";
 
 export const globalContext = createContext();
 
@@ -24,9 +27,12 @@ export const useGlobal = () => {
 
 export function GlobalProvider({ children }) {
 	const [user, setUser] = useState();
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [userId, setUserId] = useState(null);
 	const [popPup, setPopPup] = useState();
+	const userRoles = useRef([]);
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const addUserDb = async (userParam) => {
 		const options = {
@@ -59,6 +65,10 @@ export function GlobalProvider({ children }) {
 			`${API_USERS}/get-user-email`,
 			options,
 		);
+
+		if (data) {
+			userRoles.current = data.roleRef.values;
+		}
 		return data;
 	};
 
@@ -73,9 +83,13 @@ export function GlobalProvider({ children }) {
 	const login = async (email, password) => {
 		setLoading(true);
 		const data = await getUserDbByEmail(email);
-		if (data.length === 1) {
-			await signInWithEmailAndPassword(auth, email, password);
-			setUserId(data[0]._id);
+		if (data) {
+			if (userRoles.current.includes(USER_ROLE)) {
+				await signInWithEmailAndPassword(auth, email, password);
+				setUserId(data._id);
+			} else {
+				throw new Error(MESSAGES.errorRole);
+			}
 		}
 	};
 
@@ -102,20 +116,28 @@ export function GlobalProvider({ children }) {
 	useEffect(() => {
 		const unsubuscribe = onAuthStateChanged(auth, async (currentUser) => {
 			if (currentUser) {
-				const data = await getUserDbByEmail(currentUser.email);
-				if (currentUser.emailVerified) {
-					setUserId(data[0]._id);
-					setUser(currentUser);
-				} else {
-					signOut(auth);
-					sendVerification().then(() => resetStates());
+				try {
+					const data = await getUserDbByEmail(currentUser.email);
+					if (currentUser.emailVerified && data) {
+						setUserId(data._id);
+						setUser(currentUser);
+					} else {
+						signOut(auth);
+						sendVerification().then(() => resetStates());
+					}
+				} catch (err) {
+					const pathAuthRoute = location.pathname.split("/");
+					pathAuthRoute.includes("register")
+						? navigate(`${pathAuth}/register`)
+						: navigate(`${pathAuth}/login`);
 				}
 			} else {
 				resetStates();
 			}
-			setTimeout(setLoading, 1000, false);
+			setLoading(false);
 		});
 		return () => unsubuscribe();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -128,6 +150,7 @@ export function GlobalProvider({ children }) {
 				resetPassword,
 				user,
 				userId,
+				userRoles,
 				getUserDb,
 				loading,
 				setLoading,

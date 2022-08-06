@@ -10,7 +10,8 @@ import {
 	FormDefault,
 	InputLabel
 } from "../../shared/components";
-import { formIsValid, validateForm } from "../../shared/utils/Functions";
+import { MESSAGES } from "../../shared/utils/const";
+import { formIsValid, validateForm } from "../../shared/utils/functions";
 
 const Container = styled.div`
 	width: 100%;
@@ -74,19 +75,12 @@ const AuthModel = ({
 			try {
 				await action(form.email, form.password);
 				if (!auth.currentUser) {
-					writeError(
-						"Le enviamos un correo para validar su cuenta!",
-						"danger",
-					);
-					return;
+					writeError(MESSAGES.notCurrentUser, "error");
 				}
 				if (auth.currentUser.emailVerified) {
 					navigate(pathDashboard);
 				} else {
-					writeError(
-						"Le enviamos un correo para validar su cuenta!",
-						"danger",
-					);
+					writeError(MESSAGES.emailUnverified, "danger");
 				}
 			} catch (err) {
 				writeError(err.message);

@@ -12,7 +12,7 @@ import {
 	ButtonPrimaryWhite
 } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
-import { device, size } from "../../shared/utils/Breakpoints";
+import { device, size } from "../../shared/utils/breakpoints";
 
 const gap = "40px";
 

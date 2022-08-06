@@ -11,7 +11,7 @@ import {
 	InputLabel
 } from "../../shared/components";
 import SelectLabel from "../../shared/components/form/SelectLabel";
-import { formIsValid, validateForm } from "../../shared/utils/Functions";
+import { formIsValid, validateForm } from "../../shared/utils/functions";
 
 const initialForm = {
 	name: "",
