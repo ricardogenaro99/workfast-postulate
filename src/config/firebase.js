@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+// Import the Functions you need from the SDKs you need
 import runtimeEnv from "@mars/heroku-js-runtime-env";
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";

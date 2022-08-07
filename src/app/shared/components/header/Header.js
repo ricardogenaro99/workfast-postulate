@@ -1,7 +1,7 @@
 import { AiOutlinePoweroff } from "react-icons/ai";
 import styled from "styled-components";
 import { useGlobal } from "../../../contexts/globalContext";
-import { device } from "../../utils/breakpoints";
+import { device } from "../../utils/Breakpoints";
 
 const Container = styled.header`
 	position: relative;
