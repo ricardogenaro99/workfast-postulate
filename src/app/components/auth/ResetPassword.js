@@ -5,7 +5,7 @@ import { pathAuth } from "../../routes/Path";
 import {
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
-	ControlGrid
+	ControlGrid,
 } from "../../shared/components";
 import AuthModel from "./AuthModel";
 
@@ -14,7 +14,7 @@ const initialForm = {
 };
 const ResetPassword = () => {
 	const navigate = useNavigate();
-	const { resetPassword, loading, setLoading, user } = useGlobal();
+	const { resetPassword } = useGlobal();
 	const { form, handleChange } = useForm(initialForm);
 	const handleLogin = () => navigate(`${pathAuth}/login`);
 
@@ -25,9 +25,7 @@ const ResetPassword = () => {
 			onChange={handleChange}
 			action={resetPassword}
 			resetPassword={true}
-			loading={loading}
-			setLoading={setLoading}
-			user={user}
+			typeAction="resetPassword"
 		>
 			<ControlGrid>
 				<ButtonPrimaryWhite type="button" onClick={handleLogin}>

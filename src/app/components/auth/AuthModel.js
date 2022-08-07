@@ -10,6 +10,7 @@ import {
 	FormDefault,
 	InputLabel
 } from "../../shared/components";
+import PopPup from "../../shared/components/pop-pup/PopPup";
 import { MESSAGES } from "../../shared/utils/const";
 import { formIsValid, validateForm } from "../../shared/utils/functions";
 
@@ -45,9 +46,10 @@ const AuthModel = ({
 	form,
 	onChange,
 	action,
+	typeAction,
 	resetPassword = false,
 }) => {
-	const { setLoading } = useGlobal();
+	const { setLoading, popPup } = useGlobal();
 	const [error, setError] = useState();
 	const [clickSubmit, setClickSubmit] = useState(false);
 	const [formReview, setFormReview] = useState([]);
@@ -75,7 +77,18 @@ const AuthModel = ({
 			try {
 				await action(form.email, form.password);
 				if (!auth.currentUser) {
-					writeError(MESSAGES.notCurrentUser, "error");
+					switch (typeAction) {
+						case "register":
+							writeError(MESSAGES.emailUnverified, "danger");
+							break;
+						case "resetPassword":
+							writeError(MESSAGES.resetPassword, "info");
+							break;
+						default:
+							writeError(MESSAGES.notCurrentUser, "error");
+							break;
+					}
+					return;
 				}
 				if (auth.currentUser.emailVerified) {
 					navigate(pathDashboard);
@@ -90,12 +103,14 @@ const AuthModel = ({
 
 	return (
 		<Container>
+			{popPup && <PopPup message={popPup} />}
 			<section>
 				{error && (
 					<div className="alert-container">
 						<Alert message={error.message} type={error.type} />
 					</div>
 				)}
+
 				<CardDefault title={title}>
 					<FormDefault onSubmit={handleSubmit}>
 						<Fragment>

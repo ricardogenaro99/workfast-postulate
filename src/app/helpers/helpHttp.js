@@ -6,12 +6,11 @@ export const helpHttp = () => {
 			? await auth.currentUser.getIdToken()
 			: "";
 
-		let defaultHeader = {
+		const defaultHeader = {
 			Accept: "application/json",
 			"content-type": "application/json",
+			Authorization: `Bearer ${token}`,
 		};
-
-		if (token) defaultHeader.Authorization = `Bearer ${token}`;
 
 		const controller = new AbortController();
 		options.signal = controller.signal;

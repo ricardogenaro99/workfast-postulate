@@ -26,6 +26,7 @@ const Login = () => {
 			form={form}
 			onChange={handleChange}
 			action={login}
+			typeAction="login"
 		>
 			<ControlGrid>
 				<ButtonPrimaryWhite type="button" onClick={handleRegister}>

@@ -41,7 +41,6 @@ const ConfigurarCuenta = () => {
 	const [formReview, setFormReview] = useState([]);
 
 	useEffect(() => {
-		setLoading(true);
 		const getData = async () => {
 			try {
 				const data = await getUserDb();
@@ -54,12 +53,6 @@ const ConfigurarCuenta = () => {
 			}
 		};
 		getData();
-
-		const idTime = setTimeout(() => {
-			setLoading(false);
-		}, 2000);
-
-		return () => clearTimeout(idTime);
 	}, []);
 
 	useEffect(() => {
