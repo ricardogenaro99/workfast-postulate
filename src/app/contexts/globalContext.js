@@ -15,7 +15,7 @@ import { API_USERS } from "../endpoints/apis";
 import { helpHttp } from "../helpers/helpHttp";
 import { pathAuth } from "../routes/Path";
 import { Loader } from "../shared/components";
-import { MESSAGES, USER_ROLE } from "../shared/utils/const";
+import { MESSAGES, USER_ROLE } from "../shared/utils/generalConst";
 
 export const globalContext = createContext();
 
