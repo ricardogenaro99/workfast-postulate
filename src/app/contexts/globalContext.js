@@ -66,9 +66,8 @@ export function GlobalProvider({ children }) {
 			options,
 		);
 
-		if (data) {
-			userRoles.current = data.roleRef.values;
-		}
+		userRoles.current = data ? data.roleRef.values : [];
+
 		return data;
 	};
 
@@ -83,14 +82,16 @@ export function GlobalProvider({ children }) {
 	const login = async (email, password) => {
 		setLoading(true);
 		const data = await getUserDbByEmail(email);
-		if (data) {
-			if (userRoles.current.includes(USER_ROLE)) {
-				await signInWithEmailAndPassword(auth, email, password);
-				setUserId(data._id);
-			} else {
-				throw new Error(MESSAGES.errorRole);
-			}
-		}
+		await signInWithEmailAndPassword(auth, email, password);
+		setUserId(data._id);
+		// // if (data) {
+		// // 	if (userRoles.current.includes(USER_ROLE)) {
+		// // 		await signInWithEmailAndPassword(auth, email, password);
+		// // 		setUserId(data._id);
+		// // 	} else {
+		// // 		throw new Error(MESSAGES.errorRole);
+		// // 	}
+		// // }
 	};
 
 	const logout = () => {
@@ -119,8 +120,13 @@ export function GlobalProvider({ children }) {
 				try {
 					const data = await getUserDbByEmail(currentUser.email);
 					if (currentUser.emailVerified && data) {
-						setUserId(data._id);
-						setUser(currentUser);
+						if (userRoles.current.includes(USER_ROLE)) {
+							setUserId(data._id);
+							setUser(currentUser);
+						} else {
+							signOut(auth);
+							setPopPup(MESSAGES.errorRole);
+						}
 					} else {
 						signOut(auth);
 						sendVerification().then(() => resetStates());
