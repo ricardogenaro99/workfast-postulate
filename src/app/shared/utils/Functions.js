@@ -1,4 +1,4 @@
-import { VALIDATE_INPUTS } from "./Const";
+import { VALIDATE_INPUTS } from "./const";
 
 export const validateForm = (form, customValidations) => {
 	if (!customValidations) {

@@ -11,7 +11,7 @@ import {
 	InputLabel
 } from "../../shared/components";
 import PopPup from "../../shared/components/pop-pup/PopPup";
-import { MESSAGES } from "../../shared/utils/Const";
+import { MESSAGES } from "../../shared/utils/const";
 import { formIsValid, validateForm } from "../../shared/utils/Functions";
 
 const Container = styled.div`
