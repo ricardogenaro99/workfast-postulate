@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { SectionTitle } from "../../shared/templates";
-import { device } from "../../shared/utils/breakpoints";
+import { device } from "../../shared/utils/generalBreakpoints";
 
 const Container = styled.section`
 	display: grid;

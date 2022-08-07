@@ -5,7 +5,7 @@ import {
 	FormDefault,
 } from "../../shared/components";
 import SelectLabel from "../../shared/components/form/SelectLabel";
-import { formIsValid, validateForm } from "../../shared/utils/functions";
+import { formIsValid, validateForm } from "../../shared/utils/generalFunctions";
 
 const initialForm = {
 	career: "",

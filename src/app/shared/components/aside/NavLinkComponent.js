@@ -2,7 +2,7 @@ import { AiFillCrown } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { pathDashboard } from "../../../routes/Path";
-import { device } from "../../utils/breakpoints";
+import { device } from "../../utils/generalBreakpoints";
 
 const rotate = keyframes`
   0% {

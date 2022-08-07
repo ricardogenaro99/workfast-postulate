@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../utils/breakpoints";
+import { device } from "../../utils/generalBreakpoints";
 
 export const ControlGrid = styled.div`
 	display: grid;

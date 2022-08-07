@@ -6,7 +6,7 @@ import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Alert } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
-import { device } from "../../shared/utils/breakpoints";
+import { device } from "../../shared/utils/generalBreakpoints";
 
 const Container = styled.div`
 	display: grid;
