@@ -27,7 +27,7 @@ export const useGlobal = () => {
 
 export function GlobalProvider({ children }) {
 	const [user, setUser] = useState();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [popPup, setPopPup] = useState();
 	const userRoles = useRef([]);
