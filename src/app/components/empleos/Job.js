@@ -4,7 +4,7 @@ import { AiOutlineStar, AiOutlineTrophy } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_JOBS, API_USERS } from "../../endpoints/apis";
+import { API_JOBS, API_POSTULATES, API_USERS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import {
 	Alert,
@@ -63,6 +63,7 @@ const Job = () => {
 	const { userId, setLoading, setPopPup } = useGlobal();
 	const params = useParams();
 	const [favorite, setFavorite] = useState(false);
+	const [postulate, setPostulate] = useState(false);
 
 	useEffect(() => {
 		const getFavorite = async () => {
@@ -79,6 +80,25 @@ const Job = () => {
 					options,
 				);
 				setFavorite(data);
+			} catch (e) {
+				console.error({ statusText: `${e.name}: ${e.message}` });
+			}
+		};
+
+		const getPostulate = async () => {
+			try {
+				const options = {
+					body: {
+						userId,
+						jobId: params.id,
+					},
+				};
+
+				const { data } = await helpHttp().post(
+					`${API_POSTULATES}/get-user-job`,
+					options,
+				);
+				setPostulate(data !== null);
 			} catch (e) {
 				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
@@ -105,6 +125,7 @@ const Job = () => {
 		const load = async () => {
 			setLoading(true);
 			await getFavorite();
+			await getPostulate();
 			await getData();
 			setLoading(false);
 		};
@@ -117,7 +138,7 @@ const Job = () => {
 			const options = {
 				body: {
 					userId,
-					jobId: params.id,
+					jobId: jobDb._id,
 				},
 			};
 			const { message } = await helpHttp().post(
@@ -126,6 +147,25 @@ const Job = () => {
 			);
 			setPopPup(message);
 			setFavorite(!favorite);
+		} catch (err) {
+			setPopPup("Ocurrio un error inesperado");
+		}
+	};
+
+	const handleClickPostulate = async () => {
+		try {
+			const options = {
+				body: {
+					userRef: userId,
+					jobRef: jobDb._id,
+				},
+			};
+			const { message } = await helpHttp().post(
+				`${API_POSTULATES}/match-user-job`,
+				options,
+			);
+			setPopPup(message);
+			setPostulate(!postulate);
 		} catch (err) {
 			setPopPup("Ocurrio un error inesperado");
 		}
@@ -157,27 +197,26 @@ const Job = () => {
 							<div className="info-right">
 								<span>
 									<b>Pulicado el:</b>{" "}
-									{dayjs(jobDb.createdAt).format(
-										"MMMM D, YYYY",
-									)}
+									{dayjs(jobDb.createdAt).format("MMMM D, YYYY")}
 								</span>
 								<span>
 									<b>Ubicación:</b> {jobDb.details.city},{" "}
 									{jobDb.details.country}
 								</span>
 								<span>
-									<b>Empresa:</b>{" "}
-									{jobDb.enterpriseRef.details.name}
+									<b>Empresa:</b> {jobDb.enterpriseRef.details.name}
 								</span>
-								<ButtonPrimaryWhite
-									onClick={handleClickFavorite}
-								>
+								<ButtonPrimaryWhite onClick={handleClickFavorite}>
 									<AiOutlineStar />
-									{favorite ? "Quitar de" : "Añadir a"}{" "}
-									favoritos
+									{favorite ? "Quitar de" : "Añadir a"} favoritos
 								</ButtonPrimaryWhite>
-								<ButtonPrimaryPurple>
-									<AiOutlineTrophy /> Postular
+								<ButtonPrimaryPurple
+									onClick={handleClickPostulate}
+									className={postulate ? "disabled" : ""}
+									disabled={postulate}
+								>
+									<AiOutlineTrophy />{" "}
+									{postulate ? "Espera la respuesta" : "Enviar mi solicitud"}
 								</ButtonPrimaryPurple>
 							</div>
 						</section>

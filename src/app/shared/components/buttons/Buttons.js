@@ -14,6 +14,13 @@ const styleDefault = `
 	&:hover {
 		box-shadow: var(--color-purple) 0px 0px 8px 2px;
 	}
+
+	&.disabled{
+		opacity: .6;
+		&:hover {
+			box-shadow: none;
+		}
+	}
 `;
 
 const ButtonDefault = styled.button`
