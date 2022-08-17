@@ -22,14 +22,11 @@ const initialForm = {
 };
 
 const options = {
-	country: [{ labelValue: "Perú" }, { labelValue: "Colombia" }],
+	country: [{ labelValue: "Perú" }],
 	city: [
 		{ labelValue: "Lima" },
 		{ labelValue: "Arequipa" },
 		{ labelValue: "Callao" },
-		{ labelValue: "Bogota" },
-		{ labelValue: "Medellin" },
-		{ labelValue: "Barranquilla" },
 	],
 };
 
@@ -149,9 +146,7 @@ const PerfilFormPersonal = () => {
 						</ControlGrid> */}
 					</Fragment>
 					<ControlGrid columns={3}>
-						<ButtonPrimaryPurple type="submit">
-							Guardar
-						</ButtonPrimaryPurple>
+						<ButtonPrimaryPurple type="submit">Guardar</ButtonPrimaryPurple>
 					</ControlGrid>
 				</FormDefault>
 			)}
