@@ -12,6 +12,7 @@ import { CardDefault, CardDefaultStyle } from "./card/CardDefault";
 import { ControlGrid } from "./form/ControlGrid";
 import { FormDefault } from "./form/FormContainer";
 import InputLabel from "./form/InputLabel";
+import { Grilla } from "./grid/Grilla";
 import Header from "./header/Header";
 import Loader from "./loader/Loader";
 
@@ -31,5 +32,6 @@ export {
 	CardDefaultStyle,
 	Accordion,
 	FormDefault,
+	Grilla,
 };
 

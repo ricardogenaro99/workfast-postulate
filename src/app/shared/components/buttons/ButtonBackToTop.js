@@ -6,7 +6,7 @@ const size = "40px";
 const Container = styled.button`
 	width: ${size};
 	height: ${size};
-	background-color: var(--color-purple);
+	background-color: var(--color-primary);
 	color: #fff;
 	border-radius: 100%;
 	box-shadow: 2px 2px 3px #999;
@@ -20,7 +20,7 @@ const Container = styled.button`
 	right: 20px;
 
 	&:hover {
-		box-shadow: var(--color-purple) 0px 0px 8px 1px;
+		box-shadow: var(--color-primary) 0px 0px 8px 1px;
 	}
 
 	.arrow-up {

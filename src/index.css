@@ -1,13 +1,14 @@
 :root {
 	--color-white: #fdfeff;
 	--color-black: #1a1a1a;
-	/* --color-black-modal: #1a1a1a98; */
 	--color-black-modal: #50505067;
-	--color-purple: #5432ebee;
-	--color-purple-ligth: #9e88ffee;
-	--color-purple-active: #8266ffee;
+	/* --color-primary: #5432ebee;
+	--color-primary-ligth: #9e88ffee;
+	--color-primary-active: #8266ffee;*/
+	--color-primary: #1f5de4ee;
+	--color-primary-ligth: #3071fdee;
+	--color-primary-active: #5c8cf3ee;
 	--color-grey: #868686;
-	/* --color-grey-ligth: #e0e7ff; */
 	--color-grey-ligth: #d3d1d6;
 	--color-blue: #0153ce;
 	--color-blue-ligth: #8fbcff;
@@ -53,7 +54,6 @@ body {
 	box-sizing: border-box;
 	font-family: "Roboto", sans-serif;
 	font-size: 16px;
-	transition: all var(--transition);
 }
 
 *::-webkit-scrollbar {
@@ -62,7 +62,7 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-	background: var(--color-purple);
+	background: var(--color-primary);
 	border-radius: 2px;
 }
 
@@ -71,7 +71,7 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-	background: var(--color-purple-active);
+	background: var(--color-primary-active);
 	outline: var(--outline);
 }
 

@@ -1,12 +1,29 @@
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useGlobal } from "../../contexts/globalContext";
 import { API_POSTULATES } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
+import { Grilla } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
+
+const columns = [
+	{ field: "enterprise", headerName: "Empresa", flex: 1, minWidth: 150 },
+	{ field: "job", headerName: "Trabajo", flex: 2, minWidth: 250 },
+	{
+		field: "jobUbication",
+		headerName: "Lugar",
+		flex: 1,
+		minWidth: 150,
+	},
+	{ field: "jobPosition", headerName: "Cargo", flex: 1.5, minWidth: 250 },
+	{ field: "date", headerName: "Fecha", width: 170 },
+	{ field: "status", headerName: "Estado", width: 170 },
+];
 
 const PostulateJobs = () => {
 	const { userId } = useGlobal();
-	const [jobs, setJobs] = useState([]);
+	const [postulates, setPostulates] = useState([]);
+	const [rows, setRows] = useState([]);
 	const [error, setError] = useState();
 
 	useEffect(() => {
@@ -23,16 +40,14 @@ const PostulateJobs = () => {
 					options,
 				);
 
-				console.log(res);
-
 				if (res.err) {
 					setError(res);
-					setJobs([]);
+					setPostulates([]);
 					return;
 				}
 				if (res.data) {
 					setError(null);
-					setJobs(res.data);
+					setPostulates(res.data);
 					return;
 				}
 			} catch (e) {
@@ -43,11 +58,36 @@ const PostulateJobs = () => {
 		return () => getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		console.log(postulates);
+
+		// {dayjs(jobDb.createdAt).format("MMMM D, YYYY")}
+		const data = postulates.map((postulate) => ({
+			id: postulate._id,
+			enterprise: postulate.jobRef?.enterpriseRef?.details.name,
+			job: postulate.jobRef?.details.name,
+			jobUbication: `${postulate.jobRef?.details.city}, ${postulate.jobRef?.details.country}`,
+			jobPosition: postulate.jobRef?.details.position,
+			date: dayjs(postulate.createdAt).format("MMMM D, YYYY"),
+			status: generateStatus(postulate.accepted, postulate.refused),
+		}));
+		setRows(data);
+	}, [postulates]);
+
+	const generateStatus = (accepted, refused) => {
+		if (!accepted && !refused) return "En proceso";
+		if (accepted) return "Aceptado";
+		if (refused) return "Rechazado";
+	};
+
 	return (
 		<SectionTitle
 			title="Da un seguimiento a los empleos a los que postulaste"
 			error={error?.statusText}
-		></SectionTitle>
+		>
+			<Grilla rows={rows} columns={columns} />
+		</SectionTitle>
 	);
 };
 

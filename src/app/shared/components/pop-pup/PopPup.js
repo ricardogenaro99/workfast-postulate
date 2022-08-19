@@ -17,8 +17,8 @@ const Container = styled.div`
 	position: absolute;
 	top: ${margin};
 	right: ${margin};
-	background: var(--color-purple-active);
-	outline: 1px solid var(--color-purple);
+	background: var(--color-primary-active);
+	outline: 1px solid var(--color-primary);
 	padding: 20px 5%;
 	border-radius: calc(var(--border-radius-global) * 1.5);
 	opacity: 0;
@@ -27,7 +27,7 @@ const Container = styled.div`
 	animation-name: ${breatheAnimation};
 	animation-duration: 5s;
 
-	box-shadow: var(--color-purple-ligth) 0px 0px 10px 0px;
+	box-shadow: var(--color-primary-ligth) 0px 0px 10px 0px;
 	button {
 		position: absolute;
 		top: 3px;

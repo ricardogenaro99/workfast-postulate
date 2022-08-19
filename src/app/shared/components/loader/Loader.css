@@ -2,7 +2,7 @@
 .leap-frog {
     --uib-size: 80px;
     --uib-speed: 2s;
-    --uib-color: var(--color-purple);
+    --uib-color: var(--color-primary);
     position: relative;
     display: flex;
     align-items: center;

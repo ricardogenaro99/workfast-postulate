@@ -46,7 +46,7 @@ const Container = styled(NavLink)`
 
 	&:hover,
 	&.active {
-		background: var(--color-purple-active);
+		background: var(--color-primary-active);
 	}
 
 	&.active {
