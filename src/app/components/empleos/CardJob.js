@@ -78,7 +78,7 @@ const CardJob = ({ job }) => {
 				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
-		return () => getUser()
+		getUser();
 	}, [_id, userId]);
 
 	const handleClickFavorite = async () => {

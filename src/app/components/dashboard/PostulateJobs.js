@@ -55,14 +55,10 @@ const PostulateJobs = () => {
 			}
 		};
 
-		return () => getData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		getData();
+	}, [userId]);
 
 	useEffect(() => {
-		console.log(postulates);
-
-		// {dayjs(jobDb.createdAt).format("MMMM D, YYYY")}
 		const data = postulates.map((postulate) => ({
 			id: postulate._id,
 			enterprise: postulate.jobRef?.enterpriseRef?.details.name,

@@ -50,7 +50,7 @@ const ConfigurarCuenta = () => {
 			}
 		};
 		getData();
-	}, []);
+	}, [getUserDb, setForm]);
 
 	useEffect(() => {
 		if (clickSubmit) {

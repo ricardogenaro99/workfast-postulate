@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-const gapDefault = "5px";
-
 const styleDefault = `
 	display: flex;
 	flex-direction: column;
@@ -14,7 +12,6 @@ const styleDefault = `
 `;
 
 export const ContainerInputSelectLabelWithErrors = styled.div`
-
 	display: flex;
 	flex-direction: column;
 	* {
