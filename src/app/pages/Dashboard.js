@@ -1,10 +1,12 @@
-import { ContainerGapDefault, SectionTitle } from "../shared/templates";
+import FavoriteJobs from "../components/dashboard/FavoriteJobs";
+import PostulateJobs from "../components/dashboard/PostulateJobs";
+import { ContainerGapDefault } from "../shared/templates";
 
 const Dashboard = () => {
 	return (
 		<ContainerGapDefault>
-			<SectionTitle title="Revisa tus empleos favoritos"></SectionTitle>
-			<SectionTitle title="Da un seguimiento a los empleos a los que postulaste"></SectionTitle>
+			<FavoriteJobs />
+			<PostulateJobs />
 		</ContainerGapDefault>
 	);
 };
