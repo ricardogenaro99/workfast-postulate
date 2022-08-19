@@ -5,7 +5,7 @@ import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 import { CustomPagination } from "./CustomPagination";
 
 const Container = styled.div`
-	height: 380px;
+	height: 310px;
 	width: 100%;
 `;
 
