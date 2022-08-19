@@ -129,9 +129,8 @@ const Job = () => {
 			setLoading(false);
 		};
 
-		return () => load();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		load();
+	}, [params.id, setLoading, userId]);
 
 	const handleClickFavorite = async () => {
 		try {

@@ -58,9 +58,8 @@ const FavoriteJobs = () => {
 			}
 		};
 
-		return () => getData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		getData();
+	}, [userId]);
 
 	useEffect(() => {
 		const data = favorites.map((favorite) => ({

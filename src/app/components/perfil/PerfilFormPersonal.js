@@ -50,7 +50,7 @@ const PerfilFormPersonal = () => {
 			}
 		};
 		getData();
-	}, []);
+	}, [getUserDb, setForm]);
 
 	useEffect(() => {
 		if (clickSubmit) {
