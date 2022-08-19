@@ -13,6 +13,10 @@ const Container = styled.div`
 	min-height: 100vh;
 	display: grid;
 	grid-template-columns: auto 1fr;
+	*{
+		
+	transition: all var(--transition);
+	}
 `;
 
 const AppModule = () => {

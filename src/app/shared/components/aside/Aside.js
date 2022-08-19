@@ -8,7 +8,7 @@ import { device } from "../../utils/generalBreakpoints";
 import NavLinkComponent from "./NavLinkComponent";
 
 const Container = styled.aside`
-	background: var(--color-purple);
+	background: var(--color-primary);
 	width: var(--max-width-aside);
 	position: relative;
 	z-index: 1000;

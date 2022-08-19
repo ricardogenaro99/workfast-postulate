@@ -10,9 +10,9 @@ const styleDefault = `
 	justify-content: center;
 	align-items: center;
 	gap: 5px;
-	outline: 1px solid var(--color-purple);
+	outline: 1px solid var(--color-primary);
 	&:hover {
-		box-shadow: var(--color-purple) 0px 0px 8px 2px;
+		box-shadow: var(--color-primary) 0px 0px 8px 2px;
 	}
 
 	&.disabled{
@@ -28,13 +28,13 @@ const ButtonDefault = styled.button`
 `;
 
 export const ButtonPrimaryPurple = styled(ButtonDefault)`
-	background: var(--color-purple);
+	background: var(--color-primary);
 	color: var(--color-white);
 `;
 
 export const ButtonPrimaryWhite = styled(ButtonDefault)`
 	background: var(--color-white);
-	color: var(--color-purple);
+	color: var(--color-primary);
 `;
 
 const LinkDefault = styled(Link)`
@@ -42,11 +42,11 @@ const LinkDefault = styled(Link)`
 `;
 
 export const LinkPrimaryPurple = styled(LinkDefault)`
-	background: var(--color-purple);
+	background: var(--color-primary);
 	color: var(--color-white);
 `;
 
 export const LinkPrimaryWhite = styled(LinkDefault)`
 	background: var(--color-white);
-	color: var(--color-purple);
+	color: var(--color-primary);
 `;
