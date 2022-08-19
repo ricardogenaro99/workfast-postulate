@@ -1,8 +1,8 @@
-import Configuracion from "./app-workfast/Configuracion";
-import Empleos from "./app-workfast/Empleos";
-import Home from "./app-workfast/Home";
-import Perfil from "./app-workfast/Perfil";
-import Preparate from "./app-workfast/Preparate";
+import Configuracion from "./Configuracion";
+import Dashboard from "./Dashboard";
+import Empleos from "./Empleos";
+import Perfil from "./Perfil";
+import Preparate from "./Preparate";
 
-export { Empleos, Perfil, Home, Preparate, Configuracion };
+export { Empleos, Perfil, Dashboard, Preparate, Configuracion };
 

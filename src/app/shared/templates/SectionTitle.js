@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { Alert } from "../components";
 
 const Container = styled.section`
 	max-width: ${(props) => props.maxWidth};
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: var(--gap-default-XL);
@@ -20,12 +22,13 @@ const SectionTitle = ({
 	children,
 	maxWidth = "none",
 	margin = "initial",
+	error,
 }) => {
 	return (
 		<Container maxWidth={maxWidth} margin={margin}>
 			{title && <h3 className="section-title">{title}</h3>}
 			{subtitle && <h4 className="section-subtitle">{subtitle}</h4>}
-			{children}
+			{error ? <Alert message={error} /> : children}
 		</Container>
 	);
 };
