@@ -88,8 +88,8 @@ const Job = () => {
 			try {
 				const options = {
 					body: {
-						userId,
-						jobId: params.id,
+						userRef: userId,
+						jobRef: params.id,
 					},
 				};
 
