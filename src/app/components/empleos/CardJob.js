@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_USERS } from "../../endpoints/apis";
+import { API_FAVORITES } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { CardDefaultStyle, LinkPrimaryPurple } from "../../shared/components";
 
@@ -64,13 +64,13 @@ const CardJob = ({ job }) => {
 			try {
 				const options = {
 					body: {
-						userId,
-						jobId: _id,
+						userRef: userId,
+						jobRef: _id,
 					},
 				};
 
 				const { data } = await helpHttp().post(
-					`${API_USERS}/is-favorite-job`,
+					`${API_FAVORITES}/is-match`,
 					options,
 				);
 				setFavorite(data);
@@ -78,19 +78,38 @@ const CardJob = ({ job }) => {
 				console.error({ statusText: `${e.name}: ${e.message}` });
 			}
 		};
-		getUser();
+		return () => getUser()
 	}, [_id, userId]);
 
 	const handleClickFavorite = async () => {
 		try {
 			const options = {
 				body: {
-					userId,
-					jobId: _id,
+					userRef: userId,
+					jobRef: _id,
 				},
 			};
 			const { message } = await helpHttp().post(
-				`${API_USERS}/save-favorite-jobs`,
+				`${API_FAVORITES}/match-user-job`,
+				options,
+			);
+			setPopPup(message);
+			setFavorite(!favorite);
+		} catch (err) {
+			setPopPup("Ocurrio un error inesperado");
+		}
+	};
+
+	const handleClickUnfavorite = async () => {
+		try {
+			const options = {
+				body: {
+					userRef: userId,
+					jobRef: _id,
+				},
+			};
+			const { message } = await helpHttp().post(
+				`${API_FAVORITES}/unmatch-user-job`,
 				options,
 			);
 			setPopPup(message);
@@ -109,12 +128,9 @@ const CardJob = ({ job }) => {
 				</span>
 				<h4>{enterpriseRef.details.name}</h4>
 				{favorite ? (
-					<AiFillStar color="orange" onClick={handleClickFavorite} />
+					<AiFillStar color="orange" onClick={handleClickUnfavorite} />
 				) : (
-					<AiOutlineStar
-						color="orange"
-						onClick={handleClickFavorite}
-					/>
+					<AiOutlineStar color="orange" onClick={handleClickFavorite} />
 				)}
 			</div>
 			<ContentContainer>{details.description}</ContentContainer>

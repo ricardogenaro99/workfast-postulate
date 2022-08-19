@@ -28,6 +28,5 @@ export default function ProtectedRoutePremium({ children }) {
 
 	if (error) return <Alert message={error.statusText} />;
 
-	if (isPremium !== null)
-		return isPremium ? <>{children}</> : <CheckoutForm />;
+	if (isPremium !== null) return isPremium ? <>{children}</> : <CheckoutForm />;
 }

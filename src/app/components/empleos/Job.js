@@ -1,13 +1,12 @@
 import dayjs from "dayjs";
-import React, { Fragment, useEffect, useState } from "react";
-import { AiOutlineStar, AiOutlineTrophy } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiFillStar, AiOutlineStar, AiOutlineTrophy } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../../contexts/globalContext";
-import { API_JOBS, API_POSTULATES, API_USERS } from "../../endpoints/apis";
+import { API_FAVORITES, API_JOBS, API_POSTULATES } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import {
-	Alert,
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite
 } from "../../shared/components";
@@ -70,13 +69,13 @@ const Job = () => {
 			try {
 				const options = {
 					body: {
-						userId,
-						jobId: params.id,
+						userRef: userId,
+						jobRef: params.id,
 					},
 				};
 
 				const { data } = await helpHttp().post(
-					`${API_USERS}/is-favorite-job`,
+					`${API_FAVORITES}/is-match`,
 					options,
 				);
 				setFavorite(data);
@@ -130,19 +129,39 @@ const Job = () => {
 			setLoading(false);
 		};
 
-		load();
-	}, [params.id, setLoading, userId]);
+		return () => load();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleClickFavorite = async () => {
 		try {
 			const options = {
 				body: {
-					userId,
-					jobId: jobDb._id,
+					userRef: userId,
+					jobRef: jobDb._id,
 				},
 			};
 			const { message } = await helpHttp().post(
-				`${API_USERS}/save-favorite-jobs`,
+				`${API_FAVORITES}/match-user-job`,
+				options,
+			);
+			setPopPup(message);
+			setFavorite(!favorite);
+		} catch (err) {
+			setPopPup("Ocurrio un error inesperado");
+		}
+	};
+
+	const handleClickUnfavorite = async () => {
+		try {
+			const options = {
+				body: {
+					userRef: userId,
+					jobRef: jobDb._id,
+				},
+			};
+			const { message } = await helpHttp().post(
+				`${API_FAVORITES}/unmatch-user-job`,
 				options,
 			);
 			setPopPup(message);
@@ -172,58 +191,64 @@ const Job = () => {
 	};
 
 	return (
-		<Fragment>
-			{error && <Alert message={error.statusText} />}
-			{jobDb && (
-				<SectionTitle
-					title={jobDb.details.name}
-					maxWidth={size.laptopS}
-					margin="0 auto"
-				>
-					<Container>
-						<section className="image-container">
-							<img
-								src={
-									jobDb.details.image ||
-									"https://lamanzanamordida.net/app/uploads-lamanzanamordida.net/2022/06/apple-park-visitor-center.jpg"
-								}
-								alt="job"
-							/>
-						</section>
-						<section className="info-container">
-							<div className="info-left">
-								<p>{jobDb.details.description}</p>
-							</div>
-							<div className="info-right">
-								<span>
-									<b>Pulicado el:</b>{" "}
-									{dayjs(jobDb.createdAt).format("MMMM D, YYYY")}
-								</span>
-								<span>
-									<b>Ubicación:</b> {jobDb.details.city},{" "}
-									{jobDb.details.country}
-								</span>
-								<span>
-									<b>Empresa:</b> {jobDb.enterpriseRef.details.name}
-								</span>
+		<SectionTitle
+			title={jobDb?.details.name || ""}
+			maxWidth={size.laptopS}
+			margin="0 auto"
+			error={error?.statusText}
+		>
+			{jobDb ? (
+				<Container>
+					<section className="image-container">
+						<img
+							src={
+								jobDb.details.image ||
+								"https://lamanzanamordida.net/app/uploads-lamanzanamordida.net/2022/06/apple-park-visitor-center.jpg"
+							}
+							alt="job"
+						/>
+					</section>
+					<section className="info-container">
+						<div className="info-left">
+							<p>{jobDb.details.description}</p>
+						</div>
+						<div className="info-right">
+							<span>
+								<b>Pulicado el:</b>{" "}
+								{dayjs(jobDb.createdAt).format("MMMM D, YYYY")}
+							</span>
+							<span>
+								<b>Ubicación:</b> {jobDb.details.city}, {jobDb.details.country}
+							</span>
+							<span>
+								<b>Empresa:</b> {jobDb.enterpriseRef.details.name}
+							</span>
+							{favorite ? (
+								<ButtonPrimaryWhite onClick={handleClickUnfavorite}>
+									<AiFillStar />
+									Quitar de favoritos
+								</ButtonPrimaryWhite>
+							) : (
 								<ButtonPrimaryWhite onClick={handleClickFavorite}>
 									<AiOutlineStar />
-									{favorite ? "Quitar de" : "Añadir a"} favoritos
+									Agregar a favoritos
 								</ButtonPrimaryWhite>
-								<ButtonPrimaryPurple
-									onClick={handleClickPostulate}
-									className={postulate ? "disabled" : ""}
-									disabled={postulate}
-								>
-									<AiOutlineTrophy />{" "}
-									{postulate ? "Espera la respuesta" : "Enviar mi solicitud"}
-								</ButtonPrimaryPurple>
-							</div>
-						</section>
-					</Container>
-				</SectionTitle>
+							)}
+							<ButtonPrimaryPurple
+								onClick={handleClickPostulate}
+								className={postulate ? "disabled" : ""}
+								disabled={postulate}
+							>
+								<AiOutlineTrophy />
+								{postulate ? "Espera la respuesta" : "Enviar mi solicitud"}
+							</ButtonPrimaryPurple>
+						</div>
+					</section>
+				</Container>
+			) : (
+				""
 			)}
-		</Fragment>
+		</SectionTitle>
 	);
 };
 

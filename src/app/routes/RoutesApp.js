@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobal } from "../contexts/globalContext";
-import { Configuracion, Empleos, Home, Perfil, Preparate } from "../pages";
+import { Configuracion, Empleos, Dashboard, Perfil, Preparate } from "../pages";
 import { ButtonBackToTop } from "../shared/components";
 import PopPup from "../shared/components/pop-pup/PopPup";
 import ProtectedRoutePremium from "../shared/utils/protected-routes/ProtectedRoutePremium";
@@ -18,7 +18,7 @@ const RoutesApp = () => {
 			{popPup && <PopPup message={popPup} />}
 			<Routes>
 				<Route path="/">
-					<Route index element={<Home />} />
+					<Route index element={<Dashboard />} />
 					<Route path="perfil" element={<Perfil />} />
 					<Route path="empleos/*" element={<Empleos />} />
 					<Route

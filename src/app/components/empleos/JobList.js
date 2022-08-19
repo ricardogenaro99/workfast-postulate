@@ -4,7 +4,6 @@ import CardJob from "../../components/empleos/CardJob";
 import { useGlobal } from "../../contexts/globalContext";
 import { API_JOBS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
-import { Alert } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
 import { device } from "../../shared/utils/generalBreakpoints";
 
@@ -52,9 +51,11 @@ const JobList = () => {
 	}, [setLoading]);
 
 	return (
-		<SectionTitle title={"Estos empleos se ajustan a tu perfil"}>
+		<SectionTitle
+			title={"Estos empleos se ajustan a tu perfil"}
+			error={error?.statusText}
+		>
 			<Container>
-				{error && <Alert message={error.statusText} />}
 				{jobsDb.map((job, i) => (
 					<CardJob key={i} job={job} />
 				))}

@@ -1,6 +1,6 @@
-import PerfilFormPersonal from "../../components/perfil/PerfilFormPersonal";
-import PerfilFormPreferences from "../../components/perfil/PerfilFormPreferences";
-import { SectionTitle } from "../../shared/templates";
+import PerfilFormPersonal from "../components/perfil/PerfilFormPersonal";
+import PerfilFormPreferences from "../components/perfil/PerfilFormPreferences";
+import { SectionTitle } from "../shared/templates";
 
 const Perfil = () => {
 	return (

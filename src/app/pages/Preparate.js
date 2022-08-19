@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import ListOfLists from "../../components/preparate/ListOfLists";
-import { useGlobal } from "../../contexts/globalContext";
-import { ContainerGapDefault } from "../../shared/templates";
+import ListOfLists from "../components/preparate/ListOfLists";
+import { useGlobal } from "../contexts/globalContext";
+import { ContainerGapDefault } from "../shared/templates";
 
 const listOfLists = [
 	{
@@ -42,7 +42,7 @@ const Preparate = () => {
 			setLoading(false);
 		}, 1500);
 
-		return () => clearTimeout(idTime)
+		return () => clearTimeout(idTime);
 	}, [setLoading]);
 
 	return (
