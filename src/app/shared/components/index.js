@@ -1,8 +1,8 @@
-import Accordion from "./accordion/Accordion";
 import Alert from "./alert/Alert";
 import Aside from "./aside/Aside";
 import ButtonBackToTop from "./buttons/ButtonBackToTop";
 import {
+	ButtonChip,
 	ButtonPrimaryPurple,
 	ButtonPrimaryWhite,
 	LinkPrimaryPurple,
@@ -12,8 +12,9 @@ import { CardDefault, CardDefaultStyle } from "./card/CardDefault";
 import { ControlGrid } from "./form/ControlGrid";
 import { FormDefault } from "./form/FormContainer";
 import InputLabel from "./form/InputLabel";
-import { Grilla } from "./grid/Grilla";
+import { Grilla } from "./grilla/Grilla";
 import Header from "./header/Header";
+import { CustomLinkFlexGap } from "./link/Link";
 import Loader from "./loader/Loader";
 
 export {
@@ -30,8 +31,9 @@ export {
 	Alert,
 	CardDefault,
 	CardDefaultStyle,
-	Accordion,
 	FormDefault,
 	Grilla,
+	ButtonChip,
+	CustomLinkFlexGap,
 };
 

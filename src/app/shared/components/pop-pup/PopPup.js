@@ -14,10 +14,10 @@ const breatheAnimation = keyframes`
 `;
 
 const Container = styled.div`
-	position: absolute;
-	top: ${margin};
+	position: fixed;
+	top: calc(var(--height-header) + ${margin});
 	right: ${margin};
-	background: var(--color-primary-active);
+	background: var(--color-primary-ligth);
 	outline: 1px solid var(--color-primary);
 	padding: 20px 5%;
 	border-radius: calc(var(--border-radius-global) * 1.5);
@@ -26,8 +26,11 @@ const Container = styled.div`
 	color: var(--color-white);
 	animation-name: ${breatheAnimation};
 	animation-duration: 5s;
+	z-index: 10000;
 
-	box-shadow: var(--color-primary-ligth) 0px 0px 10px 0px;
+	max-width: calc(90vw - var(--min-width-aside));
+
+	box-shadow: var(--color-primary-active) 0px 0px 10px 0px;
 	button {
 		position: absolute;
 		top: 3px;

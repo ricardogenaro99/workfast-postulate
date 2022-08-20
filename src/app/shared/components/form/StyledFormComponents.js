@@ -14,6 +14,7 @@ const styleDefault = `
 export const ContainerInputSelectLabelWithErrors = styled.div`
 	display: flex;
 	flex-direction: column;
+	gap: var(--gap-default-S);
 	* {
 		background: transparent;
 		font-weight: 400;
