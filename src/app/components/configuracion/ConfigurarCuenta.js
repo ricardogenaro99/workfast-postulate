@@ -50,7 +50,8 @@ const ConfigurarCuenta = () => {
 			}
 		};
 		getData();
-	}, [getUserDb, setForm]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (clickSubmit) {
@@ -74,8 +75,6 @@ const ConfigurarCuenta = () => {
 			await helpHttp().post(`${API_USERS}/save-details`, optionsPost);
 			setLoading(false);
 			setPopPup("Se guardo exitosamente!");
-		} else {
-			setPopPup("Debe completar todos los campos.");
 		}
 	};
 

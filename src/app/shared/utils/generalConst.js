@@ -10,3 +10,9 @@ export const VALIDATE_INPUTS = {
 };
 
 export const USER_ROLE = "candidate";
+
+export const STATES = {
+	inProgress: "Por evaluar",
+	accepted: "Aceptado",
+	refused: "Rechazado",
+};

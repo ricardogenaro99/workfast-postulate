@@ -9,14 +9,16 @@ const styleDefault = `
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 5px;
+	gap: var(--gap-default-S);
 	outline: 1px solid var(--color-primary);
+	
 	&:hover {
 		box-shadow: var(--color-primary) 0px 0px 8px 2px;
 	}
 
 	&.disabled{
 		opacity: .6;
+		cursor: initial;
 		&:hover {
 			box-shadow: none;
 		}
@@ -49,4 +51,14 @@ export const LinkPrimaryPurple = styled(LinkDefault)`
 export const LinkPrimaryWhite = styled(LinkDefault)`
 	background: var(--color-white);
 	color: var(--color-primary);
+`;
+
+export const ButtonChip = styled.button`
+	background: ${(props) => props.background || "var(--color-white)"};
+	color: ${(props) => props.color || "var(--color-primary)"};
+	outline: 1px solid ${(props) => props.color || "var(--color-primary)"};
+	border-radius: 10px;
+	padding: 5px 10px;
+	opacity: 0.8;
+	cursor: ${(props) => props.cursor || "initial"};
 `;

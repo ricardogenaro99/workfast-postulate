@@ -30,6 +30,8 @@ export const Grilla = ({
 				onSelectionModelChange={(newSelectionModel) => {
 					setSelectedRows(newSelectionModel);
 				}}
+				hideFooterSelectedRowCount
+				disableSelectionOnClick
 			/>
 			{children}
 		</Container>
