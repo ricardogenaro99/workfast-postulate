@@ -22,17 +22,22 @@ export const ContainerInputSelectLabelWithErrors = styled.div`
 	}
 `;
 
-export const ContainerInputLabel = styled.div`
+export const ContainerInputTextAreaLabel = styled.div`
 	${styleDefault}
 
 	label {
 		color: var(--color-grey);
 	}
 
-	input {
+	input,
+	textarea {
 		color: var(--color-black);
 		border: none;
 		outline: none;
+	}
+
+	textarea {
+		resize: vertical;
 	}
 `;
 

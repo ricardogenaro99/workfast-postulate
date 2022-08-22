@@ -8,12 +8,14 @@ import { API_FAVORITES, API_JOBS, API_POSTULATES } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import {
 	ButtonPrimaryPurple,
-	ButtonPrimaryWhite
+	ButtonPrimaryWhite,
 } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
 import { device, size } from "../../shared/utils/generalBreakpoints";
+import { WORKFAST_IMAGE_WHITE } from "../../shared/utils/generalConst";
 
 const gap = "40px";
+const sizeEnterprise = "80px";
 
 const Container = styled.article`
 	display: grid;
@@ -26,10 +28,21 @@ const Container = styled.article`
 			overflow: hidden;
 			min-height: 250px;
 			max-height: 400px;
+			position: relative;
 			img {
 				object-fit: cover;
-				width: 100%;
-				height: 100%;
+				&:nth-child(1) {
+					width: 100%;
+					height: 100%;
+				}
+				&:nth-child(2) {
+					position: absolute;
+					height: ${sizeEnterprise};
+					width: ${sizeEnterprise};
+					border-radius: 100%;
+					bottom: 10px;
+					right: 10px;
+				}
 			}
 		}
 
@@ -130,8 +143,7 @@ const Job = () => {
 		};
 
 		load();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [params.id, setLoading, userId]);
 
 	const handleClickFavorite = async () => {
 		try {
@@ -200,13 +212,8 @@ const Job = () => {
 			{jobDb ? (
 				<Container>
 					<section className="image-container">
-						<img
-							src={
-								jobDb.details.image ||
-								"https://lamanzanamordida.net/app/uploads-lamanzanamordida.net/2022/06/apple-park-visitor-center.jpg"
-							}
-							alt="job"
-						/>
+						<img src={jobDb.details.image || WORKFAST_IMAGE_WHITE} alt="job" />
+						<img src={jobDb.enterpriseRef.details.image} alt="enterprise" />
 					</section>
 					<section className="info-container">
 						<div className="info-left">

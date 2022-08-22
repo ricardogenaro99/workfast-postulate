@@ -1,11 +1,9 @@
 import {
 	createUserWithEmailAndPassword,
-	GoogleAuthProvider,
 	onAuthStateChanged,
 	sendEmailVerification,
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
-	signInWithPopup,
 	signOut
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -30,6 +28,7 @@ export function GlobalProvider({ children }) {
 	const [loading, setLoading] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [popPup, setPopPup] = useState();
+	const [isConfComplete, setIsConfComplete] = useState(false);
 	const userRoles = useRef([]);
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -47,8 +46,8 @@ export function GlobalProvider({ children }) {
 		return data;
 	};
 
-	const getUserDb = async () => {
-		const { data } = await helpHttp().get(`${API_USERS}/${userId}`);
+	const getUserDb = async (id = userId) => {
+		const { data } = await helpHttp().get(`${API_USERS}/${id}`);
 		return data;
 	};
 
@@ -66,6 +65,11 @@ export function GlobalProvider({ children }) {
 		userRoles.current = data ? data.roleRef.values : [];
 
 		return data;
+	};
+
+	const handleConfComplete = async (_userId) => {
+		const userDb = await getUserDb(_userId);
+		setIsConfComplete(userDb.isComplete);
 	};
 
 	const signup = async (email, password) => {
@@ -95,11 +99,6 @@ export function GlobalProvider({ children }) {
 		setLoading(false);
 	};
 
-	const loginWithGoogle = () => {
-		const googleProvider = new GoogleAuthProvider();
-		return signInWithPopup(auth, googleProvider);
-	};
-
 	const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
 	const sendVerification = () => sendEmailVerification(auth.currentUser);
@@ -127,6 +126,7 @@ export function GlobalProvider({ children }) {
 
 				setUserId(data._id);
 				setUser(currentUser);
+				handleConfComplete(data._id);
 			} catch (err) {
 				const pathAuthRoute = location.pathname.split("/");
 				pathAuthRoute.includes("register")
@@ -151,8 +151,8 @@ export function GlobalProvider({ children }) {
 				login,
 				signup,
 				logout,
-				loginWithGoogle,
 				resetPassword,
+				isConfComplete,
 				user,
 				userId,
 				userRoles,
