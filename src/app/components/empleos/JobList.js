@@ -48,7 +48,8 @@ const JobList = () => {
 		};
 
 		load();
-	}, [setLoading]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<SectionTitle

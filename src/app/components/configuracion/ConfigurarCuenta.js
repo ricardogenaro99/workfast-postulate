@@ -4,13 +4,13 @@ import { API_USERS } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import { useForm } from "../../hooks/useForm";
 import {
-	Alert,
 	ButtonPrimaryPurple,
 	ControlGrid,
 	FormDefault,
 	InputLabel
 } from "../../shared/components";
 import SelectLabel from "../../shared/components/form/SelectLabel";
+import { SectionTitle } from "../../shared/templates";
 import { formIsValid, validateForm } from "../../shared/utils/generalFunctions";
 
 const initialForm = {
@@ -40,6 +40,7 @@ const ConfigurarCuenta = () => {
 	useEffect(() => {
 		const getData = async () => {
 			try {
+				setLoading(true);
 				const data = await getUserDb();
 				if (data) {
 					setForm(data.details);
@@ -47,6 +48,8 @@ const ConfigurarCuenta = () => {
 				setError(null);
 			} catch (e) {
 				setError({ statusText: `${e.name}: ${e.message}` });
+			} finally {
+				setLoading(false);
 			}
 		};
 		getData();
@@ -84,9 +87,11 @@ const ConfigurarCuenta = () => {
 	};
 
 	return (
-		<Fragment>
-			{error && <Alert message={error.statusText} />}
-			{userId && !error && (
+		<SectionTitle
+			title="Configura los datos básicos de tu cuenta"
+			error={error?.statusText}
+		>
+			{userId && (
 				<FormDefault onSubmit={handleSubmit}>
 					<Fragment>
 						<InputLabel
@@ -127,7 +132,7 @@ const ConfigurarCuenta = () => {
 					</ControlGrid>
 				</FormDefault>
 			)}
-		</Fragment>
+		</SectionTitle>
 	);
 };
 

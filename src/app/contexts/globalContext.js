@@ -43,10 +43,7 @@ export function GlobalProvider({ children }) {
 				},
 			},
 		};
-		const { data } = await helpHttp().post(
-			`${API_USERS}/save-user`,
-			options,
-		);
+		const { data } = await helpHttp().post(`${API_USERS}/save-user`, options);
 		return data;
 	};
 
@@ -62,7 +59,7 @@ export function GlobalProvider({ children }) {
 			},
 		};
 		const { data } = await helpHttp().post(
-			`${API_USERS}/get-user-email`,
+			`${API_USERS}/get-by-email`,
 			options,
 		);
 
@@ -84,14 +81,6 @@ export function GlobalProvider({ children }) {
 		const data = await getUserDbByEmail(email);
 		await signInWithEmailAndPassword(auth, email, password);
 		setUserId(data._id);
-		// // if (data) {
-		// // 	if (userRoles.current.includes(USER_ROLE)) {
-		// // 		await signInWithEmailAndPassword(auth, email, password);
-		// // 		setUserId(data._id);
-		// // 	} else {
-		// // 		throw new Error(MESSAGES.errorRole);
-		// // 	}
-		// // }
 	};
 
 	const logout = () => {
@@ -103,6 +92,7 @@ export function GlobalProvider({ children }) {
 	const resetStates = () => {
 		setUser(null);
 		setUserId(null);
+		setLoading(false);
 	};
 
 	const loginWithGoogle = () => {
@@ -116,33 +106,42 @@ export function GlobalProvider({ children }) {
 
 	useEffect(() => {
 		const unsubuscribe = onAuthStateChanged(auth, async (currentUser) => {
-			if (currentUser) {
-				try {
-					const data = await getUserDbByEmail(currentUser.email);
-					if (currentUser.emailVerified && data) {
-						if (userRoles.current.includes(USER_ROLE)) {
-							setUserId(data._id);
-							setUser(currentUser);
-						} else {
-							signOut(auth);
-							setPopPup(MESSAGES.errorRole);
-						}
-					} else {
-						signOut(auth);
-						sendVerification().then(() => resetStates());
-					}
-				} catch (err) {
-					const pathAuthRoute = location.pathname.split("/");
-					pathAuthRoute.includes("register")
-						? navigate(`${pathAuth}/register`)
-						: navigate(`${pathAuth}/login`);
-				}
-			} else {
+			if (!currentUser) {
 				resetStates();
+				return;
 			}
-			setLoading(false);
+			try {
+				const data = await getUserDbByEmail(currentUser.email);
+
+				if (!(currentUser.emailVerified && data)) {
+					signOut(auth);
+					sendVerification().then(() => resetStates());
+					return;
+				}
+
+				if (!userRoles.current.includes(USER_ROLE)) {
+					signOut(auth);
+					setPopPup(MESSAGES.errorRole);
+					return;
+				}
+
+				setUserId(data._id);
+				setUser(currentUser);
+			} catch (err) {
+				const pathAuthRoute = location.pathname.split("/");
+				pathAuthRoute.includes("register")
+					? navigate(`${pathAuth}/register`)
+					: navigate(`${pathAuth}/login`);
+			} finally {
+				setLoading(false);
+			}
 		});
-		return () => unsubuscribe();
+
+		const init = () => {
+			unsubuscribe();
+		};
+
+		return () => init();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
