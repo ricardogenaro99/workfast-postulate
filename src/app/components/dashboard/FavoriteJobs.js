@@ -7,7 +7,7 @@ import { helpHttp } from "../../helpers/helpHttp";
 import {
 	ButtonPrimaryWhite,
 	CustomLinkFlexGap,
-	Grilla
+	Grilla,
 } from "../../shared/components/";
 import { SectionTitle } from "../../shared/templates";
 
@@ -20,6 +20,8 @@ const FavoriteJobs = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [rows, setRows] = useState([]);
 	const [error, setError] = useState();
+	const [isDataLoad, setIsDataLoad] = useState(true);
+
 	const [selectedRows, setSelectedRows] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,7 @@ const FavoriteJobs = () => {
 
 	const getData = useCallback(async () => {
 		try {
+			setIsDataLoad(true);
 			const options = {
 				body: {
 					userRef: userId,
@@ -73,6 +76,8 @@ const FavoriteJobs = () => {
 			}
 		} catch (e) {
 			console.error({ statusText: `${e.name}: ${e.message}` });
+		} finally {
+			setIsDataLoad(false);
 		}
 	}, [userId]);
 
@@ -106,7 +111,7 @@ const FavoriteJobs = () => {
 			};
 
 			const res = await helpHttp().post(
-				`${API_FAVORITES}/unmatch-by-ids`,
+				`${API_FAVORITES}/unmatch-ids`,
 				options,
 			);
 
@@ -133,7 +138,12 @@ const FavoriteJobs = () => {
 			title="Revisa tus empleos favoritos"
 			error={error?.statusText}
 		>
-			<Grilla rows={rows} columns={columns} setSelectedRows={setSelectedRows}>
+			<Grilla
+				rows={rows}
+				columns={columns}
+				setSelectedRows={setSelectedRows}
+				isDataLoad={isDataLoad}
+			>
 				<ButtonPrimaryWhiteTop
 					className={selectedRows.length === 0 || loading ? "disabled" : ""}
 					disabled={selectedRows.length === 0 || loading}

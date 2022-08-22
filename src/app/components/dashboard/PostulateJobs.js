@@ -13,6 +13,7 @@ const PostulateJobs = () => {
 	const [postulates, setPostulates] = useState([]);
 	const [rows, setRows] = useState([]);
 	const [error, setError] = useState();
+	const [isDataLoad, setIsDataLoad] = useState(true);
 
 	const columns = [
 		{ field: "enterprise", headerName: "Empresa", flex: 1, minWidth: 150 },
@@ -83,6 +84,7 @@ const PostulateJobs = () => {
 	useEffect(() => {
 		const getData = async () => {
 			try {
+				setIsDataLoad(true);
 				const options = {
 					body: {
 						userRef: userId,
@@ -106,6 +108,8 @@ const PostulateJobs = () => {
 				}
 			} catch (e) {
 				console.error({ statusText: `${e.name}: ${e.message}` });
+			} finally {
+				setIsDataLoad(false);
 			}
 		};
 
@@ -143,7 +147,7 @@ const PostulateJobs = () => {
 			title="Da un seguimiento a los empleos a los que postulaste"
 			error={error?.statusText}
 		>
-			<Grilla rows={rows} columns={columns} />
+			<Grilla rows={rows} columns={columns} isDataLoad={isDataLoad} />
 		</SectionTitle>
 	);
 };

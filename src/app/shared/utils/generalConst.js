@@ -16,3 +16,5 @@ export const STATES = {
 	accepted: "Aceptado",
 	refused: "Rechazado",
 };
+
+export const TIME_OUT = 10000;

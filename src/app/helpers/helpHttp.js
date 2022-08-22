@@ -1,10 +1,9 @@
 import { auth } from "../../config/firebase";
+import { TIME_OUT } from "../shared/utils/generalConst";
 
 export const helpHttp = () => {
 	const customFetch = async (endpoint, options) => {
-		const token = auth.currentUser
-			? await auth.currentUser.getIdToken()
-			: "";
+		const token = auth.currentUser ? await auth.currentUser.getIdToken() : "";
 
 		const defaultHeader = {
 			Accept: "application/json",
@@ -25,7 +24,7 @@ export const helpHttp = () => {
 
 		setTimeout(() => {
 			controller.abort();
-		}, 10000);
+		}, TIME_OUT);
 
 		try {
 			const res = await fetch(endpoint, options);

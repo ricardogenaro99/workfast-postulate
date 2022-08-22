@@ -9,6 +9,7 @@ const styleDefault = `
 	min-height: 70px;
 	gap: var(--gap-default-XS);
 	justify-content: center;
+	background: var(--color-white);
 `;
 
 export const ContainerInputSelectLabelWithErrors = styled.div`
