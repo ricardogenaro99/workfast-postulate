@@ -18,5 +18,3 @@ export const formIsValid = (form) => {
 		.filter((isError) => isError === false);
 	return errors.length === 0;
 };
-
-export const generateOptionLabelEqualsValue = (value = []) => {};
