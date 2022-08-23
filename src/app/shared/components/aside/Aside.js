@@ -60,11 +60,11 @@ const Aside = () => {
 						name="Dashboard"
 						icon={<SiSpeedtest size={sizeIconTech} />}
 					/>
-					<NavLinkComponent
+					{/* <NavLinkComponent
 						path="perfil"
 						name="Perfil"
 						icon={<RiProfileFill size={sizeIconTech} />}
-					/>
+					/> */}
 					<NavLinkComponent
 						path="empleos"
 						name="Empleos"

@@ -1,8 +1,6 @@
 import { useEffect, useId, useState } from "react";
 import {
-	ContainerErrors,
-	ContainerInputTextAreaLabel,
-	ContainerInputSelectLabelWithErrors
+	ContainerErrors, ContainerInputSelectLabelWithErrors, ContainerInputTextAreaLabel
 } from "./StyledFormComponents";
 
 const InputLabel = ({
@@ -13,6 +11,7 @@ const InputLabel = ({
 	value,
 	onChange,
 	formReview,
+	inputElement,
 }) => {
 	const inputId = useId();
 	const [errors, setErrors] = useState([]);
@@ -28,14 +27,18 @@ const InputLabel = ({
 		<ContainerInputSelectLabelWithErrors>
 			<ContainerInputTextAreaLabel>
 				<label htmlFor={inputId}>{label}</label>
-				<input
-					id={inputId}
-					type={type}
-					placeholder={placeholder}
-					name={name}
-					value={value}
-					onChange={onChange}
-				/>
+				{inputElement ? (
+					inputElement
+				) : (
+					<input
+						id={inputId}
+						type={type}
+						placeholder={placeholder}
+						name={name}
+						value={value}
+						onChange={onChange}
+					/>
+				)}
 			</ContainerInputTextAreaLabel>
 			{errors.length !== 0 && (
 				<ContainerErrors>

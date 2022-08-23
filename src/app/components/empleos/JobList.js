@@ -9,7 +9,7 @@ import { device } from "../../shared/utils/generalBreakpoints";
 
 const Container = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	grid-auto-rows: 1fr;
 	gap: 25px;
 	@media ${device.mobileL} {

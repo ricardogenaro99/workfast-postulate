@@ -31,7 +31,8 @@ const options = {
 };
 
 const ConfigurarCuenta = () => {
-	const { setLoading, getUserDb, userId, setPopPup } = useGlobal();
+	const { setLoading, getUserDb, userId, setPopPup, isConfComplete } =
+		useGlobal();
 	const { form, handleChange, setForm } = useForm(initialForm);
 	const [error, setError] = useState(null);
 	const [clickSubmit, setClickSubmit] = useState(false);
@@ -79,7 +80,8 @@ const ConfigurarCuenta = () => {
 				await helpHttp().post(`${API_USERS}/save-details`, optionsPost);
 				setLoading(false);
 				setPopPup("Se guardo exitosamente!");
-				window.location.reload();
+
+				if (!isConfComplete) window.location.reload();
 			} catch (err) {
 				console.error(err);
 			} finally {
