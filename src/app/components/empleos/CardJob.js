@@ -1,3 +1,4 @@
+import parse from "html-react-parser";
 import { useEffect, useId, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
@@ -133,7 +134,7 @@ const CardJob = ({ job }) => {
 					<AiOutlineStar color="orange" onClick={handleClickFavorite} />
 				)}
 			</div>
-			<ContentContainer>{details.description}</ContentContainer>
+			<ContentContainer>{parse(details.description)}</ContentContainer>
 			<LinkPrimaryPurple to={_id}>Conocer más...</LinkPrimaryPurple>
 		</Container>
 	);

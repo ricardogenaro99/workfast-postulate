@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar, AiOutlineTrophy } from "react-icons/ai";
 import { useParams } from "react-router-dom";
@@ -8,7 +9,7 @@ import { API_FAVORITES, API_JOBS, API_POSTULATES } from "../../endpoints/apis";
 import { helpHttp } from "../../helpers/helpHttp";
 import {
 	ButtonPrimaryPurple,
-	ButtonPrimaryWhite,
+	ButtonPrimaryWhite
 } from "../../shared/components";
 import { SectionTitle } from "../../shared/templates";
 import { device, size } from "../../shared/utils/generalBreakpoints";
@@ -216,9 +217,7 @@ const Job = () => {
 						<img src={jobDb.enterpriseRef.details.image} alt="enterprise" />
 					</section>
 					<section className="info-container">
-						<div className="info-left">
-							<p>{jobDb.details.description}</p>
-						</div>
+						<div className="info-left">{parse(jobDb.details.description)}</div>
 						<div className="info-right">
 							<span>
 								<b>Pulicado el:</b>{" "}
