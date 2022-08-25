@@ -18,7 +18,7 @@ const Container = styled.section`
 			font-weight: 600;
 		}
 		.section-subtitle {
-			font-size: 24px;
+			font-size: 18px;
 		}
 
 		.actions-container {
