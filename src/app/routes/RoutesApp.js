@@ -21,14 +21,7 @@ const RoutesApp = () => {
 					<Route index element={<Dashboard />} />
 					<Route path="perfil" element={<Perfil />} />
 					<Route path="empleos/*" element={<Empleos />} />
-					<Route
-						path="preparate"
-						element={
-							<ProtectedRoutePremium>
-								<Preparate />
-							</ProtectedRoutePremium>
-						}
-					/>
+					<Route path="preparate" element={<Preparate />} />
 					<Route path="configuracion" element={<Configuracion />} />
 				</Route>
 				<Route path="*" element={<h1>Error 404</h1>} />
